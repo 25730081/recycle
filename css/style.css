@@ -711,93 +711,104 @@ html, body {
 
 .ts-team-bg { display: none; }
 
-/* 팀 카드 마우스오버: 로고 색은 그대로, 주위에만 불꽃 */
-.ts-card::before,
-.ts-card::after {
-  content: '';
+/* ── 팀 카드 마우스오버: 로고는 그대로, 바깥에만 팀 컬러 불꽃 + 마스코트 팝업 ── */
+
+/* 로고 모양(투명 PNG)을 따라 바깥으로만 번지는 불꽃 글로우 */
+.ts-left:hover .ts-logo,
+.ts-left:focus-visible .ts-logo  { animation: glowOrange 1.3s ease-in-out infinite alternate; }
+.ts-right:hover .ts-logo,
+.ts-right:focus-visible .ts-logo { animation: glowNavy 1.3s ease-in-out infinite alternate; }
+
+@keyframes glowOrange {
+  0%   { filter: drop-shadow(0 0 8px rgba(255,102,0,.85))  drop-shadow(0 0 24px rgba(255,153,0,.55)) drop-shadow(0 0 2px rgba(255,204,0,.9)); }
+  100% { filter: drop-shadow(0 0 16px rgba(255,102,0,1))   drop-shadow(0 0 46px rgba(255,153,0,.8))  drop-shadow(0 0 4px rgba(255,204,0,1)); }
+}
+@keyframes glowNavy {
+  0%   { filter: drop-shadow(0 0 8px rgba(4,30,66,.95))   drop-shadow(0 0 24px rgba(16,78,139,.65)) drop-shadow(0 0 2px rgba(59,130,246,.9)); }
+  100% { filter: drop-shadow(0 0 16px rgba(4,30,66,1))    drop-shadow(0 0 46px rgba(16,78,139,.85)) drop-shadow(0 0 4px rgba(59,130,246,1)); }
+}
+
+/* 위로 올라가는 불꽃 파티클 (JS에서 생성) */
+.ts-fx {
   position: absolute;
-  left: -12%;
-  right: -12%;
-  top: -6%;
+  left: -6%;
+  right: -6%;
+  top: 0;
   bottom: 22%;
   z-index: 0;
   pointer-events: none;
+  overflow: visible;
+}
+
+.flame-particle {
+  position: absolute;
+  bottom: 4%;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: riseFlame var(--dur) ease-out forwards;
+}
+
+@keyframes riseFlame {
+  0%   { opacity: .9; transform: translateY(0) scale(1); }
+  100% { opacity: 0;  transform: translateY(-110px) translateX(var(--drift)) scale(.2); }
+}
+
+/* 마스코트 + 응원 말풍선: 탄성 팝업 */
+.ts-cheer {
+  position: absolute;
+  top: -4%;
+  left: 2%;
+  z-index: 3;
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translateY(40px) scale(.5) rotate(-10deg);
+  transition: opacity .3s ease, transform .5s cubic-bezier(.34, 1.56, .64, 1);
 }
 
-.ts-card::before {
-  filter: url(#flame-filter);
-  transform-origin: 50% 80%;
+.ts-mascot {
+  display: block;
+  width: clamp(70px, 12vh, 130px);
+  height: auto;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
 }
 
-.ts-card:hover::before,
-.ts-card:hover::after,
-.ts-card:focus-visible::before,
-.ts-card:focus-visible::after {
+.ts-bubble {
+  position: absolute;
+  top: -8px;
+  left: 78%;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: clamp(12px, 1.8vh, 16px);
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  transform: scale(0);
+  transform-origin: left bottom;
+  transition: transform .4s cubic-bezier(.34, 1.56, .64, 1) .15s;
+}
+
+.ts-left  .ts-bubble { background: #ff6600; }
+.ts-right .ts-bubble { background: #041e42; }
+
+.ts-card:hover .ts-cheer,
+.ts-card:focus-visible .ts-cheer {
   opacity: 1;
+  transform: translateY(0) scale(1) rotate(0deg);
 }
 
-.ts-card:hover::before,
-.ts-card:focus-visible::before {
-  animation: flameFlicker 1.1s ease-in-out infinite;
-}
+.ts-card:hover .ts-bubble,
+.ts-card:focus-visible .ts-bubble { transform: scale(1); }
 
-.ts-card:hover::after,
-.ts-card:focus-visible::after {
-  animation: sparkRise 1.6s linear infinite;
-}
-
-@keyframes flameFlicker {
-  0%, 100% { transform: scale(1, 1); }
-  35%      { transform: scale(1.03, 1.07); }
-  65%      { transform: scale(0.98, 1.03); }
-}
-
-@keyframes sparkRise {
-  0%   { transform: translateY(14px); opacity: 0; }
-  20%  { opacity: 1; }
-  100% { transform: translateY(-34px); opacity: 0; }
-}
-
-/* 한화 이글스: 주황 불꽃 */
-.ts-left::before {
-  background: radial-gradient(ellipse 52% 56% at 50% 60%,
-    rgba(255,226,120,0.98) 0%,
-    rgba(255,160,40,0.92) 32%,
-    rgba(255,96,10,0.7) 56%,
-    rgba(255,70,0,0) 76%);
-}
-.ts-left::after {
-  background:
-    radial-gradient(circle, #ffd54f 0 2px, transparent 3px) 12% 30% / 90px 90px,
-    radial-gradient(circle, #ff9800 0 2px, transparent 3px) 70% 55% / 70px 70px,
-    radial-gradient(circle, #ffe082 0 1.5px, transparent 2.5px) 40% 10% / 110px 110px;
-}
 .ts-left:hover .ts-select-btn,
 .ts-left:focus-visible .ts-select-btn {
   background: linear-gradient(135deg, #ff9a2e, #d9570a);
   box-shadow: 0 3px 14px rgba(230,110,20,0.45);
 }
-
-/* 롯데 자이언츠: 남색 불꽃 */
-.ts-right::before {
-  background: radial-gradient(ellipse 52% 56% at 50% 60%,
-    rgba(130,170,255,0.95) 0%,
-    rgba(40,86,235,0.9) 32%,
-    rgba(14,40,150,0.75) 56%,
-    rgba(8,22,100,0) 76%);
-}
-.ts-right::after {
-  background:
-    radial-gradient(circle, #9fc0ff 0 2px, transparent 3px) 12% 30% / 90px 90px,
-    radial-gradient(circle, #4f7dff 0 2px, transparent 3px) 70% 55% / 70px 70px,
-    radial-gradient(circle, #cfe0ff 0 1.5px, transparent 2.5px) 40% 10% / 110px 110px;
-}
 .ts-right:hover .ts-select-btn,
 .ts-right:focus-visible .ts-select-btn {
-  background: linear-gradient(135deg, #2a4fc4, #0b1f6b);
-  box-shadow: 0 3px 14px rgba(20,50,160,0.5);
+  background: linear-gradient(135deg, #1b4f9c, #041e42);
+  box-shadow: 0 3px 14px rgba(4,30,66,0.5);
 }
 
 /* 한쪽에 마우스를 올리면 다른 팀 카드는 살짝 흐리게 */
