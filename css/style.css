@@ -728,29 +728,71 @@ html, body {
   100% { filter: drop-shadow(0 0 16px rgba(4,30,66,1))    drop-shadow(0 0 46px rgba(16,78,139,.85)) drop-shadow(0 0 4px rgba(59,130,246,1)); }
 }
 
-/* 위로 올라가는 불꽃 파티클 (JS에서 생성) */
+/* 로고 주위에서 타오르는 불꽃 (JS에서 생성한 불꽃 혀 + SVG 필터로 일렁이는 가장자리) */
 .ts-fx {
   position: absolute;
-  left: -6%;
-  right: -6%;
+  left: -8%;
+  right: -8%;
   top: 0;
   bottom: 22%;
   z-index: 0;
   pointer-events: none;
   overflow: visible;
+  filter: url(#flame-filter);
+}
+
+/* 불꽃의 바닥 불길: 호버 중 계속 일렁임 */
+.ts-fx::before {
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+  height: 70%;
+  border-radius: 50%;
+  opacity: 0;
+  transform-origin: 50% 100%;
+  transition: opacity .3s ease;
+}
+.ts-card:hover .ts-fx::before,
+.ts-card:focus-visible .ts-fx::before {
+  opacity: 1;
+  animation: flameBase .9s ease-in-out infinite alternate;
+}
+@keyframes flameBase {
+  0%   { transform: scale(1, 1); }
+  100% { transform: scale(1.04, 1.12); }
 }
 
 .flame-particle {
   position: absolute;
-  bottom: 4%;
-  border-radius: 50%;
+  bottom: 0;
+  border-radius: 50% 50% 46% 46% / 78% 78% 22% 22%;
+  transform-origin: 50% 100%;
   pointer-events: none;
+  opacity: 0;
   animation: riseFlame var(--dur) ease-out forwards;
 }
 
 @keyframes riseFlame {
-  0%   { opacity: .9; transform: translateY(0) scale(1); }
-  100% { opacity: 0;  transform: translateY(-110px) translateX(var(--drift)) scale(.2); }
+  0%   { opacity: 0;  transform: translate(0, 0) scale(.6, .5); }
+  18%  { opacity: 1;  transform: translate(0, calc(var(--rise) * -.15)) scale(1, 1); }
+  60%  { opacity: .85; transform: translate(calc(var(--drift) * .5), calc(var(--rise) * -.6)) scale(.78, 1.2); }
+  100% { opacity: 0;  transform: translate(var(--drift), calc(var(--rise) * -1)) scale(.25, 1.5); }
+}
+
+/* 한화 이글스: 노랑 -> 주황 -> 빨강 불꽃 */
+.ts-left .flame-particle,
+.ts-left .ts-fx::before {
+  background: radial-gradient(ellipse at 50% 85%,
+    #fff1a8 0%, #ffc233 28%, #ff7a12 58%, rgba(255,70,0,.55) 82%, rgba(255,60,0,0) 100%);
+}
+
+/* 롯데 자이언츠: 하늘색 -> 파랑 -> 남색 불꽃 */
+.ts-right .flame-particle,
+.ts-right .ts-fx::before {
+  background: radial-gradient(ellipse at 50% 85%,
+    #a9c8ff 0%, #4b83f0 28%, #1b4fb8 58%, rgba(4,30,66,.65) 82%, rgba(4,30,66,0) 100%);
 }
 
 /* 마스코트 + 응원 말풍선: 탄성 팝업 */
