@@ -215,26 +215,20 @@
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
-  // 팀 카드 마우스오버: 위로 올라가는 불꽃 파티클
-  var FLAME_COLORS = {
-    'ts-hanwha': ['#FF6600', '#FF9900', '#FFCC00', '#FF4500'],
-    'ts-lotte':  ['#041E42', '#0A3670', '#1B5E9E', '#3B82F6']
-  };
+  // 팀 카드 마우스오버: 로고 주위에서 타오르는 불꽃 (색상은 CSS에서 팀별로 지정)
   var flameTimers = {};
 
   function spawnFlameParticle(layer, id) {
-    var colors = FLAME_COLORS[id];
     var p = document.createElement('div');
     p.className = 'flame-particle';
-    var size = Math.random() * 14 + 8;
-    var color = colors[Math.floor(Math.random() * colors.length)];
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
-    p.style.left = (Math.random() * 100) + '%';
-    p.style.background = color;
-    p.style.boxShadow = '0 0 10px ' + color;
-    p.style.setProperty('--drift', ((Math.random() - 0.5) * 40) + 'px');
-    p.style.setProperty('--dur', (Math.random() * 0.7 + 0.8) + 's');
+    var w = Math.random() * 34 + 26;            // 불꽃 폭
+    var h = w * (Math.random() * 0.9 + 1.6);    // 불꽃 높이 (세로로 길게)
+    p.style.width  = w + 'px';
+    p.style.height = h + 'px';
+    p.style.left   = 'calc(' + (Math.random() * 100) + '% - ' + (w / 2) + 'px)';
+    p.style.setProperty('--drift', ((Math.random() - 0.5) * 36) + 'px');
+    p.style.setProperty('--rise',  (Math.random() * 60 + 70) + 'px');
+    p.style.setProperty('--dur',   (Math.random() * 0.5 + 0.9) + 's');
     layer.appendChild(p);
     setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 1600);
   }
@@ -243,7 +237,7 @@
     var card = document.getElementById(id);
     var layer = card && card.querySelector('.ts-fx');
     if (!layer || flameTimers[id]) return;
-    flameTimers[id] = setInterval(function () { spawnFlameParticle(layer, id); }, 110);
+    flameTimers[id] = setInterval(function () { spawnFlameParticle(layer, id); }, 70);
   }
 
   function stopFlames(id) {
