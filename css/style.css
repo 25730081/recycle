@@ -46,7 +46,7 @@ html, body {
 .home-bg {
   position: absolute;
   inset: 0;
-  background-image: url('stadium_bg.png');
+  background-image: url('../images/stadium_bg.png');
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
@@ -1368,7 +1368,7 @@ html, body {
 .complete-bg {
   position: absolute;
   inset: 0;
-  background-image: url('stadium_bg.png');
+  background-image: url('../images/stadium_bg.png');
   background-size: cover;
   background-position: center;
   filter: blur(3px) brightness(0.7);
