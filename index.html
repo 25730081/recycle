@@ -10,6 +10,20 @@
 </head>
 <body>
 
+  <!-- 팀 선택 화면 불꽃 효과용 SVG 필터 (화면에 표시되지 않음) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="flame-filter" x="-20%" y="-30%" width="140%" height="160%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" seed="7" result="noise">
+          <animate attributeName="baseFrequency" dur="1.8s" repeatCount="indefinite"
+                   values="0.020 0.050;0.026 0.068;0.020 0.050" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="34" xChannelSelector="R" yChannelSelector="G" />
+        <feGaussianBlur stdDeviation="1.2" />
+      </filter>
+    </defs>
+  </svg>
+
   <!-- ===================== -->
   <!--  화면 1 : 홈          -->
   <!-- ===================== -->
