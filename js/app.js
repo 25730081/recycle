@@ -211,8 +211,8 @@
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'hanwha_eagles.png' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'lotte_giants.png'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
