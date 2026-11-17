@@ -185,7 +185,6 @@
       document.querySelector('.seat-info-badge'),
       document.querySelector('.team-sel-title'),
       document.querySelector('.ts-cards'),
-      document.querySelector('.ts-steps'),
     ];
 
     elements.forEach(function (el, index) {
