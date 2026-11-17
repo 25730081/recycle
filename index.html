@@ -1,1 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="그린 매치 - 분리배출로 만드는 더 깨끗한 야구장!" />
+  <title>그린 매치 | Green Match</title>
+  <link rel="stylesheet" href="index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
 
+  <!-- ===================== -->
+  <!--  화면 1 : 홈          -->
+  <!-- ===================== -->
+  <div id="screen-home" class="screen active">
+
+    <!-- 배경 -->
+    <div class="home-bg"></div>
+    <div class="home-overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div class="home-container">
+
+      <!-- 헤더 -->
+      <header class="home-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="header-slogan">
+          <div class="slogan-icon">⚾</div>
+          <div class="slogan-text">
+            <span>함께하는 분리배출,</span>
+            <span>더 좋은 내일!</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- 중앙 콘텐츠 -->
+      <main class="home-content">
+        <p class="catchphrase">분리배출로 만드는 더 깨끗한 야구장! 🌿</p>
+
+        <h1 class="main-title">
+          <span class="title-gray">그린</span>
+          <span class="title-green"> 매치</span>
+        </h1>
+        <p class="title-en">Green Match</p>
+
+        <p class="subtitle">지금, 당신의 선택이 팀의 승리를 만듭니다.</p>
+
+        <!-- 팀 대결 영역 -->
+        <section class="teams-section" aria-label="팀 대결">
+          <div class="team-card team-left" id="team-hanwha">
+            <img src="hanwha_eagles.png" alt="한화 이글스 로고" class="team-logo" />
+            <p class="team-name-ko">한화 이글스</p>
+            <p class="team-name-en">HANWHA EAGLES</p>
+          </div>
+
+          <div class="vs-section">
+            <span class="vs-text">VS</span>
+            <div class="vs-leaves">🌿</div>
+          </div>
+
+          <div class="team-card team-right" id="team-lotte">
+            <img src="lotte_giants.png" alt="롯데 자이언츠 로고" class="team-logo" />
+            <p class="team-name-ko">롯데 자이언츠</p>
+            <p class="team-name-en">LOTTE GIANTS</p>
+          </div>
+        </section>
+
+        <!-- 시작하기 버튼 -->
+        <div class="btn-wrapper">
+          <button class="btn-start" id="btn-start" type="button">
+            <span class="btn-icon">⚾</span>
+            <span class="btn-label">시작하기</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+
+        <p class="guide-text">좌석번호를 입력하고 팀을 선택해주세요.</p>
+      </main>
+    </div>
+  </div><!-- /#screen-home -->
+
+
+  <!-- ============================== -->
+  <!--  화면 2 : 좌석번호 입력        -->
+  <!-- ============================== -->
+  <div id="screen-seat" class="screen">
+
+    <!-- 배경 (홈과 동일 그라디언트) -->
+    <div class="seat-bg"></div>
+    <div class="deco-corner"></div>
+
+    <div class="seat-wrapper">
+
+      <!-- 헤더 -->
+      <header class="seat-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="step-badge">
+          <span class="step-num">1</span>
+          <span class="step-dot">·</span>
+          <span class="step-label">좌석 입력</span>
+        </div>
+      </header>
+
+      <!-- 본문 -->
+      <main class="seat-content">
+
+        <!-- 왼쪽: 제목 + 입력 필드 -->
+        <section class="left-panel" aria-label="좌석번호 입력">
+          <h1 class="seat-title">
+            <span class="seat-title-black">좌석번호를</span><br />
+            <span class="seat-title-green">입력해</span> 주세요
+          </h1>
+          <p class="seat-desc">입력한 좌석으로 팀에 등록되고,<br />경기 종료 후 좌석번호 추첨에 사용돼요.</p>
+
+          <div class="input-fields">
+            <div class="input-group">
+              <label class="input-label">구역</label>
+              <div class="input-box" id="field-zone" data-field="zone" tabindex="0">
+                <span class="input-value" id="val-zone"></span>
+                <span class="input-cursor" id="cursor-zone"></span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">열</label>
+              <div class="input-box" id="field-row" data-field="row" tabindex="0">
+                <span class="input-value" id="val-row"></span>
+                <span class="input-cursor" id="cursor-row"></span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">번</label>
+              <div class="input-box" id="field-num" data-field="num" tabindex="0">
+                <span class="input-value" id="val-num"></span>
+                <span class="input-cursor" id="cursor-num"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 오른쪽: 숫자 패드 -->
+        <section class="right-panel" aria-label="숫자 패드">
+          <div class="keypad">
+            <button class="key-btn" id="key-1"       data-key="1"       type="button">1</button>
+            <button class="key-btn" id="key-2"       data-key="2"       type="button">2</button>
+            <button class="key-btn" id="key-3"       data-key="3"       type="button">3</button>
+            <button class="key-btn" id="key-4"       data-key="4"       type="button">4</button>
+            <button class="key-btn" id="key-5"       data-key="5"       type="button">5</button>
+            <button class="key-btn" id="key-6"       data-key="6"       type="button">6</button>
+            <button class="key-btn" id="key-7"       data-key="7"       type="button">7</button>
+            <button class="key-btn" id="key-8"       data-key="8"       type="button">8</button>
+            <button class="key-btn" id="key-9"       data-key="9"       type="button">9</button>
+            <button class="key-btn key-del"     id="key-del"     data-key="del"     type="button">지움</button>
+            <button class="key-btn" id="key-0"       data-key="0"       type="button">0</button>
+            <button class="key-btn key-confirm" id="key-confirm" data-key="confirm" type="button">확인</button>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div><!-- /#screen-seat -->
+
+
+  <!-- ============================== -->
+  <!--  화면 3 : 팀 선택              -->
+  <!-- ============================== -->
+  <div id="screen-team" class="screen">
+
+    <div class="seat-bg"></div>
+    <div class="deco-corner"></div>
+
+    <div class="team-sel-wrapper">
+
+      <!-- 헤더 -->
+      <header class="seat-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="step-badge">
+          <span class="step-num">2</span>
+          <span class="step-dot">·</span>
+          <span class="step-label">팀 선택</span>
+        </div>
+      </header>
+
+      <!-- 본문 -->
+      <main class="team-sel-content">
+
+        <!-- 좌석 정보 배지 -->
+        <p class="seat-info-badge" id="seat-info-badge">— 구역 — 열 — 번</p>
+
+        <h1 class="team-sel-title">
+          응원할 <span class="title-green">팀</span>을<br />선택해 주세요
+        </h1>
+
+        <div class="ts-cards">
+
+          <!-- 한화 이글스 -->
+          <div class="ts-card ts-left" id="ts-hanwha" role="button" tabindex="0" aria-label="한화 이글스 선택">
+            <div class="ts-team-bg ts-bg-hanwha"></div>
+            <img src="hanwha_eagles.png" alt="한화 이글스" class="ts-logo" />
+            <p class="ts-name-ko">한화 이글스</p>
+            <p class="ts-name-en">HANWHA EAGLES</p>
+            <button class="ts-select-btn" type="button">선택하기</button>
+          </div>
+
+          <!-- VS -->
+          <div class="ts-vs">
+            <span class="ts-vs-text">VS</span>
+          </div>
+
+          <!-- 롯데 자이언츠 -->
+          <div class="ts-card ts-right" id="ts-lotte" role="button" tabindex="0" aria-label="롯데 자이언츠 선택">
+            <div class="ts-team-bg ts-bg-lotte"></div>
+            <img src="lotte_giants.png" alt="롯데 자이언츠" class="ts-logo" />
+            <p class="ts-name-ko">롯데 자이언츠</p>
+            <p class="ts-name-en">LOTTE GIANTS</p>
+            <button class="ts-select-btn" type="button">선택하기</button>
+          </div>
+
+        </div>
+
+        <!-- 단계 표시 -->
+        <div class="ts-steps">
+          <span class="ts-step done">✓ 좌석 입력</span>
+          <span class="ts-step-arrow">›</span>
+          <span class="ts-step active">⦿ 팀 선택</span>
+          <span class="ts-step-arrow">›</span>
+          <span class="ts-step pending">○ 촬영</span>
+        </div>
+
+      </main>
+    </div>
+  </div><!-- /#screen-team -->
+
+
+  <!-- ============================== -->
+  <!--  화면 4 : AI 쓰레기 인식(촬영) -->
+  <!-- ============================== -->
+  <div id="screen-camera" class="screen">
+
+    <!-- 배경 -->
+    <div class="seat-bg"></div>
+    <div class="deco-corner"></div>
+
+    <div class="cam-wrapper">
+
+      <!-- 헤더 -->
+      <header class="seat-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="step-badge">
+          <span class="step-num">3</span>
+          <span class="step-dot">·</span>
+          <span class="step-label">촬영</span>
+        </div>
+      </header>
+
+      <!-- 본문 -->
+      <main class="cam-content">
+
+        <!-- 왼쪽: 카메라 뷰파인더 -->
+        <div class="cam-viewfinder-wrap">
+          <!-- AI 인식 배지 -->
+          <div class="cam-ai-badge" id="cam-ai-badge">
+            <span class="cam-ai-dot"></span>
+            AI가 쓰레기를 인식하고 있어요…
+          </div>
+
+          <!-- 뷰파인더 -->
+          <div class="cam-viewfinder" id="cam-viewfinder">
+            <!-- 모서리 브라켓 -->
+            <span class="vf-corner vf-tl"></span>
+            <span class="vf-corner vf-tr"></span>
+            <span class="vf-corner vf-bl"></span>
+            <span class="vf-corner vf-br"></span>
+
+            <!-- 카메라 영상 or 안내 텍스트 -->
+            <video id="cam-video" autoplay playsinline muted></video>
+            <p class="cam-placeholder" id="cam-placeholder">카메라 실시간 화면</p>
+
+            <!-- 스캔 라인 애니메이션 -->
+            <div class="cam-scanline" id="cam-scanline"></div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 정보 패널 -->
+        <div class="cam-info-panel">
+
+          <h1 class="cam-title">
+            쓰레기를 <span class="title-green">촬영해</span> 주세요
+          </h1>
+
+          <!-- 인식 상태 카드 -->
+          <div class="cam-card" id="cam-status-card">
+            <h2 class="cam-card-title">인식 상태</h2>
+            <ul class="cam-status-list">
+              <li class="cam-status-item" id="cstatus-1">
+                <span class="cam-dot cam-dot-done" id="cdot-1"></span>
+                촬영 완료
+              </li>
+              <li class="cam-status-item" id="cstatus-2">
+                <span class="cam-dot cam-dot-active" id="cdot-2"></span>
+                재질 판별 중
+              </li>
+              <li class="cam-status-item cam-status-pending" id="cstatus-3">
+                <span class="cam-dot cam-dot-empty" id="cdot-3"></span>
+                안내 준비
+              </li>
+            </ul>
+          </div>
+
+          <!-- 촬영 안내 카드 -->
+          <div class="cam-card">
+            <h2 class="cam-card-title">촬영 안내</h2>
+            <ul class="cam-guide-list">
+              <li class="cam-guide-item">
+                <span class="cam-check">✓</span>
+                쓰레기를 네모 안에 하나만
+              </li>
+              <li class="cam-guide-item">
+                <span class="cam-check">✓</span>
+                내용물은 비운 상태로
+              </li>
+            </ul>
+          </div>
+
+          <!-- 촬영하기 버튼 -->
+          <button class="cam-btn-capture" id="cam-btn-capture" type="button">
+            촬영하기
+          </button>
+
+        </div>
+      </main>
+    </div>
+  </div><!-- /#screen-camera -->
+
+
+  <!-- ============================== -->
+  <!--  화면 5 : 분리배출 안내        -->
+  <!-- ============================== -->
+  <div id="screen-result" class="screen">
+
+    <div class="seat-bg"></div>
+    <div class="deco-corner"></div>
+
+    <div class="result-wrapper">
+
+      <!-- 헤더 -->
+      <header class="seat-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="step-badge">
+          <span class="step-num">4</span>
+          <span class="step-dot">·</span>
+          <span class="step-label">분리배출 안내</span>
+        </div>
+      </header>
+
+      <!-- 본문 -->
+      <main class="result-content">
+
+        <!-- 왼쪽: AI 인식 결과 카드 -->
+        <div class="result-left-card">
+          <!-- 병 아이콘 SVG -->
+          <div class="result-icon-wrap">
+            <svg class="result-bottle-svg" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- 병목 -->
+              <rect x="46" y="10" width="28" height="18" rx="6" stroke="#333" stroke-width="4" fill="none"/>
+              <!-- 어깨 -->
+              <path d="M46 28 C38 40 28 50 24 68" stroke="#333" stroke-width="4" stroke-linecap="round" fill="none"/>
+              <path d="M74 28 C82 40 92 50 96 68" stroke="#333" stroke-width="4" stroke-linecap="round" fill="none"/>
+              <!-- 몸통 -->
+              <rect x="24" y="68" width="72" height="112" rx="12" stroke="#333" stroke-width="4" fill="none"/>
+              <!-- 내용물 표시 (아랫부분) -->
+              <rect x="28" y="130" width="64" height="46" rx="8" fill="#e0f0e0" stroke="none"/>
+              <!-- 라벨 -->
+              <rect x="30" y="90" width="60" height="35" rx="6" stroke="#333" stroke-width="2.5" fill="none"/>
+            </svg>
+          </div>
+
+          <p class="result-label">AI 인식 결과</p>
+          <p class="result-material" id="result-material">플라스틱</p>
+          <p class="result-accuracy" id="result-accuracy">정확도 98%</p>
+          <div class="result-accuracy-bar"><span id="result-accuracy-fill" style="width:98%"></span></div>
+        </div>
+
+        <!-- 오른쪽: 안내 패널 -->
+        <div class="result-right-panel">
+
+          <h1 class="result-title">
+            이렇게 <span class="title-green">버려</span> 주세요
+          </h1>
+
+          <!-- 단계 리스트 -->
+          <ul class="result-steps" id="result-steps">
+            <li class="result-step-item">
+              <span class="result-step-num">1</span>
+              <span class="result-step-text">내용물 비우고 헹구기</span>
+            </li>
+            <li class="result-step-item">
+              <span class="result-step-num">2</span>
+              <span class="result-step-text">라벨 떼어 내기</span>
+            </li>
+            <li class="result-step-item">
+              <span class="result-step-num">3</span>
+              <span class="result-step-text">찌그러뜨려 플라스틱 칸에 넣기</span>
+            </li>
+          </ul>
+
+          <!-- 투입 안내 -->
+          <div class="result-disposal-guide">
+            <!-- 작은 병 아이콘 -->
+            <svg class="disposal-item-icon" viewBox="0 0 40 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="15" y="2" width="10" height="8" rx="2" stroke="#555" stroke-width="2" fill="none"/>
+              <path d="M15 10 C12 15 9 18 8 24" stroke="#555" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M25 10 C28 15 31 18 32 24" stroke="#555" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <rect x="8" y="24" width="24" height="42" rx="5" stroke="#555" stroke-width="2" fill="none"/>
+            </svg>
+
+            <span class="disposal-arrow">→</span>
+
+            <!-- 분리수거함 아이콘 -->
+            <div class="disposal-bin-icon" id="disposal-bin-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+                <path d="M8 16h32l-3 24H11L8 16z" fill="white" opacity="0.9"/>
+                <path d="M6 12h36v5H6z" fill="white" opacity="0.7" rx="2"/>
+                <path d="M18 8h12v4H18z" fill="white" opacity="0.6"/>
+                <path d="M24 20 L24 34 M18 20 L19 34 M30 20 L29 34" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <p class="disposal-text" id="disposal-text">플라스틱 투입구에 넣어 주세요</p>
+          </div>
+
+          <!-- 분리배출 했어요 버튼 -->
+          <button class="result-done-btn" id="result-done-btn" type="button">
+            분리배출 했어요
+          </button>
+
+        </div>
+      </main>
+    </div>
+  </div><!-- /#screen-result -->
+
+
+  <!-- ============================== -->
+  <!--  화면 6 : 완료                 -->
+  <!-- ============================== -->
+  <div id="screen-complete" class="screen">
+
+    <!-- 배경: 야구장 블러 -->
+    <div class="complete-bg"></div>
+    <div class="complete-overlay"></div>
+
+    <!-- 컨텐츠 래퍼 -->
+    <div class="complete-wrapper">
+
+      <!-- 헤더 -->
+      <header class="complete-header">
+        <div class="header-logo">
+          <img src="green_match_logo.png" alt="그린매치 로고" class="logo-icon" />
+          <div class="logo-text">
+            <span class="logo-title">GREEN MATCH</span>
+            <span class="logo-subtitle">야구장 팀 대항형 스마트 분리수거함</span>
+          </div>
+        </div>
+        <div class="complete-slogan">
+          <span class="complete-slogan-icon">⚾</span>
+          <div class="complete-slogan-text">
+            <span>함께하는 분리배출,</span>
+            <span>더 좋은 내일!</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- 본문 -->
+      <main class="complete-content">
+
+        <!-- 왼쪽: 완료 카드 (초록) -->
+        <div class="complete-left-card">
+
+          <!-- 콘페티 파티클들 -->
+          <div class="confetti-wrap" id="confetti-wrap">
+            <span class="confetti c1"></span>
+            <span class="confetti c2"></span>
+            <span class="confetti c3"></span>
+            <span class="confetti c4"></span>
+            <span class="confetti c5"></span>
+            <span class="confetti c6"></span>
+            <span class="confetti c7"></span>
+            <span class="confetti c8"></span>
+          </div>
+
+          <!-- 상단 완료 메시지 -->
+          <div class="complete-check-row">
+            <span class="complete-check-icon">✓</span>
+            <span class="complete-check-text">분리배출이 완료되었습니다!</span>
+          </div>
+
+          <!-- 팀 로고 + 월계수 -->
+          <div class="complete-logo-wrap">
+            <div class="laurel-left">🌿</div>
+            <img src="hanwha_eagles.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
+            <div class="laurel-right">🌿</div>
+          </div>
+
+          <!-- 점수 적립 텍스트 -->
+          <p class="complete-team-name" id="complete-team-name">한화 이글스에</p>
+          <p class="complete-score-text">1점이 적립됐어요!</p>
+          <p class="complete-sub-text">지구를 위한 작은 실천이<br />팀에 큰 힘이 됩니다!</p>
+        </div>
+
+        <!-- 오른쪽: 요약 카드 -->
+        <div class="complete-right-card">
+
+          <!-- 배출 쓰레기 섹션 -->
+          <div class="complete-trash-section">
+            <div class="complete-trash-header">
+              <div class="complete-trash-icon-wrap">
+                <!-- 쓰레기통 아이콘 -->
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="8" width="20" height="16" rx="3" fill="#2e7d32" opacity="0.15"/>
+                  <rect x="4" y="8" width="20" height="16" rx="3" stroke="#2e7d32" stroke-width="1.8"/>
+                  <path d="M2 8h24" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M10 4h8" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M10 12v8M14 12v8M18 12v8" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="complete-trash-info">
+                <p class="complete-trash-title">이번에 배출한 쓰레기</p>
+                <p class="complete-trash-sub">분리배출이 완료되었어요.</p>
+              </div>
+              <div class="complete-participate-badge">
+                <span>🌿</span> 1회 참여 완료
+              </div>
+            </div>
+
+            <!-- 인식된 쓰레기 아이콘 -->
+            <div class="complete-item-icon-wrap">
+              <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="complete-item-svg">
+                <rect x="46" y="10" width="28" height="18" rx="6" stroke="#aaa" stroke-width="3.5" fill="none"/>
+                <path d="M46 28 C38 40 28 50 24 68" stroke="#aaa" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                <path d="M74 28 C82 40 92 50 96 68" stroke="#aaa" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                <rect x="24" y="68" width="72" height="112" rx="12" stroke="#aaa" stroke-width="3.5" fill="none"/>
+                <rect x="28" y="130" width="64" height="46" rx="8" fill="#e8e8e8" stroke="none"/>
+                <rect x="30" y="90" width="60" height="35" rx="6" stroke="#bbb" stroke-width="2" fill="none"/>
+              </svg>
+              <p class="complete-item-label" id="complete-item-label">🌿 플라스틱</p>
+            </div>
+          </div>
+
+          <div class="complete-divider"></div>
+
+          <!-- 감사 메시지 -->
+          <div class="complete-thanks">
+            <p class="complete-thanks-title">🌿 함께 만드는 더 깨끗한 야구장!</p>
+            <p class="complete-thanks-sub">분리배출에 참여해 주셔서 감사합니다.</p>
+          </div>
+
+          <!-- 버튼들 -->
+          <div class="complete-btns">
+            <button class="complete-btn-home" id="complete-btn-home" type="button">
+              🏠 홈으로 가기 →
+            </button>
+            <button class="complete-btn-retry" id="complete-btn-retry" type="button">
+              ↺ 다시 참여하기
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div><!-- /#screen-complete -->
+
+  <script src="index.js"></script>
+</body>
+</html>
