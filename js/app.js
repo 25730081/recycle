@@ -215,44 +215,6 @@
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
-  // 팀 카드 마우스오버: 로고 주위에서 타오르는 불꽃 (색상은 CSS에서 팀별로 지정)
-  var flameTimers = {};
-
-  function spawnFlameParticle(layer, id) {
-    var p = document.createElement('div');
-    p.className = 'flame-particle';
-    var w = Math.random() * 34 + 26;            // 불꽃 폭
-    var h = w * (Math.random() * 0.9 + 1.6);    // 불꽃 높이 (세로로 길게)
-    p.style.width  = w + 'px';
-    p.style.height = h + 'px';
-    p.style.left   = 'calc(' + (Math.random() * 100) + '% - ' + (w / 2) + 'px)';
-    p.style.setProperty('--drift', ((Math.random() - 0.5) * 36) + 'px');
-    p.style.setProperty('--rise',  (Math.random() * 60 + 70) + 'px');
-    p.style.setProperty('--dur',   (Math.random() * 0.5 + 0.9) + 's');
-    layer.appendChild(p);
-    setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 1600);
-  }
-
-  function startFlames(id) {
-    var card = document.getElementById(id);
-    var layer = card && card.querySelector('.ts-fx');
-    if (!layer || flameTimers[id]) return;
-    flameTimers[id] = setInterval(function () { spawnFlameParticle(layer, id); }, 70);
-  }
-
-  function stopFlames(id) {
-    if (flameTimers[id]) { clearInterval(flameTimers[id]); flameTimers[id] = null; }
-  }
-
-  ['ts-hanwha', 'ts-lotte'].forEach(function (id) {
-    var card = document.getElementById(id);
-    if (!card) return;
-    card.addEventListener('mouseenter', function () { startFlames(id); });
-    card.addEventListener('mouseleave', function () { stopFlames(id); });
-    card.addEventListener('focus',      function () { startFlames(id); });
-    card.addEventListener('blur',       function () { stopFlames(id); });
-  });
-
   // 팀 카드 클릭 → 촬영 화면으로
   ['ts-hanwha', 'ts-lotte'].forEach(function (id) {
     var card = document.getElementById(id);
@@ -260,7 +222,6 @@
       card.addEventListener('click', function () {
         // 선택한 팀 저장
         selectedTeam = TEAMS[id];
-        stopFlames('ts-hanwha'); stopFlames('ts-lotte');
         // 클릭 효과
         card.style.transform = 'scale(0.97)';
         setTimeout(function () {
