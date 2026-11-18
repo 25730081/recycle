@@ -43,9 +43,6 @@
           <p class="catchphrase">분리배출로 만드는 더 깨끗한 야구장</p>
 
           <h1 class="main-title">
-            <!-- 제목 위 장식선 -->
-            <span class="title-line title-line-l" aria-hidden="true"></span>
-            <span class="title-line title-line-r" aria-hidden="true"></span>
             <span class="title-green">그린 매치</span>
           </h1>
 
@@ -385,9 +382,8 @@
   <!-- ============================== -->
   <div id="screen-complete" class="screen">
 
-    <!-- 배경: 야구장 블러 -->
+    <!-- 배경: 야구장 -->
     <div class="complete-bg"></div>
-    <div class="complete-overlay"></div>
 
     <!-- 컨텐츠 래퍼 -->
     <div class="complete-wrapper">
@@ -402,7 +398,7 @@
       <!-- 본문 -->
       <main class="complete-content">
 
-        <!-- 적립 완료 카드 -->
+        <!-- 적립 완료 (전체 화면 반투명 레이아웃) -->
         <div class="complete-left-card team-hanwha" id="complete-left-card">
 
           <!-- 팀 컬러 곡선 -->
@@ -424,36 +420,36 @@
             <span class="confetti c8"></span>
           </div>
 
-          <!-- 팀 로고 + 팀명 -->
-          <div class="complete-logo-wrap">
-            <img src="images/hanwha_eagles.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
-          </div>
-          <p class="complete-team-name" id="complete-team-name">한화 이글스</p>
-          <p class="complete-team-name-en" id="complete-team-name-en">HANWHA EAGLES</p>
+          <!-- 적립 정보 -->
+          <div class="complete-info">
+            <!-- 좌석 정보 배지 -->
+            <p class="seat-info-badge complete-seat-badge" id="complete-seat-badge">— 구역 — 열 — 번</p>
 
-          <!-- 점수 적립 텍스트 -->
-          <div class="complete-score-wrap">
-            <svg class="complete-sprout" viewBox="0 0 40 40" aria-hidden="true">
-              <path d="M4 26L12 17M13 12L17 3M24 9L24 0"/>
-            </svg>
-            <p class="complete-score-text"><span class="score-num">1점</span> 적립 완료</p>
-          </div>
-          <p class="complete-sub-line" id="complete-sub-line">한화 이글스와 함께하는 그린매치! 🌱</p>
+            <!-- 점수 적립 텍스트 -->
+            <div class="complete-score-wrap">
+              <p class="complete-score-text"><span class="score-num">1점</span> 적립 완료</p>
+              <svg class="complete-spark complete-spark-l" viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M4 26L12 17M13 12L17 3M24 9L24 0"/>
+              </svg>
+              <svg class="complete-spark complete-spark-r" viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M4 26L12 17M13 12L17 3M24 9L24 0"/>
+              </svg>
+            </div>
 
-          <!-- 버튼들 -->
-          <div class="complete-btns">
-            <button class="complete-btn-home" id="complete-btn-home" type="button">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
-                <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
-              </svg>
-              홈으로 가기
-            </button>
-            <button class="complete-btn-retry" id="complete-btn-retry" type="button" aria-label="다시 참여하기">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 3-6.7"/>
-                <path d="M3 4v5h5"/>
-              </svg>
-            </button>
+            <p class="complete-sub-line">경기가 끝나면 좌석번호 추첨을 통해 경품을 지급해 드려요!</p>
+
+            <!-- 버튼 -->
+            <div class="complete-btns">
+              <button class="complete-btn-home" id="complete-btn-home" type="button">
+                시작 화면으로
+              </button>
+            </div>
+          </div>
+
+          <!-- 마스코트 (선택한 팀) -->
+          <div class="complete-mascot-wrap">
+            <span class="complete-mascot-shadow" aria-hidden="true"></span>
+            <img class="complete-mascot" id="complete-mascot" src="images/hanwha_suri_trash.png" alt="한화 이글스 마스코트" />
           </div>
         </div>
 
