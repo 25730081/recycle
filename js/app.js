@@ -210,8 +210,8 @@
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles_square.png', cls: 'team-hanwha' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants_square.png',  cls: 'team-lotte'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', en: 'HANWHA EAGLES', cls: 'team-hanwha' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  en: 'LOTTE GIANTS',  cls: 'team-lotte'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
@@ -430,7 +430,13 @@
       teamLogo.src = selectedTeam.logo;
       teamLogo.alt = selectedTeam.name + ' 로고';
     }
-    if (teamName) teamName.textContent = selectedTeam.name + '에';
+    if (teamName) teamName.textContent = selectedTeam.name;
+
+    var teamNameEn = document.getElementById('complete-team-name-en');
+    if (teamNameEn) teamNameEn.textContent = selectedTeam.en;
+
+    var subLine = document.getElementById('complete-sub-line');
+    if (subLine) subLine.textContent = selectedTeam.name + '와 함께하는 그린매치! 🌱';
 
     // 선택한 팀 색상 글로우 적용
     var leftCard = document.getElementById('complete-left-card');
