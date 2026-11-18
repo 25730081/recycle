@@ -589,16 +589,16 @@ html, body {
 
 /* 왼쪽 패널 */
 .left-panel {
-  flex: 0 1 604px;
+  flex: 0 1 720px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 604px;
+  max-width: 720px;
 }
 
 .seat-title {
   white-space: nowrap;
-  font-size: clamp(34px, 3.6vw, 52px);
+  font-size: clamp(40px, 4.4vw, 66px);
   font-weight: 700;
   line-height: 1.2;
   color: #1f2d3a;
@@ -609,7 +609,7 @@ html, body {
 
 .seat-desc {
   white-space: nowrap;
-  font-size: clamp(13px, 1.1vw, 17px);
+  font-size: clamp(16px, 1.5vw, 23px);
   color: #555b63;
   font-weight: 400;
   line-height: 1.75;
@@ -682,25 +682,25 @@ html, body {
   flex-shrink: 0;
   background: #fff;
   border-radius: 32px;
-  padding: 28px;
+  padding: 24px;
   box-shadow: 0 16px 48px rgba(30,60,90,0.12);
 }
 
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 404px;
+  gap: 10px;
+  width: 350px;
 }
 
 .key-btn {
   background: #fff;
   border: none;
   border-radius: 18px;
-  height: 76px;
+  height: 66px;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 700;
   color: #111;
   cursor: pointer;
@@ -721,7 +721,7 @@ html, body {
 .key-del {
   background: #fff;
   color: #111;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -731,7 +731,7 @@ html, body {
 .key-confirm {
   background: #138a50;
   color: #fff;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   box-shadow: 0 6px 18px rgba(19,138,80,0.35);
 }
@@ -1185,7 +1185,7 @@ html, body {
 .cam-stage {
   flex: 1;
   min-height: 0;
-  width: min(940px, 72vw);
+  width: min(1080px, 80vw);
   display: flex;
   flex-direction: column;
 }
@@ -1533,13 +1533,14 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(320px, 32vw, 520px);
-  height: clamp(66px, 10.5vh, 104px);
-  padding: 0 32px;
+  /* 홈 화면 "시작하기" 버튼과 같은 크기 */
+  width: clamp(300px, 22vw, 420px);
+  padding: clamp(12px, 2vh, 22px) 36px;
   background: #2e9e48;
   color: #fff;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(22px, 3.8vh, 36px);
+  font-size: clamp(18px, 3.2vh, 30px);
+  line-height: normal;
   font-weight: 900;
   border: none;
   border-radius: 999px;
@@ -1866,7 +1867,10 @@ html, body {
 
 .result-retry-btn {
   flex: none;
-  padding: 22px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 36px;
   background: #fff;
   color: #2e7d32;
   font-family: 'Noto Sans KR', sans-serif;
@@ -2066,15 +2070,17 @@ html, body {
   position: relative;
 }
 
-/* "좌석번호를 입력해 주세요"(.seat-title)와 같은 폰트·굵기·색상, 크기만 크게 */
+/* 홈 화면 "그린 매치"와 같은 폰트·크기 */
 .complete-score-text {
   position: relative;
   z-index: 1;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(60px, 13.5vh, 130px);
-  font-weight: 700;
+  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-weight: 900;
+  font-synthesis: none;
+  font-size: clamp(70px, 15vh, 160px);
+  line-height: 1.1;
+  letter-spacing: 4px;
   color: #1f2d3a;
-  line-height: 1.2;
   white-space: nowrap;
 }
 
