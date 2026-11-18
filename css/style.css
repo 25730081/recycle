@@ -1185,7 +1185,7 @@ html, body {
 .cam-stage {
   flex: 1;
   min-height: 0;
-  width: min(1100px, 84vw);
+  width: min(940px, 72vw);
   display: flex;
   flex-direction: column;
 }
@@ -1194,25 +1194,10 @@ html, body {
 .cam-guide-row {
   position: relative;
   flex-shrink: 0;
-  height: clamp(110px, 18vh, 190px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: clamp(140px, 22vh, 240px);
-}
-
-/* 마스코트: 뷰파인더 왼쪽 위에 걸쳐 앉은 형태 */
-.cam-mascot {
-  position: absolute;
-  left: -3%;
-  bottom: -9vh;
-  height: 27vh;
-  width: auto;
-  z-index: 4;
-  pointer-events: none;
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,0.30));
-  transform-origin: center bottom;
-  animation: mascotBob 2.8s ease-in-out infinite;
+  padding-bottom: 2.4vh;
 }
 
 /* 말풍선 */
@@ -1222,8 +1207,9 @@ html, body {
   background: rgba(255,255,255,0.96);
   border-radius: 26px;
   box-shadow: 0 10px 28px rgba(10,30,60,0.22);
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: clamp(20px, 3.4vh, 34px);
-  font-weight: 900;
+  font-weight: 700;
   color: #1f2d3a;
   line-height: 1.35;
   text-align: center;
@@ -2080,26 +2066,19 @@ html, body {
   position: relative;
 }
 
+/* "좌석번호를 입력해 주세요"(.seat-title)와 같은 폰트·굵기·색상, 크기만 크게 */
 .complete-score-text {
   position: relative;
   z-index: 1;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: clamp(60px, 13.5vh, 130px);
-  font-weight: 900;
-  color: var(--navy);
-  letter-spacing: -4px;
-  line-height: 1.05;
+  font-weight: 700;
+  color: #1f2d3a;
+  line-height: 1.2;
   white-space: nowrap;
-  text-shadow: 0 4px 0 #fff, 0 10px 26px rgba(10,42,107,0.18);
 }
 
-.complete-score-text .score-num {
-  background: linear-gradient(180deg, #2bb15f, #13823f);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: none;
-  filter: drop-shadow(0 4px 0 #fff) drop-shadow(0 10px 18px rgba(19,130,63,0.25));
-}
+.complete-score-text .score-num { color: #16a05a; }
 
 /* 제목 양쪽 위 반짝임 장식 */
 .complete-spark {
