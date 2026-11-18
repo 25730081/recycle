@@ -210,8 +210,8 @@
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', cls: 'team-hanwha' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  cls: 'team-lotte'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
@@ -388,6 +388,13 @@
       teamLogo.alt = selectedTeam.name + ' 로고';
     }
     if (teamName) teamName.textContent = selectedTeam.name + '에';
+
+    // 선택한 팀 색상 글로우 적용
+    var leftCard = document.getElementById('complete-left-card');
+    if (leftCard) {
+      leftCard.classList.remove('team-hanwha', 'team-lotte');
+      leftCard.classList.add(selectedTeam.cls);
+    }
 
     // 엘리먼트 애니메이션
     var els = [
