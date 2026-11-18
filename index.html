@@ -422,10 +422,17 @@
       <!-- 본문 -->
       <main class="complete-content">
 
-        <!-- 왼쪽: 완료 카드 (초록) -->
+        <!-- 적립 완료 카드 -->
         <div class="complete-left-card team-hanwha" id="complete-left-card">
 
-          <!-- 콘페티 파티클들 -->
+          <!-- 팀 컬러 곡선 -->
+          <svg class="complete-swoosh" viewBox="0 0 1180 160" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sw-a" d="M0 70 C140 125 380 155 700 160 L0 160 Z"/>
+            <path class="sw-a" d="M1180 40 C1070 120 900 150 690 160 L1180 160 Z"/>
+            <path class="sw-b" d="M1180 105 C1090 140 960 156 820 160 L1180 160 Z"/>
+          </svg>
+
+          <!-- 콘페티 -->
           <div class="confetti-wrap" id="confetti-wrap">
             <span class="confetti c1"></span>
             <span class="confetti c2"></span>
@@ -437,75 +444,39 @@
             <span class="confetti c8"></span>
           </div>
 
-          <!-- 상단 완료 메시지 -->
-          <div class="complete-check-row">
-            <span class="complete-check-icon">✓</span>
-            <span class="complete-check-text">분리배출이 완료되었습니다!</span>
-          </div>
-
-          <!-- 팀 로고 + 월계수 -->
+          <!-- 팀 로고 + 팀명 -->
           <div class="complete-logo-wrap">
-            <div class="complete-logo-frame">
-              <img src="images/hanwha_eagles_square.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
-            </div>
+            <img src="images/hanwha_eagles.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
           </div>
+          <p class="complete-team-name" id="complete-team-name">한화 이글스</p>
+          <p class="complete-team-name-en" id="complete-team-name-en">HANWHA EAGLES</p>
 
           <!-- 점수 적립 텍스트 -->
-          <p class="complete-team-name" id="complete-team-name">한화 이글스에</p>
-          <p class="complete-score-text">1점 적립 완료</p>
-        </div>
-
-        <!-- 오른쪽: 요약 카드 -->
-        <div class="complete-right-card">
-
-          <!-- 배출 쓰레기 섹션 -->
-          <div class="complete-trash-section">
-            <div class="complete-trash-header">
-              <div class="complete-trash-info">
-                <p class="complete-trash-title">이번에 배출한 쓰레기</p>
-                <p class="complete-trash-sub">분리배출이 완료되었어요.</p>
-              </div>
-              <div class="complete-participate-badge">
-                1회 참여 완료
-              </div>
-            </div>
-
-            <!-- 인식된 쓰레기 아이콘 -->
-            <div class="complete-item-icon-wrap">
-              <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="complete-item-svg">
-                <rect x="46" y="10" width="28" height="18" rx="6" stroke="#aaa" stroke-width="3.5" fill="none"/>
-                <path d="M46 28 C38 40 28 50 24 68" stroke="#aaa" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                <path d="M74 28 C82 40 92 50 96 68" stroke="#aaa" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                <rect x="24" y="68" width="72" height="112" rx="12" stroke="#aaa" stroke-width="3.5" fill="none"/>
-                <rect x="28" y="130" width="64" height="46" rx="8" fill="#e8e8e8" stroke="none"/>
-                <rect x="30" y="90" width="60" height="35" rx="6" stroke="#bbb" stroke-width="2" fill="none"/>
-              </svg>
-              <p class="complete-item-label" id="complete-item-label">플라스틱</p>
-            </div>
+          <div class="complete-score-wrap">
+            <svg class="complete-sprout" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M4 26L12 17M13 12L17 3M24 9L24 0"/>
+            </svg>
+            <p class="complete-score-text"><span class="score-num">1점</span> 적립 완료</p>
           </div>
-
-          <div class="complete-divider"></div>
-
-          <!-- 감사 메시지 -->
-          <div class="complete-thanks">
-            <p class="complete-thanks-title">함께 만드는 더 깨끗한 야구장!</p>
-            <p class="complete-thanks-sub">분리배출에 참여해 주셔서 감사합니다.</p>
-          </div>
+          <p class="complete-sub-line" id="complete-sub-line">한화 이글스와 함께하는 그린매치! 🌱</p>
 
           <!-- 버튼들 -->
           <div class="complete-btns">
             <button class="complete-btn-home" id="complete-btn-home" type="button">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+                <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
+              </svg>
               홈으로 가기
             </button>
             <button class="complete-btn-retry" id="complete-btn-retry" type="button" aria-label="다시 참여하기">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3 12a9 9 0 1 0 3-6.7"/>
                 <path d="M3 4v5h5"/>
               </svg>
             </button>
           </div>
-
         </div>
+
       </main>
     </div>
   </div><!-- /#screen-complete -->
