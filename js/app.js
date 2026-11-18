@@ -80,6 +80,7 @@
      좌석번호 입력 화면
   ============================== */
   var seatData = { zone: '', row: '', num: '' };
+  var seatText = '— 구역 — 열 — 번';   // 완료 화면에 표시할 좌석번호
   var activeField = 'zone';
   var fieldOrder = ['zone', 'row', 'num'];
 
@@ -170,8 +171,9 @@
     }
 
     // 팀 선택 화면으로 이동
+    seatText = zone + '구역 ' + row + '열 ' + num + '번';
     var badge = document.getElementById('seat-info-badge');
-    if (badge) badge.textContent = zone + '구역 ' + row + '열 ' + num + '번';
+    if (badge) badge.textContent = seatText;
 
     showScreen('team');
     animateTeamEntrance();
@@ -202,16 +204,17 @@
 
   /** 좌석 확인 후 팀 선택 화면으로 이동 */
   function showSeatResult(zone, row, num) {
+    seatText = zone + '구역 ' + row + '열 ' + num + '번';
     var badge = document.getElementById('seat-info-badge');
-    if (badge) badge.textContent = zone + '구역 ' + row + '열 ' + num + '번';
+    if (badge) badge.textContent = seatText;
     showScreen('team');
     animateTeamEntrance();
   }
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', en: 'HANWHA EAGLES', cls: 'team-hanwha', mascot: 'images/hanwha_eagles_suri.png' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  en: 'LOTTE GIANTS',  cls: 'team-lotte',  mascot: 'images/lotte_giants_nuri.png'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', en: 'HANWHA EAGLES', cls: 'team-hanwha', mascot: 'images/hanwha_eagles_suri.png', trash: 'images/hanwha_suri_trash.png' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  en: 'LOTTE GIANTS',  cls: 'team-lotte',  mascot: 'images/lotte_giants_nuri.png',  trash: 'images/lotte_nuri_trash.png'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
@@ -427,22 +430,18 @@
      완료 화면 (screen-complete)
   ============================== */
   function initComplete() {
-    // 사용자가 선택한 팀의 로고/이름으로 표시
-    var teamLogo = document.getElementById('complete-team-logo');
-    var teamName = document.getElementById('complete-team-name');
-    if (teamLogo) {
-      teamLogo.src = selectedTeam.logo;
-      teamLogo.alt = selectedTeam.name + ' 로고';
+    // 입력한 좌석번호 표시
+    var seatBadge = document.getElementById('complete-seat-badge');
+    if (seatBadge) seatBadge.textContent = seatText;
+
+    // 선택한 팀의 마스코트 표시
+    var mascot = document.getElementById('complete-mascot');
+    if (mascot) {
+      mascot.src = selectedTeam.trash;
+      mascot.alt = selectedTeam.name + ' 마스코트';
     }
-    if (teamName) teamName.textContent = selectedTeam.name;
 
-    var teamNameEn = document.getElementById('complete-team-name-en');
-    if (teamNameEn) teamNameEn.textContent = selectedTeam.en;
-
-    var subLine = document.getElementById('complete-sub-line');
-    if (subLine) subLine.textContent = selectedTeam.name + '와 함께하는 그린매치! 🌱';
-
-    // 선택한 팀 색상 글로우 적용
+    // 선택한 팀 색상·배치 적용 (한화: 마스코트 왼쪽 / 롯데: 마스코트 오른쪽)
     var leftCard = document.getElementById('complete-left-card');
     if (leftCard) {
       leftCard.classList.remove('team-hanwha', 'team-lotte');
@@ -451,8 +450,8 @@
 
     // 엘리먼트 애니메이션
     var els = [
-      document.querySelector('.complete-left-card'),
-      document.querySelector('.complete-right-card'),
+      document.querySelector('.complete-info'),
+      document.querySelector('.complete-mascot-wrap'),
     ];
     els.forEach(function (el, i) {
       if (!el) return;
@@ -466,21 +465,11 @@
     });
   }
 
-  // 홈으로 가기 버튼
+  // 시작 화면으로 버튼
   var completeBtnHome = document.getElementById('complete-btn-home');
   if (completeBtnHome) {
     completeBtnHome.addEventListener('click', function () {
       showScreen('home');
-    });
-  }
-
-  // 다시 참여하기 버튼 → 홈스크맰으로
-  var completeBtnRetry = document.getElementById('complete-btn-retry');
-  if (completeBtnRetry) {
-    completeBtnRetry.addEventListener('click', function () {
-      showScreen('home');
-      // 쏼 초기화
-      setTimeout(function () { initHomeAnimation(); }, 50);
     });
   }
 
