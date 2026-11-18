@@ -334,29 +334,59 @@ html, body {
 .home-mascot {
   position: absolute;
   bottom: 3vh;
-  height: min(74vh, 38vw);
+  height: min(66vh, 34vw);
   width: auto;
   z-index: 2;
   pointer-events: none;
   filter: drop-shadow(0 14px 20px rgba(0,0,0,0.28));
 }
 
-.home-mascot-left  { left: 4vw; }
-.home-mascot-right { right: 4vw; }
+.home-mascot-left  { left: 7.5vw; }
+.home-mascot-right { right: 7.5vw; }
+
+/* 마스코트 발밑 그림자 (바닥과 자연스럽게 이어지도록) */
+.home-mascot-shadow {
+  --mw: calc(min(66vh, 34vw) * 0.707);
+  position: absolute;
+  bottom: 1.6vh;
+  height: 3.4vh;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(60,35,15,0.55) 0%, rgba(60,35,15,0.28) 45%, rgba(60,35,15,0) 72%);
+}
+
+/* 수리: 딛고 있는 오른발 아래 */
+.home-mascot-shadow-left {
+  left: calc(7.5vw + var(--mw) * 0.68);
+  width: calc(var(--mw) * 0.62);
+  transform: translateX(-50%);
+}
+
+/* 누리: 벌린 두 발 아래 */
+.home-mascot-shadow-right {
+  right: calc(7.5vw + var(--mw) * 0.47);
+  width: calc(var(--mw) * 1.05);
+  transform: translateX(50%);
+}
 
 /* 타이틀: 초록 그라데이션 + 잎사귀/장식선 */
 .home-content .main-title {
-  margin-top: 4vh;
+  margin-top: auto;
   margin-bottom: 3.2vh;
-  font-size: clamp(60px, 12.5vh, 136px);
-  letter-spacing: 2px;
+  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-weight: 900;
+  font-synthesis: none;
+  font-size: clamp(70px, 15vh, 160px);
+  line-height: 1.1;
+  letter-spacing: 4px;
   text-shadow: none;
 }
 
 .home-content .main-title::after { content: none; }
 
 .main-title .title-green {
-  background: linear-gradient(180deg, #2fa548 0%, #1b7f33 55%, #12632a 100%);
+  background: linear-gradient(135deg, #6fd36a 0%, #2fa548 35%, #1b7f33 70%, #0e5a24 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -381,7 +411,7 @@ html, body {
   font-weight: 900;
   color: #1b7f33;
   letter-spacing: 0;
-  margin-bottom: 6vh;
+  margin-bottom: 0;
   padding-bottom: 0.8vh;
 }
 
@@ -427,11 +457,18 @@ html, body {
   width: clamp(300px, 22vw, 420px);
   gap: 10px;
   background: #1e8a34;
-  border: 3px solid rgba(255,255,255,0.9);
-  box-shadow: 0 6px 22px rgba(30,138,52,0.40);
+  border: none;
+  box-shadow: 0 6px 18px rgba(30,138,52,0.30);
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
-.home-content .btn-start:hover { box-shadow: 0 10px 30px rgba(30,138,52,0.50); }
+/* 마우스 오버 시 글로우 */
+.home-content .btn-start:hover {
+  box-shadow:
+    0 0 18px rgba(67,190,90,0.85),
+    0 0 42px rgba(46,170,72,0.55),
+    0 8px 24px rgba(30,138,52,0.35);
+}
 
 .home-content .btn-arrow { font-size: clamp(26px, 4vh, 40px); line-height: 1; margin-top: -0.12em; }
 
