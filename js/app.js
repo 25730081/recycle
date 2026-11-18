@@ -329,18 +329,16 @@
           scanline.style.opacity = '0';
         }
 
-        // 버튼 텍스트 → 다음으로
-        camCaptureBtn.disabled = false;
+        // 버튼 텍스트 → 다음으로 (클릭 없이 자동으로 넘어가므로 중복 실행 방지용 비활성 유지)
         camCaptureBtn.textContent = '다음으로';
         camCaptureBtn.style.opacity = '1';
-        camCaptureBtn.style.background = 'linear-gradient(135deg, #43a047, #1b5e20)';
 
-        // 다음 클릭 시 결과 화면으로
-        camCaptureBtn.onclick = function () {
+        // 인식 완료 후 버튼 클릭 없이 자동으로 결과 화면으로 이동
+        camTimer = setTimeout(function () {
+          camTimer = null;
           showScreen('result');
           initResult();
-          camCaptureBtn.onclick = null;
-        };
+        }, 800);
 
       }, 1600);
     });
