@@ -186,6 +186,7 @@
     var elements = [
       document.querySelector('.seat-info-badge'),
       document.querySelector('.team-sel-title'),
+      document.querySelector('.team-sel-sub'),
       document.querySelector('.ts-cards'),
     ];
 
