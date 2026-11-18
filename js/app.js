@@ -210,8 +210,8 @@
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', en: 'HANWHA EAGLES', cls: 'team-hanwha' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  en: 'LOTTE GIANTS',  cls: 'team-lotte'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', en: 'HANWHA EAGLES', cls: 'team-hanwha', mascot: 'images/hanwha_eagles_suri.png' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  en: 'LOTTE GIANTS',  cls: 'team-lotte',  mascot: 'images/lotte_giants_nuri.png'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
@@ -222,6 +222,12 @@
       card.addEventListener('click', function () {
         // 선택한 팀 저장
         selectedTeam = TEAMS[id];
+        // 촬영 화면 마스코트를 선택한 팀으로 변경
+        var camMascot = document.getElementById('cam-mascot');
+        if (camMascot) {
+          camMascot.src = selectedTeam.mascot;
+          camMascot.alt = selectedTeam.name + ' 마스코트';
+        }
         // 클릭 효과
         card.style.transform = 'scale(0.97)';
         setTimeout(function () {
@@ -479,6 +485,16 @@
       setTimeout(function () { initHomeAnimation(); }, 50);
     });
   }
+
+  // 팀 선택 / 촬영 화면 상단 홈 버튼 → 홈 화면으로
+  var navHomeBtns = document.querySelectorAll('.nav-home-btn');
+  Array.prototype.forEach.call(navHomeBtns, function (btn) {
+    btn.addEventListener('click', function () {
+      resetCamera();
+      showScreen('home');
+      setTimeout(function () { initHomeAnimation(); }, 50);
+    });
+  });
 
   /* ==============================
      초기 실행
