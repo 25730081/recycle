@@ -210,8 +210,8 @@
 
   // 팀 정보 (선택한 팀에 점수를 적립하기 위해 사용)
   var TEAMS = {
-    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles.png', cls: 'team-hanwha' },
-    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants.png',  cls: 'team-lotte'  },
+    'ts-hanwha': { name: '한화 이글스',   logo: 'images/hanwha_eagles_square.png', cls: 'team-hanwha' },
+    'ts-lotte':  { name: '롯데 자이언츠', logo: 'images/lotte_giants_square.png',  cls: 'team-lotte'  },
   };
   var selectedTeam = TEAMS['ts-hanwha'];
 
@@ -237,6 +237,7 @@
      촬영(AI 인식) 화면
   ============================== */
   var camStream = null;
+  var camTimer = null;
 
   function initCamera() {
     // 카메라 접근 시도
@@ -300,7 +301,7 @@
       // 단계 1 → 재질 판별 중
       setCamStatus(2);
 
-      setTimeout(function () {
+      camTimer = setTimeout(function () {
         // 단계 2 → 안내 준비
         setCamStatus(3);
 
@@ -349,7 +350,7 @@
       document.querySelector('.result-title'),
       document.querySelector('.result-steps'),
       document.querySelector('.result-disposal-guide'),
-      document.querySelector('.result-done-btn'),
+      document.querySelector('.result-btn-row'),
     ];
     els.forEach(function (el, i) {
       if (!el) return;
@@ -373,6 +374,48 @@
         showScreen('complete');
         initComplete();
       }, 150);
+    });
+  }
+
+  /**
+   * 촬영 화면을 처음 상태로 되돌림 (다시 인식하기)
+   */
+  function resetCamera() {
+    if (camTimer) { clearTimeout(camTimer); camTimer = null; }
+    setCamStatus(1);
+
+    if (camCaptureBtn) {
+      camCaptureBtn.disabled = false;
+      camCaptureBtn.textContent = '촬영하기';
+      camCaptureBtn.style.opacity = '';
+      camCaptureBtn.style.background = '';
+      camCaptureBtn.onclick = null;
+    }
+
+    var badge = document.getElementById('cam-ai-badge');
+    if (badge) {
+      var dot = badge.querySelector('.cam-ai-dot');
+      var textNode = badge.lastChild;
+      if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+        textNode.textContent = ' AI가 쓰레기를 인식하고 있어요…';
+      }
+      if (dot) dot.style.background = '';
+    }
+
+    var scanline = document.getElementById('cam-scanline');
+    if (scanline) {
+      scanline.style.animationPlayState = '';
+      scanline.style.opacity = '';
+    }
+  }
+
+  // 다시 인식하기 버튼 → 촬영 화면으로
+  var resultRetryBtn = document.getElementById('result-retry-btn');
+  if (resultRetryBtn) {
+    resultRetryBtn.addEventListener('click', function () {
+      resetCamera();
+      showScreen('camera');
+      if (!camStream) initCamera();
     });
   }
 
