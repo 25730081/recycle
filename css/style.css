@@ -1177,15 +1177,15 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.4vh;
-  padding: 0 48px 3.6vh;
+  gap: 1.6vh;
+  padding: 0 48px 2.6vh;
   overflow: hidden;
 }
 
 .cam-stage {
   flex: 1;
   min-height: 0;
-  width: min(1080px, 80vw);
+  width: min(1240px, 86vw);
   display: flex;
   flex-direction: column;
 }
@@ -1197,7 +1197,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 2.4vh;
+  padding-bottom: 1.8vh;
 }
 
 /* 말풍선 */
@@ -2080,11 +2080,24 @@ html, body {
   font-size: clamp(70px, 15vh, 160px);
   line-height: 1.1;
   letter-spacing: 4px;
-  color: #1f2d3a;
   white-space: nowrap;
 }
 
-.complete-score-text .score-num { color: #16a05a; }
+/* "1점": 홈 "그린 매치"와 같은 녹색 그라데이션 */
+.complete-score-text .score-num {
+  background: linear-gradient(135deg, #6fd36a 0%, #2fa548 35%, #1b7f33 70%, #0e5a24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* "적립 완료": 진한 회색 그라데이션 */
+.complete-score-text .score-label {
+  background: linear-gradient(135deg, #4b5661 0%, #2f3a45 40%, #1f2d3a 70%, #141c24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* 제목 양쪽 위 반짝임 장식 */
 .complete-spark {
@@ -2108,34 +2121,20 @@ html, body {
   color: #24364f;
 }
 
-/* 버튼 */
-.complete-btns {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* 자동 복귀 안내 (기존 버튼 자리) */
+.complete-countdown {
   margin-top: 2vh;
+  font-size: clamp(18px, 2.8vh, 26px);
+  font-weight: 500;
+  color: #9aa3ab;
+  white-space: nowrap;
+  animation: countdownFloat 1.6s ease-in-out infinite;
 }
 
-.complete-btn-home {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: clamp(60px, 9vh, 86px);
-  padding: 0 clamp(56px, 5.5vw, 96px);
-  background: linear-gradient(180deg, #2bb15f, #13823f);
-  color: #fff;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(20px, 3vh, 28px);
-  font-weight: 700;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(19,130,63,0.35);
-  transition: filter 0.15s ease, transform 0.15s ease;
+@keyframes countdownFloat {
+  0%, 100% { transform: translateY(0);    opacity: 0.75; }
+  50%      { transform: translateY(-5px); opacity: 1; }
 }
-
-.complete-btn-home:hover   { filter: brightness(1.08); transform: translateY(-2px); }
-.complete-btn-home:active  { filter: brightness(0.95); transform: translateY(0); }
 
 /* ── 마스코트 섹션 ── */
 .complete-mascot-wrap {
