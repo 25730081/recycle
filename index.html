@@ -429,7 +429,7 @@
 
             <!-- 점수 적립 텍스트 -->
             <div class="complete-score-wrap">
-              <p class="complete-score-text"><span class="score-num">1점</span> 적립 완료</p>
+              <p class="complete-score-text"><span class="score-num">1점</span> <span class="score-label">적립 완료</span></p>
               <svg class="complete-spark complete-spark-l" viewBox="0 0 40 40" aria-hidden="true">
                 <path d="M4 26L12 17M13 12L17 3M24 9L24 0"/>
               </svg>
@@ -440,12 +440,8 @@
 
             <p class="complete-sub-line">경기가 끝나면 좌석번호 추첨을 통해 경품을 지급해 드려요</p>
 
-            <!-- 버튼 -->
-            <div class="complete-btns">
-              <button class="complete-btn-home" id="complete-btn-home" type="button">
-                시작 화면으로
-              </button>
-            </div>
+            <!-- 자동 복귀 안내 (5초 카운트다운) -->
+            <p class="complete-countdown" id="complete-countdown"><span id="complete-countdown-num">5</span>초 후 처음 화면으로 돌아갑니다</p>
           </div>
 
           <!-- 마스코트 (선택한 팀) -->
