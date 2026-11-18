@@ -229,6 +229,8 @@
         card.style.transform = 'scale(0.97)';
         setTimeout(function () {
           card.style.transform = '';
+          // 이전 참여에서 '다음으로'(비활성) 상태로 남은 촬영 화면을 초기화
+          resetCamera();
           showScreen('camera');
           initCamera();
         }, 150);
