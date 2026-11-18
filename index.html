@@ -360,7 +360,7 @@
         <div class="result-right-panel">
 
           <h1 class="result-title">
-            이렇게 <span class="title-green">버려</span> 주세요
+            분리배출 <span class="title-green">순서</span> 안내
           </h1>
 
           <!-- 단계 리스트 -->
@@ -385,9 +385,14 @@
           </div>
 
           <!-- 분리배출 했어요 버튼 -->
-          <button class="result-done-btn" id="result-done-btn" type="button">
-            분리배출 완료
-          </button>
+          <div class="result-btn-row">
+            <button class="result-retry-btn" id="result-retry-btn" type="button">
+              다시 인식하기
+            </button>
+            <button class="result-done-btn" id="result-done-btn" type="button">
+              분리배출 완료
+            </button>
+          </div>
 
         </div>
       </main>
@@ -440,7 +445,9 @@
 
           <!-- 팀 로고 + 월계수 -->
           <div class="complete-logo-wrap">
-            <img src="images/hanwha_eagles.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
+            <div class="complete-logo-frame">
+              <img src="images/hanwha_eagles_square.png" alt="팀 로고" class="complete-team-logo" id="complete-team-logo" />
+            </div>
           </div>
 
           <!-- 점수 적립 텍스트 -->
@@ -454,16 +461,6 @@
           <!-- 배출 쓰레기 섹션 -->
           <div class="complete-trash-section">
             <div class="complete-trash-header">
-              <div class="complete-trash-icon-wrap">
-                <!-- 쓰레기통 아이콘 -->
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="4" y="8" width="20" height="16" rx="3" fill="#2e7d32" opacity="0.15"/>
-                  <rect x="4" y="8" width="20" height="16" rx="3" stroke="#2e7d32" stroke-width="1.8"/>
-                  <path d="M2 8h24" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
-                  <path d="M10 4h8" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
-                  <path d="M10 12v8M14 12v8M18 12v8" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
               <div class="complete-trash-info">
                 <p class="complete-trash-title">이번에 배출한 쓰레기</p>
                 <p class="complete-trash-sub">분리배출이 완료되었어요.</p>
@@ -500,8 +497,11 @@
             <button class="complete-btn-home" id="complete-btn-home" type="button">
               홈으로 가기
             </button>
-            <button class="complete-btn-retry" id="complete-btn-retry" type="button">
-              다시 참여하기
+            <button class="complete-btn-retry" id="complete-btn-retry" type="button" aria-label="다시 참여하기">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7"/>
+                <path d="M3 4v5h5"/>
+              </svg>
             </button>
           </div>
 
