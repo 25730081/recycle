@@ -459,14 +459,30 @@
         el.style.transform = 'translateY(0)';
       }, 80 + i * 120);
     });
+
+    startCompleteCountdown();
   }
 
-  // 시작 화면으로 버튼
-  var completeBtnHome = document.getElementById('complete-btn-home');
-  if (completeBtnHome) {
-    completeBtnHome.addEventListener('click', function () {
-      showScreen('home');
-    });
+  /**
+   * 완료 화면 카운트다운: 5 → 4 → 3 → 2 → 1 후 처음 화면으로 (새로 고침)
+   */
+  var countdownTimer = null;
+  function startCompleteCountdown() {
+    var numEl = document.getElementById('complete-countdown-num');
+    var count = 5;
+    if (countdownTimer) clearInterval(countdownTimer);
+    if (numEl) numEl.textContent = count;
+
+    countdownTimer = setInterval(function () {
+      count -= 1;
+      if (count >= 1) {
+        if (numEl) numEl.textContent = count;
+      } else {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+        window.location.reload();
+      }
+    }, 1000);
   }
 
   // 팀 선택 / 촬영 화면 상단 홈 버튼 → 홈 화면으로
