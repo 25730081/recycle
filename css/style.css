@@ -399,16 +399,6 @@ html, body {
   color: transparent;
 }
 
-.title-line {
-  position: absolute;
-  top: -0.2em;
-  width: 33%;
-  height: 2px;
-  background: #2e8b3e;
-  border-radius: 2px;
-}
-.title-line-l { left: 0; }
-.title-line-r { right: 0; }
 
 /* 타이틀 + 문구 블록: 화면 정중앙 */
 .home-title-block {
@@ -469,7 +459,7 @@ html, body {
 /* 타이틀·문구·로고/VS는 위쪽으로, 시작하기 버튼은 기존 위치 유지 */
 .home-content {
   justify-content: flex-start;
-  padding-bottom: 14vh;
+  padding-bottom: 19vh;
 }
 
 .home-content .btn-wrapper { margin-top: auto; }
