@@ -330,6 +330,71 @@ html, body {
 
 /* ── 홈 화면 리디자인: 양쪽 마스코트 + 가운데 타이틀 ── */
 
+/* 그라운드: 잔디 + 흙 + 파울라인 + 홈플레이트 */
+.home-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26vh;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0 7vw, rgba(0,0,0,0) 7vw 14vw),
+    linear-gradient(180deg, #2f6e3c 0%, #2f6e3c 9%, #8cc95c 9.5%, #6db547 30%, #57a23b 100%);
+}
+
+/* 외야 펜스 위 하이라이트 */
+.home-ground::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9%;
+  height: 3px;
+  background: rgba(255,255,255,0.35);
+}
+
+/* 흙 (내야) */
+.ground-dirt {
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  top: 46%;
+  bottom: 12%;
+  border-radius: 50% 50% 50% 50% / 38% 38% 30% 30%;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(255,235,205,0.35) 0%, rgba(255,235,205,0) 60%),
+    linear-gradient(180deg, #d4a06a 0%, #c48c55 50%, #b07a46 100%);
+  box-shadow: inset 0 4px 10px rgba(90,50,20,0.25);
+}
+
+/* 파울라인 */
+.ground-line {
+  position: absolute;
+  top: 58%;
+  width: 70vw;
+  height: 4px;
+  background: rgba(255,255,255,0.88);
+  border-radius: 2px;
+}
+.ground-line-r { left: 50%;  transform-origin: left center;  transform: rotate(9deg); }
+.ground-line-l { right: 50%; transform-origin: right center; transform: rotate(-9deg); }
+
+/* 홈플레이트 */
+.ground-plate {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  width: 6vw;
+  height: 1.8vh;
+  transform: translateX(-50%);
+  background: #f7f4ee;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
+}
+
 /* 양쪽 마스코트 */
 .home-mascot {
   position: absolute;
@@ -374,38 +439,16 @@ html, body {
 .title-line-l { left: 0; }
 .title-line-r { right: 0; }
 
-.title-leaf {
-  position: absolute;
-  overflow: visible;
-}
-.title-leaf path       { fill: #34a853; }
-.title-leaf .leaf-vein { fill: none; stroke: rgba(255,255,255,0.65); stroke-width: 1.6; stroke-linecap: round; }
-
-.leaf-top   { top: -0.52em; left: 50%; width: 0.46em; height: 0.46em; transform: translateX(-30%) rotate(-8deg); }
-.leaf-small { top: -0.12em; right: 2%;  width: 0.2em;  height: 0.2em;  transform: rotate(-20deg); }
-.leaf-left  { top: 0.08em;  left: -0.42em; width: 0.24em; height: 0.24em; transform: rotate(-100deg); }
-.leaf-right { top: 0.55em;  right: -0.48em; width: 0.24em; height: 0.24em; transform: rotate(-10deg); }
-
-/* 초록 캐치프레이즈 + 밑줄 곡선 */
+/* 초록 캐치프레이즈 */
 .home-content .catchphrase {
   position: relative;
   font-size: clamp(20px, 4vh, 38px);
   font-weight: 900;
   color: #1b7f33;
   letter-spacing: 0;
-  margin-bottom: 2.4vh;
+  margin-bottom: 9vh;
   padding-bottom: 0.8vh;
 }
-
-.catchphrase-swoosh {
-  position: absolute;
-  left: 4%;
-  bottom: -0.6vh;
-  width: 92%;
-  height: 0.5em;
-  overflow: visible;
-}
-.catchphrase-swoosh path { fill: none; stroke: #6cc04a; stroke-width: 3; stroke-linecap: round; }
 
 .home-content .subtitle {
   font-size: clamp(14px, 2.6vh, 26px);
