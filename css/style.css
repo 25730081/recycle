@@ -1924,23 +1924,14 @@ html, body {
    [화면 6] 완료 화면
    ============================================================ */
 
-/* 배경: 야구장 이미지 + 블러 오버레이 */
+/* 배경: 야구장 이미지 */
 .complete-bg {
   position: absolute;
   inset: 0;
   background-image: url('../images/stadium_bg_home.png');
   background-size: cover;
   background-position: center;
-  filter: blur(3px) brightness(0.7);
-  transform: scale(1.05);
   z-index: 0;
-}
-
-.complete-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.25);
-  z-index: 1;
 }
 
 /* 래퍼 */
@@ -1949,100 +1940,54 @@ html, body {
   z-index: 2;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-/* 헤더 */
+/* 헤더 (왼쪽 위 로고) */
 .complete-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 22px 48px 0;
-  flex-shrink: 0;
 }
 
-.complete-slogan {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  padding: 9px 18px;
-  border: 1px solid rgba(255,255,255,0.35);
-}
+#screen-complete .logo-icon { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
 
-.complete-slogan-icon { font-size: 20px; }
-
-.complete-slogan-text {
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.5;
-  font-style: italic;
-}
-
-/* 헤더 로고 텍스트 색상 (어두운 배경 위) */
-#screen-complete .logo-icon { filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px rgba(255,255,255,0.9)); }
-#screen-complete .logo-title   { color: #fff; }
-#screen-complete .logo-subtitle { color: rgba(255,255,255,0.75); }
-
-/* 본문 레이아웃: 두 카드를 같은 높이로 꽉 채워 가운데 정렬 */
+/* 본문: 전체 화면 */
 .complete-content {
-  flex: 1;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 0;
-  padding: 16px 48px 36px;
-  min-height: 0;
-  overflow: hidden;
 }
 
-/* ── 적립 완료 카드 (단일 카드) ── */
+/* ── 적립 완료 레이아웃: 화면 전체를 덮는 반투명 흰색 ── */
 .complete-left-card {
-  --accent: #ff6600;
   --navy: #0b2447;
   --sw-a: #ff7a00;
-  --sw-b: #0b2447;
+  --sw-b: #c94f00;
   --cf-1: #ff7a00;
-  --cf-2: #0b2447;
+  --cf-2: #1a1a1a;
   --cf-3: #ffffff;
+  --text-gap: 13vw;     /* 텍스트 섹션과 화면 가장자리 사이 간격 */
   position: relative;
-  flex: 0 1 1180px;
-  max-width: 1180px;
-  min-height: 0;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
-  border-radius: 40px;
-  border: 3px solid rgba(255,255,255,0.9);
-  background:
-    linear-gradient(180deg, rgba(238,247,255,0.88) 0%, rgba(255,255,255,0.82) 100%),
-    url('../images/stadium_bg_home.png') center / cover no-repeat,
-    #eef6fc;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: clamp(4px, 1vh, 10px);
-  padding: 24px 40px 56px;
-  box-shadow: 0 16px 56px rgba(0,0,0,0.38);
+  flex-direction: row-reverse;   /* 한화: 마스코트 왼쪽 / 텍스트 오른쪽 */
+  align-items: stretch;
+  background: linear-gradient(180deg, rgba(238,247,255,0.80) 0%, rgba(255,255,255,0.72) 100%);
 }
 
+/* 롯데: 텍스트 왼쪽 / 마스코트 오른쪽 */
 .complete-left-card.team-lotte {
-  --accent: #e60026;
   --sw-a: #0a2a6b;
   --sw-b: #e60026;
   --cf-1: #0a2a6b;
   --cf-2: #e60026;
-}
-
-.complete-left-card > :not(.confetti-wrap):not(.complete-swoosh) {
-  position: relative;
-  z-index: 1;
+  flex-direction: row;
 }
 
 /* 하단 팀 컬러 곡선 */
@@ -2051,10 +1996,12 @@ html, body {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 17%;
+  height: 15%;
   z-index: 0;
   pointer-events: none;
+  transform: scaleX(-1);   /* 한화: 마스코트 쪽(왼쪽)에서 시작 */
 }
+.complete-left-card.team-lotte .complete-swoosh { transform: none; }
 .complete-swoosh .sw-a { fill: var(--sw-a); }
 .complete-swoosh .sw-b { fill: var(--sw-b); }
 
@@ -2076,14 +2023,25 @@ html, body {
   animation: confettiFall 3s ease-in-out infinite;
 }
 
-.c1 { top: 24%; left: 17%; background: var(--cf-3); transform: rotate(-20deg); animation-delay: 0s; }
-.c2 { top: 20%; left: 27%; background: var(--cf-2); transform: rotate(35deg);  animation-delay: 0.4s; }
-.c3 { top: 17%; left: 68%; background: var(--cf-2); transform: rotate(-30deg); animation-delay: 0.8s; }
-.c4 { top: 33%; left: 74%; background: var(--cf-1); transform: rotate(50deg);  animation-delay: 1.2s; }
-.c5 { top: 53%; left: 83%; background: var(--cf-3); transform: rotate(-10deg); animation-delay: 0.6s; }
-.c6 { top: 62%; left: 12%; background: var(--cf-1); transform: rotate(25deg);  animation-delay: 1.0s; }
-.c7 { top: 42%; left: 88%; background: var(--cf-2); transform: rotate(-40deg); animation-delay: 0.2s; }
-.c8 { top: 50%; left: 6%;  background: var(--cf-3); transform: rotate(15deg);  animation-delay: 1.4s; }
+/* 한화 위치 (텍스트·마스코트를 피해서) */
+.c1 { top: 12%; left: 8%;  background: var(--cf-3); transform: rotate(-20deg); animation-delay: 0s; }
+.c2 { top: 30%; left: 5%;  background: var(--cf-2); transform: rotate(35deg);  animation-delay: 0.4s; }
+.c3 { top: 14%; left: 94%; background: var(--cf-2); transform: rotate(-30deg); animation-delay: 0.8s; }
+.c4 { top: 36%; left: 96%; background: var(--cf-1); transform: rotate(50deg);  animation-delay: 1.2s; }
+.c5 { top: 62%; left: 94%; background: var(--cf-3); transform: rotate(-10deg); animation-delay: 0.6s; }
+.c6 { top: 70%; left: 44%; background: var(--cf-1); transform: rotate(25deg);  animation-delay: 1.0s; }
+.c7 { top: 14%; left: 48%; background: var(--cf-2); transform: rotate(-40deg); animation-delay: 0.2s; }
+.c8 { top: 46%; left: 38%; background: var(--cf-3); transform: rotate(15deg);  animation-delay: 1.4s; }
+
+/* 롯데 위치 (좌우 반전) */
+.team-lotte .c1 { left: 92%; }
+.team-lotte .c2 { left: 95%; }
+.team-lotte .c3 { left: 6%; }
+.team-lotte .c4 { left: 4%; }
+.team-lotte .c5 { left: 6%; }
+.team-lotte .c6 { left: 56%; }
+.team-lotte .c7 { left: 52%; }
+.team-lotte .c8 { left: 62%; }
 
 @keyframes confettiFall {
   0%   { transform: translateY(-12px) rotate(0deg);   opacity: 1; }
@@ -2091,90 +2049,98 @@ html, body {
   100% { transform: translateY(-12px) rotate(320deg); opacity: 1; }
 }
 
-/* 팀 로고 + 팀명 */
-.complete-logo-wrap {
+/* ── 적립 정보 섹션 ── */
+.complete-info {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4.7vh;
+  padding: 7vh var(--text-gap) 8vh 0;       /* 한화: 오른쪽 여백 */
+  text-align: center;
 }
 
-.complete-team-logo {
-  height: clamp(150px, 28vh, 270px);
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 14px rgba(10,30,70,0.25));
+.team-lotte .complete-info {
+  padding: 7vh 0 8vh var(--text-gap);       /* 롯데: 왼쪽 여백 */
 }
 
-.complete-team-name {
-  font-size: clamp(24px, 4.2vh, 40px);
-  font-weight: 900;
-  color: var(--navy);
-  line-height: 1.15;
-}
-
-.complete-team-name-en {
-  font-size: clamp(13px, 2vh, 20px);
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--navy);
+/* 좌석 정보 배지 */
+.complete-seat-badge {
+  font-size: clamp(15px, 2.3vh, 22px);
+  padding: 8px 26px;
+  margin-bottom: -0.5vh;
 }
 
 /* 점수 텍스트 */
 .complete-score-wrap {
   position: relative;
-  margin-top: clamp(4px, 1.2vh, 12px);
 }
 
 .complete-score-text {
-  font-size: clamp(54px, 10vh, 100px);
+  position: relative;
+  z-index: 1;
+  font-size: clamp(60px, 13.5vh, 130px);
   font-weight: 900;
   color: var(--navy);
-  letter-spacing: -2px;
-  line-height: 1.1;
+  letter-spacing: -4px;
+  line-height: 1.05;
+  white-space: nowrap;
+  text-shadow: 0 4px 0 #fff, 0 10px 26px rgba(10,42,107,0.18);
 }
 
-.complete-score-text .score-num { color: #16a05a; }
+.complete-score-text .score-num {
+  background: linear-gradient(180deg, #2bb15f, #13823f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 0 #fff) drop-shadow(0 10px 18px rgba(19,130,63,0.25));
+}
 
-.complete-sprout {
+/* 제목 양쪽 위 반짝임 장식 */
+.complete-spark {
   position: absolute;
-  left: -56px;
-  top: -4px;
-  width: 44px;
-  height: 44px;
+  top: -22px;
+  width: 46px;
+  height: 46px;
   overflow: visible;
   fill: none;
   stroke: #16a05a;
-  stroke-width: 3.4;
+  stroke-width: 3.6;
   stroke-linecap: round;
 }
+.complete-spark-l { left: -40px; }
+.complete-spark-r { right: -44px; transform: scaleX(-1); }
 
+/* 안내 문구 */
 .complete-sub-line {
-  font-size: clamp(16px, 2.6vh, 24px);
+  font-size: clamp(18px, 3vh, 28px);
   font-weight: 500;
   color: #24364f;
 }
 
-/* 버튼들 */
+/* 버튼 */
 .complete-btns {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-top: clamp(10px, 2.4vh, 24px);
+  margin-top: 2vh;
 }
 
 .complete-btn-home {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  height: clamp(56px, 8vh, 76px);
-  padding: 0 clamp(40px, 5vw, 72px);
+  height: clamp(60px, 9vh, 86px);
+  padding: 0 clamp(56px, 5.5vw, 96px);
   background: linear-gradient(180deg, #2bb15f, #13823f);
   color: #fff;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(18px, 2.6vh, 24px);
+  font-size: clamp(20px, 3vh, 28px);
   font-weight: 700;
   border: none;
   border-radius: 50px;
@@ -2186,20 +2152,35 @@ html, body {
 .complete-btn-home:hover   { filter: brightness(1.08); transform: translateY(-2px); }
 .complete-btn-home:active  { filter: brightness(0.95); transform: translateY(0); }
 
-.complete-btn-retry {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: clamp(56px, 8vh, 76px);
-  aspect-ratio: 1 / 1;
-  padding: 0;
-  background: #fff;
-  color: #1f9d55;
-  border: 2px solid #1f9d55;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.15s ease;
+/* ── 마스코트 섹션 ── */
+.complete-mascot-wrap {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 44%;
 }
 
-.complete-btn-retry:hover  { background: #e8f5e9; }
-.complete-btn-retry:active { background: #c8e6c9; }
+.complete-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: 11%;
+  height: 70%;
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 12px 18px rgba(10,30,70,0.25));
+  z-index: 2;
+}
+
+.complete-mascot-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: calc(11% - 6px);
+  width: min(300px, 60%);
+  height: 34px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(10,42,107,0.35) 0%, rgba(10,42,107,0) 70%);
+  z-index: 1;
+}
