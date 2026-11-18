@@ -878,34 +878,37 @@ html, body {
   box-shadow: 0 4px 14px rgba(30,60,90,0.15);
 }
 
-/* 헤더 가운데 좌석 정보 (위치 아이콘 + 좌석번호, 바탕 없음) */
+/* 헤더 가운데 좌석 정보 — 적립 완료 화면 좌석 배지와 동일 (흰 알약 + 녹색 글자), 핀 아이콘 포함 */
 .ts-seat {
   position: absolute;
   left: 50%;
-  top: 22px;
-  height: clamp(56px, 8vh, 72px);
-  transform: translateX(-50%);
+  top: calc(22px + clamp(56px, 8vh, 72px) / 2);   /* 헤더 홈 버튼과 같은 높이 중앙 */
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 8px 26px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(30,60,90,0.15);
+  font-size: clamp(15px, 2.3vh, 22px);
 }
 
 .ts-seat-pin {
-  width: clamp(22px, 3.2vh, 32px);
-  height: clamp(22px, 3.2vh, 32px);
-  fill: #16a05a;
-  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.9));
+  width: 1.1em;
+  height: 1.1em;
+  fill: #138a50;
+  flex-shrink: 0;
 }
 
 #screen-team .seat-info-badge {
   background: none;
   box-shadow: none;
   padding: 0;
-  font-size: clamp(18px, 2.8vh, 28px);
-  font-weight: 900;
+  font-size: inherit;
+  font-weight: 700;
   color: #138a50;
   white-space: nowrap;
-  text-shadow: 0 0 6px rgba(255,255,255,0.9), 0 0 2px #fff;
 }
 
 /* 헤더 오른쪽 홈 버튼 (흰색 원) */
@@ -932,21 +935,10 @@ html, body {
   white-space: nowrap;
   font-size: clamp(36px, 7.4vh, 76px);
   font-weight: 900;
-  color: #138a50;
+  color: #ffffff;
   text-align: center;
   line-height: 1.15;
   letter-spacing: -1px;
-  text-shadow: 0 0 2px #fff, 0 0 10px rgba(255,255,255,0.95), 0 4px 14px rgba(255,255,255,0.8);
-}
-
-.team-sel-sub {
-  flex-shrink: 0;
-  margin-top: 1.4vh;
-  white-space: nowrap;
-  font-size: clamp(16px, 2.9vh, 28px);
-  font-weight: 700;
-  color: #1f2d3a;
-  text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 0 2px #fff;
 }
 
 /* 팀 카드 컨테이너 (좌우 반반) */
@@ -982,21 +974,7 @@ html, body {
   width: 100%;
 }
 
-/* 팀 컬러 브러시 */
-.ts-brush {
-  position: absolute;
-  left: 50%;
-  bottom: 5%;
-  width: min(90%, 80vh);
-  height: 72%;
-  transform: translateX(-50%);
-  overflow: visible;
-  z-index: 0;
-}
-.ts-left  .ts-brush { fill: #f58b22; }
-.ts-right .ts-brush { fill: #3b8bf0; transform: translateX(-50%) scaleX(-1); }
-
-/* 팀 이니셜 (브러시 위, 마스코트 왼쪽) */
+/* 팀 이니셜 (마스코트 왼쪽) */
 .ts-letter {
   position: absolute;
   left: calc(50% - 30vh);   /* 마스코트 크기(vh) 기준으로 왼쪽 배치 */
@@ -1043,6 +1021,22 @@ html, body {
   transition: filter 0.25s ease;
 }
 
+/* 마스코트 테두리 모양대로 퍼지는 팀 컬러 글로우 (약 3cm) */
+.ts-left .ts-mascot {
+  filter:
+    drop-shadow(0 0 4px rgba(255,140,30,1))
+    drop-shadow(0 0 18px rgba(255,122,0,0.9))
+    drop-shadow(0 0 45px rgba(255,122,0,0.8))
+    drop-shadow(0 0 90px rgba(255,140,30,0.6));
+}
+.ts-right .ts-mascot {
+  filter:
+    drop-shadow(0 0 4px rgba(70,135,240,1))
+    drop-shadow(0 0 18px rgba(40,100,220,0.9))
+    drop-shadow(0 0 45px rgba(40,100,220,0.8))
+    drop-shadow(0 0 90px rgba(70,135,240,0.6));
+}
+
 .ts-right .ts-mascot { animation-delay: 1.4s; }
 
 @keyframes mascotBob {
@@ -1064,16 +1058,18 @@ html, body {
 .ts-left:hover .ts-mascot,
 .ts-left:focus-visible .ts-mascot {
   filter:
-    drop-shadow(0 0 14px rgba(255,122,0,1))
-    drop-shadow(0 0 40px rgba(255,150,40,0.75))
-    drop-shadow(0 12px 16px rgba(0,0,0,0.25));
+    drop-shadow(0 0 6px rgba(255,140,30,1))
+    drop-shadow(0 0 24px rgba(255,122,0,1))
+    drop-shadow(0 0 55px rgba(255,122,0,0.9))
+    drop-shadow(0 0 100px rgba(255,140,30,0.7));
 }
 .ts-right:hover .ts-mascot,
 .ts-right:focus-visible .ts-mascot {
   filter:
-    drop-shadow(0 0 14px rgba(50,115,235,1))
-    drop-shadow(0 0 40px rgba(40,95,200,0.75))
-    drop-shadow(0 12px 16px rgba(0,0,0,0.25));
+    drop-shadow(0 0 6px rgba(70,135,240,1))
+    drop-shadow(0 0 24px rgba(40,100,220,1))
+    drop-shadow(0 0 55px rgba(40,100,220,0.9))
+    drop-shadow(0 0 100px rgba(70,135,240,0.7));
 }
 
 /* ── 축하 팡파레: 마우스 오버 시 마스코트 머리 위에서 터짐 ── */
@@ -1139,72 +1135,27 @@ html, body {
 /* 한쪽에 마우스를 올리면 다른 팀은 살짝 흐리게 */
 .ts-cards:has(.ts-card:hover) .ts-card:not(:hover) { opacity: 0.6; }
 
-/* 팀 이름 버튼 (양 끝 사선 스트라이프) */
+/* 팀 이름 (바탕·모양 없이 팀 컬러 글자) */
 .ts-select-btn {
-  position: relative;
-  overflow: hidden;
   flex-shrink: 0;
-  width: clamp(260px, 26vw, 420px);
-  height: clamp(58px, 9.4vh, 90px);
-  padding: 0 20px;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(22px, 4.2vh, 40px);
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 1px;
+  padding: 0.4vh 20px;
+  background: none;
   border: none;
-  border-radius: 999px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: clamp(20px, 3.6vh, 34px);
+  font-weight: 900;
+  letter-spacing: 1px;
   cursor: pointer;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, filter 0.15s ease;
 }
 
-/* 양 끝 사선 스트라이프 */
-.ts-select-btn::before,
-.ts-select-btn::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 26%;
-  pointer-events: none;
-}
-.ts-select-btn::before { left: 0; }
-.ts-select-btn::after  { right: 0; }
-
-.ts-left .ts-select-btn {
-  background: linear-gradient(180deg, #ff9b3d 0%, #f47a12 100%);
-  box-shadow: 0 8px 20px rgba(200,90,0,0.35), inset 0 -4px 0 rgba(0,0,0,0.08);
-}
-.ts-left .ts-select-btn::before,
-.ts-left .ts-select-btn::after {
-  background: repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,0.28) 22px 34px);
-}
-
-.ts-right .ts-select-btn {
-  background: linear-gradient(180deg, #24336f 0%, #18245a 100%);
-  box-shadow: 0 8px 20px rgba(10,30,90,0.35), inset 0 -4px 0 rgba(0,0,0,0.12);
-}
-.ts-right .ts-select-btn::before,
-.ts-right .ts-select-btn::after {
-  background: repeating-linear-gradient(115deg, transparent 0 18px, #e60026 18px 26px);
-}
-.ts-right .ts-select-btn::before { width: 16%; }
-.ts-right .ts-select-btn::after  { width: 16%; }
+.ts-left  .ts-select-btn { color: #f47a12; }
+.ts-right .ts-select-btn { color: #0a2a6b; }
 
 .ts-card:hover .ts-select-btn,
 .ts-card:focus-visible .ts-select-btn {
   transform: translateY(-3px);
   filter: brightness(1.08);
-}
-
-.ts-left:hover .ts-select-btn,
-.ts-left:focus-visible .ts-select-btn {
-  box-shadow: 0 0 24px rgba(255,122,0,0.95), 0 0 56px rgba(255,140,30,0.6);
-}
-.ts-right:hover .ts-select-btn,
-.ts-right:focus-visible .ts-select-btn {
-  box-shadow: 0 0 24px rgba(50,115,235,0.95), 0 0 56px rgba(40,95,200,0.6);
 }
 
 .ts-select-btn:active { transform: scale(0.95); }
