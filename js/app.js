@@ -225,12 +225,6 @@
       card.addEventListener('click', function () {
         // 선택한 팀 저장
         selectedTeam = TEAMS[id];
-        // 촬영 화면 마스코트를 선택한 팀으로 변경
-        var camMascot = document.getElementById('cam-mascot');
-        if (camMascot) {
-          camMascot.src = selectedTeam.mascot;
-          camMascot.alt = selectedTeam.name + ' 마스코트';
-        }
         // 클릭 효과
         card.style.transform = 'scale(0.97)';
         setTimeout(function () {
