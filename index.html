@@ -158,6 +158,17 @@
     <div class="seat-bg"></div>
     <div class="deco-corner"></div>
 
+    <!-- 팀 컬러 좌우 분할 배경 + 가운데 구분선 -->
+    <div class="ts-tint ts-tint-left"></div>
+    <div class="ts-tint ts-tint-right"></div>
+    <div class="ts-divider"></div>
+
+    <!-- 콘페티 장식 -->
+    <div class="stadium-confetti" aria-hidden="true">
+      <span class="sc sc1"></span><span class="sc sc2"></span><span class="sc sc3"></span>
+      <span class="sc sc4"></span><span class="sc sc5"></span><span class="sc sc6"></span>
+    </div>
+
     <div class="team-sel-wrapper">
 
       <!-- 헤더 -->
@@ -165,45 +176,35 @@
         <div class="header-logo">
           <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
         </div>
+
+        <!-- 좌석 정보 배지 -->
+        <p class="seat-info-badge" id="seat-info-badge">— 구역 — 열 — 번</p>
+
+        <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
+            <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
+          </svg>
+        </button>
       </header>
 
       <!-- 본문 -->
       <main class="team-sel-content">
 
-        <!-- 좌석 정보 배지 -->
-        <p class="seat-info-badge" id="seat-info-badge">— 구역 — 열 — 번</p>
-
-        <h1 class="team-sel-title">
-          응원할 <span class="title-green">팀</span>을 선택해 주세요
-        </h1>
+        <!-- 말풍선 안내 -->
+        <h1 class="team-sel-title">응원할 팀을 선택해 주세요!</h1>
 
         <div class="ts-cards">
 
           <!-- 한화 이글스 -->
           <div class="ts-card ts-left" id="ts-hanwha" role="button" tabindex="0" aria-label="한화 이글스 선택">
-            <div class="ts-team-bg ts-bg-hanwha"></div>
-            <div class="ts-cheer" aria-hidden="true">
-              <img class="ts-mascot" src="images/suri.png" alt="" onerror="this.style.display='none'" />
-              <span class="ts-bubble">파이팅!</span>
-            </div>
-            <img src="images/hanwha_eagles.png" alt="한화 이글스" class="ts-logo" />
-            <button class="ts-select-btn" type="button">선택하기</button>
-          </div>
-
-          <!-- VS -->
-          <div class="ts-vs">
-            <span class="ts-vs-text">VS</span>
+            <img class="ts-mascot" src="images/hanwha_eagles_suri.png" alt="한화 이글스 마스코트" />
+            <button class="ts-select-btn" type="button">한화 이글스</button>
           </div>
 
           <!-- 롯데 자이언츠 -->
           <div class="ts-card ts-right" id="ts-lotte" role="button" tabindex="0" aria-label="롯데 자이언츠 선택">
-            <div class="ts-team-bg ts-bg-lotte"></div>
-            <div class="ts-cheer" aria-hidden="true">
-              <img class="ts-mascot" src="images/nuri.png" alt="" onerror="this.style.display='none'" />
-              <span class="ts-bubble">VICTORY!</span>
-            </div>
-            <img src="images/lotte_giants.png" alt="롯데 자이언츠" class="ts-logo" />
-            <button class="ts-select-btn" type="button">선택하기</button>
+            <img class="ts-mascot" src="images/lotte_giants_nuri.png" alt="롯데 자이언츠 마스코트" />
+            <button class="ts-select-btn" type="button">롯데 자이언츠</button>
           </div>
 
         </div>
@@ -222,6 +223,12 @@
     <div class="seat-bg"></div>
     <div class="deco-corner"></div>
 
+    <!-- 콘페티 장식 -->
+    <div class="stadium-confetti" aria-hidden="true">
+      <span class="sc sc1"></span><span class="sc sc2"></span><span class="sc sc3"></span>
+      <span class="sc sc4"></span><span class="sc sc5"></span><span class="sc sc6"></span>
+    </div>
+
     <div class="cam-wrapper">
 
       <!-- 헤더 -->
@@ -229,12 +236,26 @@
         <div class="header-logo">
           <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
         </div>
+
+        <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
+            <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
+          </svg>
+        </button>
       </header>
 
       <!-- 본문 -->
       <main class="cam-content">
 
-        <!-- 왼쪽: 카메라 뷰파인더 -->
+        <div class="cam-stage">
+
+        <!-- 마스코트 + 말풍선 안내 (선택한 팀 마스코트로 표시) -->
+        <div class="cam-guide-row">
+          <img class="cam-mascot" id="cam-mascot" src="images/hanwha_eagles_suri.png" alt="응원팀 마스코트" />
+          <p class="cam-bubble">분리배출할 쓰레기를<br />카메라에 비춰주세요!</p>
+        </div>
+
+        <!-- 카메라 뷰파인더 (원본 유지) -->
         <div class="cam-viewfinder-wrap">
           <!-- AI 인식 배지 -->
           <div class="cam-ai-badge" id="cam-ai-badge">
@@ -259,53 +280,13 @@
           </div>
         </div>
 
-        <!-- 오른쪽: 정보 패널 -->
-        <div class="cam-info-panel">
+        </div><!-- /.cam-stage -->
 
-          <h1 class="cam-title">
-            쓰레기를 <span class="title-green">촬영해</span> 주세요
-          </h1>
+        <!-- 촬영하기 버튼 -->
+        <button class="cam-btn-capture" id="cam-btn-capture" type="button">
+          촬영하기
+        </button>
 
-          <!-- 인식 상태 카드 -->
-          <div class="cam-card" id="cam-status-card">
-            <h2 class="cam-card-title">인식 상태</h2>
-            <ul class="cam-status-list">
-              <li class="cam-status-item" id="cstatus-1">
-                <span class="cam-dot cam-dot-done" id="cdot-1" data-step="1"></span>
-                <span class="cam-status-label">촬영 완료</span>
-              </li>
-              <li class="cam-status-item" id="cstatus-2">
-                <span class="cam-dot cam-dot-active" id="cdot-2" data-step="2"></span>
-                <span class="cam-status-label">재질 판별 중</span>
-              </li>
-              <li class="cam-status-item cam-status-pending" id="cstatus-3">
-                <span class="cam-dot cam-dot-empty" id="cdot-3" data-step="3"></span>
-                <span class="cam-status-label">안내 준비</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- 촬영 안내 카드 -->
-          <div class="cam-card">
-            <h2 class="cam-card-title">촬영 안내</h2>
-            <ul class="cam-guide-list">
-              <li class="cam-guide-item">
-                <span class="cam-check">✓</span>
-                <span class="cam-guide-text">하나씩 올려 주세요</span>
-              </li>
-              <li class="cam-guide-item">
-                <span class="cam-check">✓</span>
-                <span class="cam-guide-text">비운 뒤 촬영해 주세요</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- 촬영하기 버튼 -->
-          <button class="cam-btn-capture" id="cam-btn-capture" type="button">
-            촬영하기
-          </button>
-
-        </div>
       </main>
     </div>
   </div><!-- /#screen-camera -->
