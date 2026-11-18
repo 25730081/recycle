@@ -97,11 +97,10 @@ html, body {
 /* 헤더 */
 .home-header {
   width: 100%;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 40px 0;
+  padding: 22px 36px 0;   /* 좌석번호 입력 화면 로고 위치와 동일 */
 }
 
 /* 로고 공통 */
@@ -109,6 +108,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
+  align-self: flex-start;   /* 헤더 오른쪽 요소 높이와 상관없이 모든 화면에서 같은 위치 */
 }
 
 .logo-icon {
@@ -594,7 +594,7 @@ html, body {
   flex: 0 1 720px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 36px;
   max-width: 720px;
 }
 
@@ -701,7 +701,7 @@ html, body {
   background: #fff;
   border: none;
   border-radius: 18px;
-  min-height: 66px;
+  min-height: 56px;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 26px;
@@ -745,7 +745,7 @@ html, body {
 
 /* ── 팀 선택 화면: 야구장 배경 (좌우 팀 컬러 분할) ── */
 #screen-team .seat-bg {
-  background: url('../images/stadium_bg_home.png') center / cover no-repeat;
+  background: url('../images/stadium_bg_team.png') center / cover no-repeat;
   filter: blur(2px);
   transform: scale(1.04);
 }
@@ -837,49 +837,6 @@ html, body {
 }
 .nav-home-btn:active { transform: scale(0.94); }
 
-/* ── 팀 컬러 좌우 분할 배경 ── */
-.ts-tint {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.ts-tint-left {
-  left: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255,170,90,0.30) 0%,
-    rgba(255,120,20,0.22) 55%,
-    rgba(120,60,10,0.18) 100%
-  );
-}
-
-.ts-tint-right {
-  right: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(120,160,230,0.30) 0%,
-    rgba(20,60,140,0.26) 55%,
-    rgba(5,20,60,0.22) 100%
-  );
-}
-
-/* 가운데 흰색 구분선 */
-.ts-divider {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 3px;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 20%, rgba(255,255,255,0.9) 85%, rgba(255,255,255,0) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
 /* ── 공통: 콘페티 장식 (팀 선택 / 촬영) ── */
 .stadium-confetti {
   position: absolute;
@@ -921,6 +878,44 @@ html, body {
   box-shadow: 0 4px 14px rgba(30,60,90,0.15);
 }
 
+/* 헤더 가운데 좌석 정보 (위치 아이콘 + 좌석번호, 바탕 없음) */
+.ts-seat {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  height: clamp(56px, 8vh, 72px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ts-seat-pin {
+  width: clamp(22px, 3.2vh, 32px);
+  height: clamp(22px, 3.2vh, 32px);
+  fill: #16a05a;
+  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.9));
+}
+
+#screen-team .seat-info-badge {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: clamp(18px, 2.8vh, 28px);
+  font-weight: 900;
+  color: #138a50;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(255,255,255,0.9), 0 0 2px #fff;
+}
+
+/* 헤더 오른쪽 홈 버튼 (흰색 원) */
+#screen-team .nav-home-btn {
+  background: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(30,60,90,0.18);
+}
+#screen-team .nav-home-btn:hover { background: #f1f8f2; }
+
 .team-sel-content {
   flex: 1;
   min-height: 0;
@@ -928,38 +923,30 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 48px 4vh;
-  gap: 2vh;
+  padding: 3vh 48px 5vh;
 }
 
-/* 말풍선 안내 */
+/* 안내 문구 (말풍선 없이 큰 녹색 글자) */
 .team-sel-title {
-  position: relative;
   flex-shrink: 0;
   white-space: nowrap;
-  font-size: clamp(26px, 4.8vh, 46px);
+  font-size: clamp(36px, 7.4vh, 76px);
   font-weight: 900;
-  color: #1f2d3a;
+  color: #138a50;
   text-align: center;
-  line-height: 1.2;
-  padding: clamp(14px, 2.4vh, 24px) clamp(36px, 4vw, 60px);
-  background: rgba(255,255,255,0.95);
-  border-radius: 28px;
-  box-shadow: 0 10px 30px rgba(10,30,60,0.22);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  text-shadow: 0 0 2px #fff, 0 0 10px rgba(255,255,255,0.95), 0 4px 14px rgba(255,255,255,0.8);
 }
 
-/* 말풍선 꼬리 */
-.team-sel-title::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -14px;
-  width: 30px;
-  height: 30px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 4px;
-  transform: translateX(-50%) rotate(45deg);
-  z-index: -1;
+.team-sel-sub {
+  flex-shrink: 0;
+  margin-top: 1.4vh;
+  white-space: nowrap;
+  font-size: clamp(16px, 2.9vh, 28px);
+  font-weight: 700;
+  color: #1f2d3a;
+  text-shadow: 0 0 8px rgba(255,255,255,0.95), 0 0 2px #fff;
 }
 
 /* 팀 카드 컨테이너 (좌우 반반) */
@@ -969,9 +956,10 @@ html, body {
   width: 100%;
   display: flex;
   align-items: stretch;
+  margin-top: 2vh;
 }
 
-/* 팀 카드: 마스코트 + 팀 이름 버튼 */
+/* 팀 카드: 브러시 배경 + 마스코트 + 팀 이름 버튼 */
 .ts-card {
   position: relative;
   flex: 1;
@@ -980,45 +968,79 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 1.6vh;
+  gap: 0.6vh;
   cursor: pointer;
   transition: opacity 0.25s ease;
   outline: none;
 }
 
-/* 마스코트 영역 (크기 축소) — 팡파레 위치 기준 */
+/* 마스코트 영역 — 브러시·이니셜·강조선·팡파레 위치 기준 */
 .ts-mascot-wrap {
   position: relative;
-  flex: 0 1 auto;
-  height: 62%;
+  flex: 1;
   min-height: 0;
-  aspect-ratio: 1 / 1;
-  max-width: 72%;
+  width: 100%;
 }
 
+/* 팀 컬러 브러시 */
+.ts-brush {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: min(90%, 80vh);
+  height: 72%;
+  transform: translateX(-50%);
+  overflow: visible;
+  z-index: 0;
+}
+.ts-left  .ts-brush { fill: #f58b22; }
+.ts-right .ts-brush { fill: #3b8bf0; transform: translateX(-50%) scaleX(-1); }
+
+/* 팀 이니셜 (브러시 위, 마스코트 왼쪽) */
+.ts-letter {
+  position: absolute;
+  left: calc(50% - 30vh);   /* 마스코트 크기(vh) 기준으로 왼쪽 배치 */
+  bottom: 13%;
+  z-index: 1;
+  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-size: clamp(90px, 22vh, 230px);
+  line-height: 1;
+  transform: skewX(-8deg);
+  pointer-events: none;
+}
+.ts-left  .ts-letter { color: #fdf0e2; }
+.ts-right .ts-letter { color: #cfe2ff; }
+
+/* 머리 옆 강조선 */
+.ts-accent {
+  position: absolute;
+  top: 9%;
+  width: clamp(36px, 5.6vh, 60px);
+  height: clamp(24px, 3.8vh, 40px);
+  overflow: visible;
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  z-index: 1;
+}
+.ts-left  .ts-accent { left: calc(50% + 19vh); stroke: #f58b22; }
+.ts-right .ts-accent { left: calc(50% - 25vh); stroke: #2f7de6; }
+
+/* 마스코트 */
 .ts-mascot {
-  display: block;
-  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;           /* 가로 가운데 */
   height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+  max-height: 46vh;
+  width: auto;
+  z-index: 2;
   transform-origin: center bottom;
   animation: mascotBob 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 12px 16px rgba(0,0,0,0.25));
   transition: filter 0.25s ease;
-}
-
-/* 팀 컬러 글로우 (항상 표시, 마우스 오버 시 더 강하게) */
-.ts-left .ts-mascot {
-  filter:
-    drop-shadow(0 0 10px rgba(255,122,0,0.85))
-    drop-shadow(0 0 26px rgba(255,140,30,0.55))
-    drop-shadow(0 12px 16px rgba(0,0,0,0.25));
-}
-.ts-right .ts-mascot {
-  filter:
-    drop-shadow(0 0 10px rgba(40,100,220,0.85))
-    drop-shadow(0 0 26px rgba(30,80,180,0.55))
-    drop-shadow(0 12px 16px rgba(0,0,0,0.25));
 }
 
 .ts-right .ts-mascot { animation-delay: 1.4s; }
@@ -1038,6 +1060,7 @@ html, body {
   50%       { transform: translateY(-16px) scale(1.06) rotate(2deg); }
 }
 
+/* 마우스 오버 시 팀 컬러 글로우 */
 .ts-left:hover .ts-mascot,
 .ts-left:focus-visible .ts-mascot {
   filter:
@@ -1116,32 +1139,58 @@ html, body {
 /* 한쪽에 마우스를 올리면 다른 팀은 살짝 흐리게 */
 .ts-cards:has(.ts-card:hover) .ts-card:not(:hover) { opacity: 0.6; }
 
-/* 팀 이름 버튼 (테두리 없는 단색 + 팀 컬러 글로우) */
+/* 팀 이름 버튼 (양 끝 사선 스트라이프) */
 .ts-select-btn {
+  position: relative;
+  overflow: hidden;
   flex-shrink: 0;
-  width: clamp(210px, 20vw, 330px);
-  height: clamp(54px, 8vh, 80px);
+  width: clamp(260px, 26vw, 420px);
+  height: clamp(58px, 9.4vh, 90px);
   padding: 0 20px;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(20px, 3.4vh, 32px);
+  font-size: clamp(22px, 4.2vh, 40px);
   font-weight: 900;
   color: #fff;
   letter-spacing: 1px;
   border: none;
   border-radius: 999px;
   cursor: pointer;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
   transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* 양 끝 사선 스트라이프 */
+.ts-select-btn::before,
+.ts-select-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 26%;
+  pointer-events: none;
+}
+.ts-select-btn::before { left: 0; }
+.ts-select-btn::after  { right: 0; }
+
 .ts-left .ts-select-btn {
-  background: #f47a12;
-  box-shadow: 0 0 18px rgba(255,122,0,0.75), 0 0 40px rgba(255,140,30,0.45);
+  background: linear-gradient(180deg, #ff9b3d 0%, #f47a12 100%);
+  box-shadow: 0 8px 20px rgba(200,90,0,0.35), inset 0 -4px 0 rgba(0,0,0,0.08);
+}
+.ts-left .ts-select-btn::before,
+.ts-left .ts-select-btn::after {
+  background: repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,0.28) 22px 34px);
 }
 
 .ts-right .ts-select-btn {
-  background: #163d82;
-  box-shadow: 0 0 18px rgba(40,100,220,0.75), 0 0 40px rgba(30,80,180,0.45);
+  background: linear-gradient(180deg, #24336f 0%, #18245a 100%);
+  box-shadow: 0 8px 20px rgba(10,30,90,0.35), inset 0 -4px 0 rgba(0,0,0,0.12);
 }
+.ts-right .ts-select-btn::before,
+.ts-right .ts-select-btn::after {
+  background: repeating-linear-gradient(115deg, transparent 0 18px, #e60026 18px 26px);
+}
+.ts-right .ts-select-btn::before { width: 16%; }
+.ts-right .ts-select-btn::after  { width: 16%; }
 
 .ts-card:hover .ts-select-btn,
 .ts-card:focus-visible .ts-select-btn {
@@ -1927,7 +1976,7 @@ html, body {
   z-index: 5;
   display: flex;
   align-items: center;
-  padding: 22px 48px 0;
+  padding: 22px 36px 0;   /* 좌석번호 입력 화면 로고 위치와 동일 */
 }
 
 #screen-complete .logo-icon { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
