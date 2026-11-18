@@ -750,6 +750,14 @@ html, body {
   transform: scale(1.04);
 }
 
+/* 배경을 살짝 하얗게 뿌옇게 */
+#screen-team .seat-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.22);
+}
+
 #screen-team .deco-corner { display: none; }
 
 #screen-team .seat-header { padding: 22px 36px 0; }
@@ -935,10 +943,16 @@ html, body {
   white-space: nowrap;
   font-size: clamp(36px, 7.4vh, 76px);
   font-weight: 900;
-  color: #ffffff;
   text-align: center;
   line-height: 1.15;
   letter-spacing: -1px;
+  /* 홈 "그린 매치"처럼 그라데이션 — 흰색 계열 */
+  background: linear-gradient(135deg, #ffffff 0%, #f6f9fc 35%, #e3edf5 70%, #cddcea 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* 배경과 분리되도록 아래쪽 그림자 */
+  filter: drop-shadow(0 3px 6px rgba(10,40,80,0.35));
 }
 
 /* 팀 카드 컨테이너 (좌우 반반) */
@@ -973,21 +987,6 @@ html, body {
   min-height: 0;
   width: 100%;
 }
-
-/* 팀 이니셜 (마스코트 왼쪽) */
-.ts-letter {
-  position: absolute;
-  left: calc(50% - 30vh);   /* 마스코트 크기(vh) 기준으로 왼쪽 배치 */
-  bottom: 13%;
-  z-index: 1;
-  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
-  font-size: clamp(90px, 22vh, 230px);
-  line-height: 1;
-  transform: skewX(-8deg);
-  pointer-events: none;
-}
-.ts-left  .ts-letter { color: #fdf0e2; }
-.ts-right .ts-letter { color: #cfe2ff; }
 
 /* 머리 옆 강조선 */
 .ts-accent {
@@ -1149,8 +1148,26 @@ html, body {
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 
-.ts-left  .ts-select-btn { color: #f47a12; }
-.ts-right .ts-select-btn { color: #0a2a6b; }
+/* 팀 이름: 흰 글자 + 마스코트와 같은 팀 컬러 글로우 */
+.ts-left .ts-select-btn {
+  color: #ffffff;
+  text-shadow:
+    0 0 2px #d65a00, 0 0 2px #d65a00, 0 0 3px #d65a00,
+    0 0 7px rgba(240,105,0,1),
+    0 0 14px rgba(255,122,0,1),
+    0 0 26px rgba(255,122,0,0.9),
+    0 0 42px rgba(255,140,30,0.7);
+}
+.ts-right .ts-select-btn {
+  color: #ffffff;
+  text-shadow:
+    0 0 2px #123c9c, 0 0 2px #123c9c, 0 0 3px #123c9c,
+    0 0 7px rgba(25,80,200,1),
+    0 0 14px rgba(40,100,220,1),
+    0 0 26px rgba(40,100,220,0.9),
+    0 0 42px rgba(70,135,240,0.7);
+}
+
 
 .ts-card:hover .ts-select-btn,
 .ts-card:focus-visible .ts-select-btn {
