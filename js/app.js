@@ -464,12 +464,12 @@
   }
 
   /**
-   * 완료 화면 카운트다운: 5 → 4 → 3 → 2 → 1 후 처음 화면으로 (새로 고침)
+   * 완료 화면 카운트다운: 10 → 9 → … → 1 후 처음 화면으로 (새로 고침)
    */
   var countdownTimer = null;
   function startCompleteCountdown() {
     var numEl = document.getElementById('complete-countdown-num');
-    var count = 5;
+    var count = 10;
     if (countdownTimer) clearInterval(countdownTimer);
     if (numEl) numEl.textContent = count;
 
