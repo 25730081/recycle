@@ -324,7 +324,7 @@
 
         // 버튼 텍스트 → 다음으로
         camCaptureBtn.disabled = false;
-        camCaptureBtn.textContent = '다음으로 →';
+        camCaptureBtn.textContent = '다음으로';
         camCaptureBtn.style.opacity = '1';
         camCaptureBtn.style.background = 'linear-gradient(135deg, #43a047, #1b5e20)';
 
