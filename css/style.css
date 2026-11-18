@@ -1421,6 +1421,7 @@ html, body {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   padding: 22px 24px;
   background: linear-gradient(135deg, #e8f5e9, #d4ece2);
@@ -1502,6 +1503,36 @@ html, body {
   transform: translateY(0);
   filter: brightness(0.96);
 }
+
+/* 다시 인식하기 + 분리배출 완료 버튼 행 */
+.result-btn-row {
+  flex-shrink: 0;
+  display: flex;
+  gap: 14px;
+}
+
+.result-btn-row .result-done-btn {
+  flex: 1;
+  width: auto;
+}
+
+.result-retry-btn {
+  flex: none;
+  padding: 22px 36px;
+  background: #fff;
+  color: #2e7d32;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: 2px solid #2e7d32;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.result-retry-btn:hover  { background: #e8f5e9; transform: translateY(-2px); }
+.result-retry-btn:active { background: #c8e6c9; transform: translateY(0); }
 
 @media (max-width: 900px) {
   .result-content { flex-direction: column; padding: 16px 20px 24px; overflow-y: auto; }
@@ -1613,6 +1644,7 @@ html, body {
 .complete-left-card {
   --tc: #ff6600;
   --tc-tint: rgba(255,153,0,0.26);
+  --tc-box: 0 0 0 3px #ff6600, 0 0 18px rgba(255,122,0,.85), 0 0 46px rgba(255,153,0,.55);
   --tc-glow: drop-shadow(0 0 2px #ff6600) drop-shadow(0 0 2px #ff6600)
              drop-shadow(0 0 14px rgba(255,122,0,.85)) drop-shadow(0 0 30px rgba(255,153,0,.5));
   flex: 0 0 58%;
@@ -1634,6 +1666,7 @@ html, body {
 .complete-left-card.team-lotte {
   --tc: #041e42;
   --tc-tint: rgba(27,79,156,0.22);
+  --tc-box: 0 0 0 3px #0a2a6b, 0 0 18px rgba(16,78,160,.85), 0 0 46px rgba(27,79,156,.55);
   --tc-glow: drop-shadow(0 0 2px #0a2a6b) drop-shadow(0 0 2px #0a2a6b)
              drop-shadow(0 0 14px rgba(16,78,160,.85)) drop-shadow(0 0 30px rgba(27,79,156,.5));
 }
@@ -1708,11 +1741,25 @@ html, body {
 .laurel-left  { font-size: clamp(44px, 8vh, 84px); transform: scaleX(-1); filter: hue-rotate(40deg); }
 .laurel-right { font-size: clamp(44px, 8vh, 84px); filter: hue-rotate(40deg); }
 
+/* 팀 로고(가로형 이미지): 바깥 배경을 잘라내고 팀 컬러 글로우 적용 */
+.complete-logo-frame {
+  position: relative;
+  height: clamp(190px, 42vh, 420px);
+  aspect-ratio: 1244 / 842;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 9.2% / 13.7%;
+  box-shadow: var(--tc-box);
+}
+
 .complete-team-logo {
-  width: clamp(160px, 32vh, 320px);
-  height: clamp(160px, 32vh, 320px);
-  object-fit: contain;
-  filter: var(--tc-glow);
+  position: absolute;
+  width: 134.24%;
+  height: 111.88%;
+  left: -17.04%;
+  top: -5.94%;
+  max-width: none;
+  object-fit: fill;
 }
 
 /* 점수 텍스트 */
@@ -1803,13 +1850,16 @@ html, body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #e8f5e9;
-  color: #2e7d32;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 24px;
-  padding: 7px 16px;
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  border-radius: 40px;
+  padding: 12px 36px;
+  margin-top: 6px;
   white-space: nowrap;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 22px rgba(46,125,50,0.40);
 }
 
 /* 인식 아이템 아이콘 */
@@ -1869,14 +1919,16 @@ html, body {
 .complete-btns {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: stretch;
   gap: 12px;
   padding-top: 20px;
   flex-shrink: 0;
 }
 
 .complete-btn-home {
-  width: 100%;
+  flex: 1;
+  width: auto;
   padding: 20px;
   background: linear-gradient(135deg, #43a047, #1b5e20);
   color: #fff;
@@ -1895,15 +1947,20 @@ html, body {
 .complete-btn-home:active  { filter: brightness(0.95); transform: translateY(0); }
 
 .complete-btn-retry {
-  width: 100%;
-  padding: 18px;
+  flex: none;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   background: transparent;
   color: #2e7d32;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
   font-weight: 700;
   border: 2px solid #2e7d32;
-  border-radius: 50px;
+  border-radius: 50%;
   cursor: pointer;
   letter-spacing: 0.5px;
   transition: background 0.15s ease;
