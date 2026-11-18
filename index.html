@@ -19,6 +19,10 @@
     <div class="home-bg"></div>
     <div class="home-overlay"></div>
 
+    <!-- 양쪽 마스코트 -->
+    <img src="images/hanwha_suri.png" alt="한화 이글스 마스코트 수리" class="home-mascot home-mascot-left" />
+    <img src="images/lotte_nuri.png" alt="롯데 자이언츠 마스코트 누리" class="home-mascot home-mascot-right" />
+
     <!-- 컨테이너 -->
     <div class="home-container">
 
@@ -31,43 +35,42 @@
 
       <!-- 중앙 콘텐츠 -->
       <main class="home-content">
-        <p class="catchphrase">분리배출로 만드는 더 깨끗한 야구장!</p>
-
         <h1 class="main-title">
-          <span class="title-gray">그린</span>
-          <span class="title-green"> 매치</span>
+          <!-- 제목 위 장식선 + 잎사귀 -->
+          <span class="title-line title-line-l" aria-hidden="true"></span>
+          <span class="title-line title-line-r" aria-hidden="true"></span>
+          <svg class="title-leaf leaf-top" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 36C6 18 18 4 36 4C36 22 24 36 6 36Z"/><path class="leaf-vein" d="M8 34L30 10"/></svg>
+          <svg class="title-leaf leaf-small" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 36C6 18 18 4 36 4C36 22 24 36 6 36Z"/><path class="leaf-vein" d="M8 34L30 10"/></svg>
+          <svg class="title-leaf leaf-left" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 36C6 18 18 4 36 4C36 22 24 36 6 36Z"/><path class="leaf-vein" d="M8 34L30 10"/></svg>
+          <svg class="title-leaf leaf-right" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 36C6 18 18 4 36 4C36 22 24 36 6 36Z"/><path class="leaf-vein" d="M8 34L30 10"/></svg>
+          <span class="title-green">그린 매치</span>
         </h1>
-        <p class="title-en">Green Match</p>
+
+        <p class="catchphrase">
+          분리배출로 만드는 더 깨끗한 야구장!
+          <svg class="catchphrase-swoosh" viewBox="0 0 400 20" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M4 16 C120 4 280 2 396 8"/>
+          </svg>
+        </p>
 
         <p class="subtitle">지금, 당신의 선택이 팀의 승리를 만듭니다.</p>
 
         <!-- 팀 대결 영역 -->
         <section class="teams-section" aria-label="팀 대결">
-          <div class="team-card team-left" id="team-hanwha">
-            <img src="images/hanwha_eagles.png" alt="한화 이글스 로고" class="team-logo" />
-            <p class="team-name-ko">한화 이글스</p>
-            <p class="team-name-en">HANWHA EAGLES</p>
-          </div>
-
+          <p class="home-team-name">HANWHA<br />EAGLES</p>
           <div class="vs-section">
             <span class="vs-text">VS</span>
           </div>
-
-          <div class="team-card team-right" id="team-lotte">
-            <img src="images/lotte_giants.png" alt="롯데 자이언츠 로고" class="team-logo" />
-            <p class="team-name-ko">롯데 자이언츠</p>
-            <p class="team-name-en">LOTTE GIANTS</p>
-          </div>
+          <p class="home-team-name">LOTTE<br />GIANTS</p>
         </section>
 
         <!-- 시작하기 버튼 -->
         <div class="btn-wrapper">
           <button class="btn-start" id="btn-start" type="button">
             <span class="btn-label">시작하기</span>
+            <span class="btn-arrow" aria-hidden="true">›</span>
           </button>
         </div>
-
-        <p class="guide-text">좌석번호를 입력하고 팀을 선택해주세요.</p>
       </main>
     </div>
   </div><!-- /#screen-home -->
