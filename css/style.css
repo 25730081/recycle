@@ -380,7 +380,7 @@ html, body {
 /* 타이틀: 초록 그라데이션 + 잎사귀/장식선 */
 .home-content .main-title {
   margin-top: 0;
-  margin-bottom: 3.2vh;
+  margin-bottom: 0;
   font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   font-weight: 900;
   font-synthesis: none;
@@ -424,15 +424,19 @@ html, body {
   z-index: 1;
 }
 
-/* 캐치프레이즈 (어두운 회색) */
+/* 캐치프레이즈 (어두운 회색) — "그린 매치" 위에 배치 */
 .home-content .catchphrase {
-  position: relative;
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: 100%;
+  text-align: center;
   font-size: clamp(20px, 4vh, 38px);
   font-weight: 900;
   color: #3a3f45;
   letter-spacing: 0;
-  margin-bottom: 0;
-  padding-bottom: 0.8vh;
+  margin-bottom: 5.5vh;
+  padding-bottom: 0;
 }
 
 .home-content .subtitle {
