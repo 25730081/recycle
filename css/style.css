@@ -626,6 +626,8 @@ html, body {
   display: flex;
   gap: 14px;
   margin-top: 12px;
+  width: 66.6%;          /* 칸 가로 길이를 기존의 약 2/3로 */
+  align-self: center;    /* 줄어든 입력칸 묶음을 가운데에 */
 }
 
 .input-group {
@@ -638,6 +640,7 @@ html, body {
 .input-group:not(:first-child) { flex: 1; }
 
 .input-label {
+  text-align: center;    /* 각 칸 가로 길이의 가운데 */
   font-size: 13px;
   font-weight: 700;
   color: #1f2d3a;
