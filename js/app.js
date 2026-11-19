@@ -265,6 +265,15 @@
 
     // 인식 상태 초기화: 촬영완료(done), 재질판별중(active), 안내준비(pending)
     setCamStatus(1);
+
+    // 촬영하기 버튼 없이 자동으로 인식 시작
+    scheduleRecognition();
+  }
+
+  /** 촬영 화면 진입 후 잠시 뒤 자동으로 인식 시작 */
+  function scheduleRecognition() {
+    if (camTimer) clearTimeout(camTimer);
+    camTimer = setTimeout(startRecognition, 2500);
   }
 
   /**
@@ -295,52 +304,41 @@
     }
   }
 
-  // 촬영하기 버튼
-  var camCaptureBtn = document.getElementById('cam-btn-capture');
-  if (camCaptureBtn) {
-    camCaptureBtn.addEventListener('click', function () {
-      camCaptureBtn.disabled = true;
-      camCaptureBtn.textContent = '인식 중…';
-      camCaptureBtn.style.opacity = '0.7';
+  /** AI 인식 진행 → 완료 후 결과 화면으로 자동 이동 */
+  function startRecognition() {
+    // 단계 1 → 재질 판별 중
+    setCamStatus(2);
 
-      // 단계 1 → 재질 판별 중
-      setCamStatus(2);
+    camTimer = setTimeout(function () {
+      // 단계 2 → 안내 준비
+      setCamStatus(3);
 
+      // AI 배지 텍스트 변경
+      var badge = document.getElementById('cam-ai-badge');
+      if (badge) {
+        var dot = badge.querySelector('.cam-ai-dot');
+        var textNode = badge.lastChild;
+        if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+          textNode.textContent = ' 인식 완료!';
+        }
+        if (dot) dot.style.background = '#43a047';
+      }
+
+      // 스캔 라인 정지
+      var scanline = document.getElementById('cam-scanline');
+      if (scanline) {
+        scanline.style.animationPlayState = 'paused';
+        scanline.style.opacity = '0';
+      }
+
+      // 인식 완료 후 자동으로 결과 화면으로 이동
       camTimer = setTimeout(function () {
-        // 단계 2 → 안내 준비
-        setCamStatus(3);
+        camTimer = null;
+        showScreen('result');
+        initResult();
+      }, 800);
 
-        // AI 배지 텍스트 변경
-        var badge = document.getElementById('cam-ai-badge');
-        if (badge) {
-          var dot = badge.querySelector('.cam-ai-dot');
-          var textNode = badge.lastChild;
-          if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-            textNode.textContent = ' 인식 완료!';
-          }
-          if (dot) dot.style.background = '#43a047';
-        }
-
-        // 스캔 라인 정지
-        var scanline = document.getElementById('cam-scanline');
-        if (scanline) {
-          scanline.style.animationPlayState = 'paused';
-          scanline.style.opacity = '0';
-        }
-
-        // 버튼 텍스트 → 다음으로 (클릭 없이 자동으로 넘어가므로 중복 실행 방지용 비활성 유지)
-        camCaptureBtn.textContent = '다음으로';
-        camCaptureBtn.style.opacity = '1';
-
-        // 인식 완료 후 버튼 클릭 없이 자동으로 결과 화면으로 이동
-        camTimer = setTimeout(function () {
-          camTimer = null;
-          showScreen('result');
-          initResult();
-        }, 800);
-
-      }, 1600);
-    });
+    }, 1600);
   }
 
   /* ==============================
@@ -387,14 +385,6 @@
     if (camTimer) { clearTimeout(camTimer); camTimer = null; }
     setCamStatus(1);
 
-    if (camCaptureBtn) {
-      camCaptureBtn.disabled = false;
-      camCaptureBtn.textContent = '촬영하기';
-      camCaptureBtn.style.opacity = '';
-      camCaptureBtn.style.background = '';
-      camCaptureBtn.onclick = null;
-    }
-
     var badge = document.getElementById('cam-ai-badge');
     if (badge) {
       var dot = badge.querySelector('.cam-ai-dot');
@@ -419,6 +409,7 @@
       resetCamera();
       showScreen('camera');
       if (!camStream) initCamera();
+      else scheduleRecognition();
     });
   }
 
