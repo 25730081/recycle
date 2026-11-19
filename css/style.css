@@ -849,36 +849,6 @@ html, body {
 }
 .nav-home-btn:active { transform: scale(0.94); }
 
-/* ── 공통: 콘페티 장식 (팀 선택 / 촬영) ── */
-.stadium-confetti {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.sc {
-  position: absolute;
-  width: 22px;
-  height: 12px;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
-  animation: scFloat 3.2s ease-in-out infinite;
-}
-
-.sc1 { top: 9%;  left: 9%;  background: #e53935; --r: -25deg; animation-delay: 0s; }
-.sc2 { top: 13%; left: 35%; background: #43a047; --r: 30deg;  animation-delay: 0.5s; }
-.sc3 { top: 6%;  left: 63%; background: #e53935; --r: -35deg; animation-delay: 1s; }
-.sc4 { top: 15%; left: 84%; background: #1e5bd8; --r: 40deg;  animation-delay: 0.3s; }
-.sc5 { top: 19%; left: 93%; background: #fbc02d; --r: -50deg; animation-delay: 1.3s; }
-.sc6 { top: 24%; left: 3%;  background: #fbc02d; --r: 20deg;  animation-delay: 0.8s; }
-
-@keyframes scFloat {
-  0%, 100% { transform: translateY(0)   rotate(var(--r)); }
-  50%       { transform: translateY(10px) rotate(calc(var(--r) + 40deg)); }
-}
-
 /* 헤더 가운데 좌석 정보 배지 */
 .seat-info-badge {
   background: rgba(255,255,255,0.9);
@@ -890,35 +860,18 @@ html, body {
   box-shadow: 0 4px 14px rgba(30,60,90,0.15);
 }
 
-/* 헤더 가운데 좌석 정보 — 바탕 없이 흰색 글자 (핀 아이콘 포함) */
+/* 헤더 가운데 좌석 정보 — 적립 완료 화면 좌석 배지와 동일 (흰 알약 + 녹색 글자) */
 .ts-seat {
   position: absolute;
   left: 50%;
   top: calc(22px + clamp(56px, 8vh, 72px) / 2);   /* 헤더 홈 버튼과 같은 높이 중앙 */
   transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: clamp(15px, 2.3vh, 22px);
-}
-
-.ts-seat-pin {
-  width: 1.1em;
-  height: 1.1em;
-  fill: #ffffff;
-  flex-shrink: 0;
-  filter: drop-shadow(0 1px 2px rgba(10,40,80,0.35));
 }
 
 #screen-team .seat-info-badge {
-  background: none;
-  box-shadow: none;
-  padding: 0;
-  font-size: inherit;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: clamp(15px, 2.3vh, 22px);
+  padding: 8px 26px;
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(10,40,80,0.35);
 }
 
 /* 헤더 오른쪽 홈 버튼 (흰색 원) */
@@ -936,14 +889,14 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 3vh 48px 5vh;
+  padding: 3vh 48px 11vh;   /* 마스코트·버튼을 위로 */
 }
 
 /* 안내 문구 (말풍선 없이 큰 녹색 글자) */
 .team-sel-title {
   flex-shrink: 0;
   white-space: nowrap;
-  font-size: clamp(36px, 7.4vh, 76px);
+  font-size: clamp(44px, 9.2vh, 96px);
   font-weight: 900;
   text-align: center;
   line-height: 1.15;
@@ -958,7 +911,7 @@ html, body {
 .ts-cards {
   flex: 1;
   min-height: 0;
-  width: 100%;
+  width: min(100%, 72vw);   /* 두 마스코트를 가운데 쪽으로 */
   display: flex;
   align-items: stretch;
   margin-top: 2vh;
@@ -973,7 +926,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.6vh;
+  gap: 1.2vh;
   cursor: pointer;
   transition: opacity 0.25s ease;
   outline: none;
@@ -1128,13 +1081,13 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(220px, 20vw, 340px);
-  height: clamp(52px, 7.6vh, 74px);
-  padding: 0 24px;
+  width: clamp(170px, 24vh, 250px);   /* 마스코트 가로폭보다 작게 */
+  height: clamp(46px, 6.6vh, 64px);
+  padding: 0 18px;
   border: none;
   border-radius: 999px;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(20px, 3.6vh, 34px);
+  font-size: clamp(18px, 3vh, 28px);
   font-weight: 900;
   letter-spacing: 1px;
   color: #fff;
@@ -1178,24 +1131,24 @@ html, body {
   flex-direction: column;
 }
 
-/* 본문 레이아웃: 마스코트·말풍선 → 뷰파인더 → 촬영하기 버튼 (세로) */
+/* 본문 레이아웃: 메인 문구 → 뷰파인더 (화면 전체) */
 .cam-content {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.6vh;
-  padding: 0 48px 2.6vh;
+  padding: 0 4vw 4vh;
   overflow: hidden;
 }
 
 .cam-stage {
   flex: 1;
   min-height: 0;
-  width: min(1000px, 72vw);
+  width: min(1400px, 84vw);
   display: flex;
   flex-direction: column;
+  gap: 2.6vh;
 }
 
 /* 마스코트 + 말풍선 줄 */
@@ -1205,15 +1158,15 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 1.8vh;
+  margin-top: -2vh;   /* 헤더 아래 빈 공간 줄이기 */
 }
 
 /* 말풍선 */
 .cam-bubble {
   position: relative;
-  padding: clamp(12px, 2vh, 20px) clamp(28px, 3vw, 44px);
+  padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(40px, 4.4vw, 66px);   /* "좌석번호를 입력해 주세요"와 동일 */
+  font-size: clamp(48px, 5.4vw, 86px);
   font-weight: 700;
   color: #1f2d3a;
   line-height: 1.2;
@@ -1519,41 +1472,6 @@ html, body {
   font-size: 14px;
   font-weight: 900;
   flex-shrink: 0;
-}
-
-/* 촬영하기 / 다음으로 버튼 (테두리 없는 단색 + 글로우) */
-.cam-btn-capture {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  /* 홈 화면 "시작하기" 버튼과 같은 크기 */
-  width: clamp(300px, 22vw, 420px);
-  padding: clamp(12px, 2vh, 22px) 36px;
-  background: #2e9e48;
-  color: #fff;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(18px, 3.2vh, 30px);
-  line-height: normal;
-  font-weight: 900;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  box-shadow: 0 0 18px rgba(67,180,90,0.75), 0 0 42px rgba(46,160,72,0.45);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-}
-
-.cam-btn-capture:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(67,180,90,0.95), 0 0 56px rgba(46,160,72,0.6);
-  filter: brightness(1.06);
-}
-
-.cam-btn-capture:active {
-  transform: translateY(0);
-  box-shadow: 0 0 12px rgba(67,180,90,0.7), 0 0 28px rgba(46,160,72,0.4);
-  filter: brightness(0.96);
 }
 
 /* ============================================================
