@@ -460,7 +460,7 @@ html, body {
 /* 타이틀·문구·로고/VS는 위쪽으로, 시작하기 버튼은 기존 위치 유지 */
 .home-content {
   justify-content: flex-start;
-  padding-bottom: 19vh;
+  padding-bottom: 25vh;   /* 시작하기 버튼 위치 (위로) */
 }
 
 .home-content .btn-wrapper { margin-top: auto; }
@@ -864,7 +864,7 @@ html, body {
 .ts-seat {
   position: absolute;
   left: 50%;
-  top: calc(22px + clamp(56px, 8vh, 72px) / 2);   /* 헤더 홈 버튼과 같은 높이 중앙 */
+  top: calc(22px + clamp(56px, 8vh, 72px) / 2 + 4vh);   /* 아래로 내림 */
   transform: translate(-50%, -50%);
 }
 
@@ -889,7 +889,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 3vh 48px 11vh;   /* 마스코트·버튼을 위로 */
+  padding: 7vh 48px 7vh;   /* 제목·마스코트·버튼을 아래로 */
 }
 
 /* 안내 문구 (말풍선 없이 큰 녹색 글자) */
@@ -957,20 +957,22 @@ html, body {
   transition: filter 0.25s ease;
 }
 
-/* 마스코트 테두리 모양대로 퍼지는 팀 컬러 글로우 (약 3cm) */
+/* 마스코트 테두리 모양대로 퍼지는 팀 컬러 글로우 (약 5cm 이상) */
 .ts-left .ts-mascot {
   filter:
     drop-shadow(0 0 4px rgba(255,140,30,1))
-    drop-shadow(0 0 18px rgba(255,122,0,0.9))
-    drop-shadow(0 0 45px rgba(255,122,0,0.8))
-    drop-shadow(0 0 90px rgba(255,140,30,0.6));
+    drop-shadow(0 0 22px rgba(255,122,0,0.9))
+    drop-shadow(0 0 60px rgba(255,122,0,0.8))
+    drop-shadow(0 0 120px rgba(255,140,30,0.65))
+    drop-shadow(0 0 190px rgba(255,140,30,0.5));   /* 약 5cm 이상 */
 }
 .ts-right .ts-mascot {
   filter:
     drop-shadow(0 0 4px rgba(70,135,240,1))
-    drop-shadow(0 0 18px rgba(40,100,220,0.9))
-    drop-shadow(0 0 45px rgba(40,100,220,0.8))
-    drop-shadow(0 0 90px rgba(70,135,240,0.6));
+    drop-shadow(0 0 22px rgba(40,100,220,0.9))
+    drop-shadow(0 0 60px rgba(40,100,220,0.8))
+    drop-shadow(0 0 120px rgba(70,135,240,0.65))
+    drop-shadow(0 0 190px rgba(70,135,240,0.5));   /* 약 5cm 이상 */
 }
 
 .ts-right .ts-mascot { animation-delay: 1.4s; }
@@ -995,17 +997,19 @@ html, body {
 .ts-left:focus-visible .ts-mascot {
   filter:
     drop-shadow(0 0 6px rgba(255,140,30,1))
-    drop-shadow(0 0 24px rgba(255,122,0,1))
-    drop-shadow(0 0 55px rgba(255,122,0,0.9))
-    drop-shadow(0 0 100px rgba(255,140,30,0.7));
+    drop-shadow(0 0 26px rgba(255,122,0,1))
+    drop-shadow(0 0 70px rgba(255,122,0,0.9))
+    drop-shadow(0 0 130px rgba(255,140,30,0.75))
+    drop-shadow(0 0 200px rgba(255,140,30,0.55));
 }
 .ts-right:hover .ts-mascot,
 .ts-right:focus-visible .ts-mascot {
   filter:
     drop-shadow(0 0 6px rgba(70,135,240,1))
-    drop-shadow(0 0 24px rgba(40,100,220,1))
-    drop-shadow(0 0 55px rgba(40,100,220,0.9))
-    drop-shadow(0 0 100px rgba(70,135,240,0.7));
+    drop-shadow(0 0 26px rgba(40,100,220,1))
+    drop-shadow(0 0 70px rgba(40,100,220,0.9))
+    drop-shadow(0 0 130px rgba(70,135,240,0.75))
+    drop-shadow(0 0 200px rgba(70,135,240,0.55));
 }
 
 /* ── 축하 팡파레: 마우스 오버 시 마스코트 머리 위에서 터짐 ── */
@@ -1097,12 +1101,18 @@ html, body {
 
 /* 팀 컬러 버튼 */
 .ts-left .ts-select-btn {
-  background: linear-gradient(180deg, #ff9234 0%, #f26b00 100%);
-  box-shadow: 0 6px 18px rgba(200,90,0,0.35);
+  background: linear-gradient(180deg, rgba(255,146,52,0.62) 0%, rgba(242,107,0,0.62) 100%);
+  box-shadow: 0 6px 18px rgba(200,90,0,0.25);
+  text-shadow: 0 1px 2px rgba(110,40,0,0.85), 0 0 8px rgba(110,40,0,0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 .ts-right .ts-select-btn {
-  background: linear-gradient(180deg, #3d7ae6 0%, #2058c8 100%);
-  box-shadow: 0 6px 18px rgba(20,70,190,0.35);
+  background: linear-gradient(180deg, rgba(61,122,230,0.62) 0%, rgba(32,88,200,0.62) 100%);
+  box-shadow: 0 6px 18px rgba(20,70,190,0.25);
+  text-shadow: 0 1px 2px rgba(5,25,90,0.85), 0 0 8px rgba(5,25,90,0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 .ts-card:hover .ts-select-btn,
@@ -1166,7 +1176,7 @@ html, body {
   position: relative;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(48px, 5.4vw, 86px);
+  font-size: clamp(36px, 4.2vw, 64px);
   font-weight: 700;
   color: #1f2d3a;
   line-height: 1.2;
@@ -1986,7 +1996,7 @@ html, body {
 .complete-score-text {
   position: relative;
   z-index: 1;
-  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;   /* 숫자 1이 기본 숫자 모양인 폰트 */
   font-weight: 900;
   font-synthesis: none;
   font-size: clamp(70px, 15vh, 160px);
