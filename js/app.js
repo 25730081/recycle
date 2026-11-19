@@ -495,6 +495,23 @@
     });
   });
 
+  // 모든 화면 상단 그린매치 로고 → 처음 화면으로 (새로 고침)
+  var headerLogos = document.querySelectorAll('.header-logo');
+  Array.prototype.forEach.call(headerLogos, function (logo) {
+    logo.setAttribute('role', 'button');
+    logo.setAttribute('tabindex', '0');
+    logo.setAttribute('aria-label', '처음 화면으로');
+    logo.addEventListener('click', function () {
+      window.location.reload();
+    });
+    logo.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.reload();
+      }
+    });
+  });
+
   /* ==============================
      초기 실행
   ============================== */
