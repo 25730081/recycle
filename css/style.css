@@ -594,7 +594,8 @@ html, body {
   flex: 0 1 720px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  justify-content: center;   /* 숫자 패드와 높이를 맞출 때 세로 가운데 */
+  gap: 26px;
   max-width: 720px;
 }
 
@@ -644,7 +645,7 @@ html, body {
   border: 2px solid #c3d9cc;
   border-radius: 22px;
   padding: 0 22px;
-  min-height: 72px;
+  min-height: 92px;
   display: flex;
   align-items: center;
   font-size: 30px;
@@ -682,26 +683,26 @@ html, body {
 /* 오른쪽 패널 — 숫자 패드 (큰 흰색 카드) */
 .right-panel {
   flex-shrink: 0;
+  align-self: center;
   display: flex;
   background: #fff;
   border-radius: 32px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 16px 48px rgba(30,60,90,0.12);
 }
 
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 1fr);   /* 패널 높이에 맞춰 버튼 높이 늘어남 */
-  gap: 10px;
-  width: 350px;
+  gap: 8px;
+  width: clamp(220px, 17vw, 270px);   /* 버튼이 정사각형에 가깝도록 폭 조정 */
 }
 
 .key-btn {
   background: #fff;
   border: none;
   border-radius: 18px;
-  min-height: 56px;
+  aspect-ratio: 1 / 0.86;   /* 정사각형에 가까운 버튼 */
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 26px;
@@ -886,7 +887,7 @@ html, body {
   box-shadow: 0 4px 14px rgba(30,60,90,0.15);
 }
 
-/* 헤더 가운데 좌석 정보 — 적립 완료 화면 좌석 배지와 동일 (흰 알약 + 녹색 글자), 핀 아이콘 포함 */
+/* 헤더 가운데 좌석 정보 — 바탕 없이 흰색 글자 (핀 아이콘 포함) */
 .ts-seat {
   position: absolute;
   left: 50%;
@@ -895,18 +896,15 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 26px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 20px;
-  box-shadow: 0 4px 14px rgba(30,60,90,0.15);
   font-size: clamp(15px, 2.3vh, 22px);
 }
 
 .ts-seat-pin {
   width: 1.1em;
   height: 1.1em;
-  fill: #138a50;
+  fill: #ffffff;
   flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(10,40,80,0.35));
 }
 
 #screen-team .seat-info-badge {
@@ -915,8 +913,9 @@ html, body {
   padding: 0;
   font-size: inherit;
   font-weight: 700;
-  color: #138a50;
+  color: #ffffff;
   white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(10,40,80,0.35);
 }
 
 /* 헤더 오른쪽 홈 버튼 (흰색 원) */
@@ -946,14 +945,11 @@ html, body {
   text-align: center;
   line-height: 1.15;
   letter-spacing: -1px;
-  /* 홈 "그린 매치"처럼 그라데이션 — 흰색 계열 */
-  background: linear-gradient(135deg, #ffffff 0%, #f6f9fc 35%, #e3edf5 70%, #cddcea 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* 배경과 분리되도록 아래쪽 그림자 */
-  filter: drop-shadow(0 3px 6px rgba(10,40,80,0.35));
 }
+
+/* "좌석번호를 입력해 주세요"와 같은 색: 녹색 + 어두운 색 */
+.ts-title-green { color: #16a05a; }
+.ts-title-dark  { color: #1f2d3a; }
 
 /* 팀 카드 컨테이너 (좌우 반반) */
 .ts-cards {
@@ -1075,7 +1071,7 @@ html, body {
 .ts-fanfare {
   position: absolute;
   left: 50%;
-  top: 0;
+  top: max(0px, calc(100% - 46vh));   /* 마스코트 머리 높이에서 시작 */
   width: 0;
   height: 0;
   z-index: 3;
@@ -1108,18 +1104,33 @@ html, body {
   100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); }
 }
 
-.ff1  { --x: -150px; --y: -70px;  --r: 260deg;  background: #fbc02d; }
-.ff2  { --x: -110px; --y: -120px; --r: -200deg; animation-delay: 0.05s !important; }
-.ff3  { --x: -60px;  --y: -150px; --r: 320deg;  background: #43a047; }
-.ff4  { --x: -20px;  --y: -170px; --r: -280deg; background: #ffffff; animation-delay: 0.1s !important; }
-.ff5  { --x: 25px;   --y: -165px; --r: 240deg; }
-.ff6  { --x: 70px;   --y: -145px; --r: -300deg; background: #fbc02d; animation-delay: 0.05s !important; }
-.ff7  { --x: 115px;  --y: -115px; --r: 280deg;  background: #e53935; }
-.ff8  { --x: 155px;  --y: -65px;  --r: -220deg; background: #ffffff; animation-delay: 0.1s !important; }
-.ff9  { --x: -130px; --y: -20px;  --r: 200deg;  background: #43a047; animation-delay: 0.15s !important; }
-.ff10 { --x: 135px;  --y: -25px;  --r: -260deg; animation-delay: 0.15s !important; }
-.ff11 { --x: -80px;  --y: -95px;  --r: 300deg;  background: #1e5bd8; animation-delay: 0.08s !important; }
-.ff12 { --x: 85px;   --y: -100px; --r: -240deg; background: #fbc02d; animation-delay: 0.08s !important; }
+/* 한화(왼쪽): 왼쪽 위 대각선 바깥으로 */
+.ts-left .ff1  { --x: -230px; --y: -40px;  --r: 260deg; }
+.ts-left .ff2  { --x: -200px; --y: -80px;  --r: -200deg; animation-delay: 0.05s !important; }
+.ts-left .ff3  { --x: -170px; --y: -115px; --r: 320deg; }
+.ts-left .ff4  { --x: -130px; --y: -135px; --r: -280deg; animation-delay: 0.1s !important; }
+.ts-left .ff5  { --x: -95px;  --y: -125px; --r: 240deg; }
+.ts-left .ff6  { --x: -150px; --y: -60px;  --r: -300deg; animation-delay: 0.05s !important; }
+.ts-left .ff7  { --x: -110px; --y: -90px;  --r: 280deg; }
+.ts-left .ff8  { --x: -250px; --y: -10px;  --r: -220deg; animation-delay: 0.1s !important; }
+.ts-left .ff9  { --x: -185px; --y: -20px;  --r: 200deg;  animation-delay: 0.15s !important; }
+.ts-left .ff10 { --x: -70px;  --y: -100px; --r: -260deg; animation-delay: 0.15s !important; }
+.ts-left .ff11 { --x: -215px; --y: -105px; --r: 300deg;  animation-delay: 0.08s !important; }
+.ts-left .ff12 { --x: -135px; --y: -30px;  --r: -240deg; animation-delay: 0.08s !important; }
+
+/* 롯데(오른쪽): 오른쪽 위 대각선 바깥으로 */
+.ts-right .ff1  { --x: 230px; --y: -40px;  --r: -260deg; }
+.ts-right .ff2  { --x: 200px; --y: -80px;  --r: 200deg;  animation-delay: 0.05s !important; }
+.ts-right .ff3  { --x: 170px; --y: -115px; --r: -320deg; }
+.ts-right .ff4  { --x: 130px; --y: -135px; --r: 280deg;  animation-delay: 0.1s !important; }
+.ts-right .ff5  { --x: 95px;  --y: -125px; --r: -240deg; }
+.ts-right .ff6  { --x: 150px; --y: -60px;  --r: 300deg;  animation-delay: 0.05s !important; }
+.ts-right .ff7  { --x: 110px; --y: -90px;  --r: -280deg; }
+.ts-right .ff8  { --x: 250px; --y: -10px;  --r: 220deg;  animation-delay: 0.1s !important; }
+.ts-right .ff9  { --x: 185px; --y: -20px;  --r: -200deg; animation-delay: 0.15s !important; }
+.ts-right .ff10 { --x: 70px;  --y: -100px; --r: 260deg;  animation-delay: 0.15s !important; }
+.ts-right .ff11 { --x: 215px; --y: -105px; --r: -300deg; animation-delay: 0.08s !important; }
+.ts-right .ff12 { --x: 135px; --y: -30px;  --r: 240deg;  animation-delay: 0.08s !important; }
 
 /* 팀 컬러 색종이 (기본색) */
 .ts-left  .ff { background-color: #ff7a00; }
@@ -1148,26 +1159,25 @@ html, body {
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 
-/* 팀 이름: 흰 글자 + 마스코트와 같은 팀 컬러 글로우 */
+/* 팀 이름: 팀 컬러 글자 + 흰색 글로우 */
 .ts-left .ts-select-btn {
-  color: #ffffff;
+  color: #f26b00;
   text-shadow:
-    0 0 2px #d65a00, 0 0 2px #d65a00, 0 0 3px #d65a00,
-    0 0 7px rgba(240,105,0,1),
-    0 0 14px rgba(255,122,0,1),
-    0 0 26px rgba(255,122,0,0.9),
-    0 0 42px rgba(255,140,30,0.7);
+    0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff,
+    0 0 7px rgba(255,255,255,1),
+    0 0 14px rgba(255,255,255,1),
+    0 0 26px rgba(255,255,255,0.9),
+    0 0 42px rgba(255,255,255,0.7);
 }
 .ts-right .ts-select-btn {
-  color: #ffffff;
+  color: #2864dc;
   text-shadow:
-    0 0 2px #123c9c, 0 0 2px #123c9c, 0 0 3px #123c9c,
-    0 0 7px rgba(25,80,200,1),
-    0 0 14px rgba(40,100,220,1),
-    0 0 26px rgba(40,100,220,0.9),
-    0 0 42px rgba(70,135,240,0.7);
+    0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff,
+    0 0 7px rgba(255,255,255,1),
+    0 0 14px rgba(255,255,255,1),
+    0 0 26px rgba(255,255,255,0.9),
+    0 0 42px rgba(255,255,255,0.7);
 }
-
 
 .ts-card:hover .ts-select-btn,
 .ts-card:focus-visible .ts-select-btn {
