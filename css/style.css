@@ -109,6 +109,7 @@ html, body {
   align-items: center;
   gap: 10px;
   align-self: flex-start;   /* 헤더 오른쪽 요소 높이와 상관없이 모든 화면에서 같은 위치 */
+  cursor: pointer;          /* 누르면 처음 화면으로 */
 }
 
 .logo-icon {
@@ -601,6 +602,7 @@ html, body {
 
 .seat-title {
   white-space: nowrap;
+  text-align: center;
   font-size: clamp(40px, 4.4vw, 66px);
   font-weight: 700;
   line-height: 1.2;
@@ -612,6 +614,7 @@ html, body {
 
 .seat-desc {
   white-space: nowrap;
+  text-align: center;
   font-size: clamp(16px, 1.5vw, 23px);
   color: #555b63;
   font-weight: 400;
@@ -643,9 +646,9 @@ html, body {
 .input-box {
   background: #fff;
   border: 2px solid #c3d9cc;
-  border-radius: 22px;
-  padding: 0 22px;
-  min-height: 92px;
+  border-radius: 18px;
+  padding: 0 20px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   font-size: 30px;
@@ -756,7 +759,7 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.45);
 }
 
 #screen-team .deco-corner { display: none; }
@@ -984,21 +987,6 @@ html, body {
   width: 100%;
 }
 
-/* 머리 옆 강조선 */
-.ts-accent {
-  position: absolute;
-  top: 9%;
-  width: clamp(36px, 5.6vh, 60px);
-  height: clamp(24px, 3.8vh, 40px);
-  overflow: visible;
-  fill: none;
-  stroke-width: 6;
-  stroke-linecap: round;
-  z-index: 1;
-}
-.ts-left  .ts-accent { left: calc(50% + 19vh); stroke: #f58b22; }
-.ts-right .ts-accent { left: calc(50% - 25vh); stroke: #2f7de6; }
-
 /* 마스코트 */
 .ts-mascot {
   position: absolute;
@@ -1083,54 +1071,43 @@ html, body {
 .ts-card:hover .ts-fanfare,
 .ts-card:focus-visible .ts-fanfare { opacity: 1; }
 
-/* 터지는 색종이 */
+/* 머리 대각선 주변에서 살랑살랑 흔들리는 색종이 (소수) */
 .ff {
   position: absolute;
-  left: -6px;
-  top: -4px;
+  left: var(--x);
+  top: var(--y);
   width: 12px;
   height: 8px;
   border-radius: 2px;
   opacity: 0;
+  transform: rotate(var(--r));
 }
+
+/* 4개만 사용 */
+.ff5, .ff6, .ff7, .ff8, .ff9, .ff10, .ff11, .ff12 { display: none; }
 
 .ts-card:hover .ff,
-.ts-card:focus-visible .ff { animation: ffBurst 1.2s cubic-bezier(.2,.7,.4,1) infinite; }
+.ts-card:focus-visible .ff { animation: ffSway 1.6s ease-in-out infinite; }
 
-@keyframes ffBurst {
-  0%   { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(0.4); }
-  12%  { opacity: 1; }
+@keyframes ffSway {
+  0%   { opacity: 0; transform: translate(0, 4px) rotate(var(--r)); }
+  20%  { opacity: 1; }
+  50%  { opacity: 1; transform: translate(4px, -6px) rotate(calc(var(--r) + 25deg)); }
   80%  { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); }
+  100% { opacity: 1; transform: translate(0, 4px) rotate(var(--r)); }
 }
 
-/* 한화(왼쪽): 왼쪽 위 대각선 바깥으로 */
-.ts-left .ff1  { --x: -230px; --y: -40px;  --r: 260deg; }
-.ts-left .ff2  { --x: -200px; --y: -80px;  --r: -200deg; animation-delay: 0.05s !important; }
-.ts-left .ff3  { --x: -170px; --y: -115px; --r: 320deg; }
-.ts-left .ff4  { --x: -130px; --y: -135px; --r: -280deg; animation-delay: 0.1s !important; }
-.ts-left .ff5  { --x: -95px;  --y: -125px; --r: 240deg; }
-.ts-left .ff6  { --x: -150px; --y: -60px;  --r: -300deg; animation-delay: 0.05s !important; }
-.ts-left .ff7  { --x: -110px; --y: -90px;  --r: 280deg; }
-.ts-left .ff8  { --x: -250px; --y: -10px;  --r: -220deg; animation-delay: 0.1s !important; }
-.ts-left .ff9  { --x: -185px; --y: -20px;  --r: 200deg;  animation-delay: 0.15s !important; }
-.ts-left .ff10 { --x: -70px;  --y: -100px; --r: -260deg; animation-delay: 0.15s !important; }
-.ts-left .ff11 { --x: -215px; --y: -105px; --r: 300deg;  animation-delay: 0.08s !important; }
-.ts-left .ff12 { --x: -135px; --y: -30px;  --r: -240deg; animation-delay: 0.08s !important; }
+/* 한화(왼쪽): 머리 왼쪽 위 대각선 */
+.ts-left .ff1 { --x: -150px; --y: 10px;  --r: -20deg; }
+.ts-left .ff2 { --x: -120px; --y: -30px; --r: 35deg;  animation-delay: 0.4s !important; }
+.ts-left .ff3 { --x: -95px;  --y: -5px;  --r: -45deg; animation-delay: 0.8s !important; }
+.ts-left .ff4 { --x: -175px; --y: -25px; --r: 15deg;  animation-delay: 1.2s !important; }
 
-/* 롯데(오른쪽): 오른쪽 위 대각선 바깥으로 */
-.ts-right .ff1  { --x: 230px; --y: -40px;  --r: -260deg; }
-.ts-right .ff2  { --x: 200px; --y: -80px;  --r: 200deg;  animation-delay: 0.05s !important; }
-.ts-right .ff3  { --x: 170px; --y: -115px; --r: -320deg; }
-.ts-right .ff4  { --x: 130px; --y: -135px; --r: 280deg;  animation-delay: 0.1s !important; }
-.ts-right .ff5  { --x: 95px;  --y: -125px; --r: -240deg; }
-.ts-right .ff6  { --x: 150px; --y: -60px;  --r: 300deg;  animation-delay: 0.05s !important; }
-.ts-right .ff7  { --x: 110px; --y: -90px;  --r: -280deg; }
-.ts-right .ff8  { --x: 250px; --y: -10px;  --r: 220deg;  animation-delay: 0.1s !important; }
-.ts-right .ff9  { --x: 185px; --y: -20px;  --r: -200deg; animation-delay: 0.15s !important; }
-.ts-right .ff10 { --x: 70px;  --y: -100px; --r: 260deg;  animation-delay: 0.15s !important; }
-.ts-right .ff11 { --x: 215px; --y: -105px; --r: -300deg; animation-delay: 0.08s !important; }
-.ts-right .ff12 { --x: 135px; --y: -30px;  --r: 240deg;  animation-delay: 0.08s !important; }
+/* 롯데(오른쪽): 머리 오른쪽 위 대각선 */
+.ts-right .ff1 { --x: 140px; --y: 10px;  --r: 20deg; }
+.ts-right .ff2 { --x: 110px; --y: -30px; --r: -35deg; animation-delay: 0.4s !important; }
+.ts-right .ff3 { --x: 85px;  --y: -5px;  --r: 45deg;  animation-delay: 0.8s !important; }
+.ts-right .ff4 { --x: 165px; --y: -25px; --r: -15deg; animation-delay: 1.2s !important; }
 
 /* 팀 컬러 색종이 (기본색) */
 .ts-left  .ff { background-color: #ff7a00; }
@@ -1145,38 +1122,34 @@ html, body {
 /* 한쪽에 마우스를 올리면 다른 팀은 살짝 흐리게 */
 .ts-cards:has(.ts-card:hover) .ts-card:not(:hover) { opacity: 0.6; }
 
-/* 팀 이름 (바탕·모양 없이 팀 컬러 글자) */
+/* 팀 이름 버튼 */
 .ts-select-btn {
   flex-shrink: 0;
-  padding: 0.4vh 20px;
-  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(220px, 20vw, 340px);
+  height: clamp(52px, 7.6vh, 74px);
+  padding: 0 24px;
   border: none;
+  border-radius: 999px;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: clamp(20px, 3.6vh, 34px);
   font-weight: 900;
   letter-spacing: 1px;
+  color: #fff;
   cursor: pointer;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* 팀 이름: 팀 컬러 글자 + 흰색 글로우 */
+/* 팀 컬러 버튼 */
 .ts-left .ts-select-btn {
-  color: #f26b00;
-  text-shadow:
-    0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff,
-    0 0 7px rgba(255,255,255,1),
-    0 0 14px rgba(255,255,255,1),
-    0 0 26px rgba(255,255,255,0.9),
-    0 0 42px rgba(255,255,255,0.7);
+  background: linear-gradient(180deg, #ff9234 0%, #f26b00 100%);
+  box-shadow: 0 6px 18px rgba(200,90,0,0.35);
 }
 .ts-right .ts-select-btn {
-  color: #2864dc;
-  text-shadow:
-    0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff,
-    0 0 7px rgba(255,255,255,1),
-    0 0 14px rgba(255,255,255,1),
-    0 0 26px rgba(255,255,255,0.9),
-    0 0 42px rgba(255,255,255,0.7);
+  background: linear-gradient(180deg, #3d7ae6 0%, #2058c8 100%);
+  box-shadow: 0 6px 18px rgba(20,70,190,0.35);
 }
 
 .ts-card:hover .ts-select-btn,
@@ -1184,6 +1157,10 @@ html, body {
   transform: translateY(-3px);
   filter: brightness(1.08);
 }
+.ts-left:hover .ts-select-btn,
+.ts-left:focus-visible .ts-select-btn  { box-shadow: 0 0 22px rgba(255,122,0,0.85); }
+.ts-right:hover .ts-select-btn,
+.ts-right:focus-visible .ts-select-btn { box-shadow: 0 0 22px rgba(40,100,220,0.85); }
 
 .ts-select-btn:active { transform: scale(0.95); }
 
@@ -1236,13 +1213,16 @@ html, body {
   position: relative;
   padding: clamp(12px, 2vh, 20px) clamp(28px, 3vw, 44px);
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(20px, 3.4vh, 34px);
+  font-size: clamp(40px, 4.4vw, 66px);   /* "좌석번호를 입력해 주세요"와 동일 */
   font-weight: 700;
   color: #1f2d3a;
-  line-height: 1.35;
+  line-height: 1.2;
   text-align: center;
   white-space: nowrap;
 }
+
+.cam-bubble-green { color: #16a05a; }
+.cam-bubble-dark  { color: #1f2d3a; }
 
 .cam-stage .cam-viewfinder-wrap { min-height: 0; }
 
