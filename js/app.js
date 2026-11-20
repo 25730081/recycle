@@ -102,6 +102,10 @@
           boxEl.classList.remove('focused');
         }
       }
+      // 입력 중인 칸의 이름(구역/열/번호) 뒤에 회색 원형 배경
+      if (boxEl && boxEl.parentElement) {
+        boxEl.parentElement.classList.toggle('is-active', field === activeField);
+      }
     });
   }
 
