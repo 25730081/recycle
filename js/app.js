@@ -64,12 +64,10 @@
   /* ==============================
      홈 — 화면 아무 곳이나 터치하면 시작
   ============================== */
-  var homeScreen = document.getElementById('screen-home');
-  if (homeScreen) {
-    homeScreen.addEventListener('click', function (e) {
-      // 왼쪽 위 로고(처음 화면으로)를 누른 경우는 제외
-      if (e.target.closest('.header-logo')) return;
-      if (!homeScreen.classList.contains('active')) return;
+  if (screens.home) {
+    screens.home.addEventListener('click', function (e) {
+      if (!screens.home.classList.contains('active')) return;
+      if (e.target.closest('.header-logo')) return;   // 로고는 기존대로 새로 고침
       showScreen('seat');
       initSeat();
     });
@@ -338,11 +336,12 @@
         scanline.style.opacity = '0';
       }
 
-      // 인식 완료 후 자동으로 결과 화면으로 이동
+      // 인식 완료 후 자동으로 결과 화면으로 이동 (인식된 쓰레기 종류의 안내 표시)
       camTimer = setTimeout(function () {
         camTimer = null;
+        var wasteType = getRecognizedType();
         showScreen('result');
-        initResult();
+        initResult(wasteType);
       }, 800);
 
     }, 1600);
@@ -362,128 +361,261 @@
   window.addEventListener('resize', fitGuideStage);
   fitGuideStage();
 
-  /* 분리배출 안내 데이터 — 쓰레기 종류별 제목·3단계 안내·일러스트·투입구 */
-  var GUIDES = {
-    general: {
-      name: "일반 쓰레기",
-      steps: [
-        { t: "재활용 표시 확인하기", s: "재활용 표시가 없는 쓰레기만 버려 주세요",
-          svg: "<path d=\"M40 58 L50 54 L58 58 L66 54 L74 58 L74 128 L66 124 L58 128 L50 124 L40 128 Z\" fill=\"#f3d9a8\" stroke=\"#1c2a3a\" stroke-width=\"3.6\" stroke-linejoin=\"round\"/><path d=\"M48 80 H66 M48 92 H62\" stroke=\"#1c2a3a\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"104\" cy=\"88\" r=\"24\" fill=\"#fff\" fill-opacity=\".85\" stroke=\"#1c2a3a\" stroke-width=\"4\"/><path d=\"M121 105 L138 122\" stroke=\"#1c2a3a\" stroke-width=\"7\" stroke-linecap=\"round\"/><path d=\"M94 88 L101 95 L114 80\" stroke=\"#2fa24b\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>" },
-        { t: "내용물 비우기", s: "남은 음식과 음료는 먼저 비워 주세요",
-          svg: "<g transform=\"rotate(38 88 84)\"><path d=\"M60 46 L116 46 L107 116 Q106 122 100 122 L76 122 Q70 122 69 116 Z\" fill=\"#fff\" stroke=\"#1c2a3a\" stroke-width=\"3.8\" stroke-linejoin=\"round\"/><path d=\"M63 70 L113 70\" stroke=\"#2fa24b\" stroke-width=\"5\" stroke-linecap=\"butt\"/><path d=\"M56 46 L120 46\" stroke=\"#1c2a3a\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><path d=\"M52 112 q-5 8 0 11 q5 -3 0 -11z\" fill=\"#c9985a\"/><path d=\"M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z\" fill=\"#c9985a\"/><path d=\"M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z\" fill=\"#d9ad72\"/>" },
-        { t: "작게 뭉쳐 넣기", s: "오른쪽 <b>일반 투입구</b>에 넣어요",
-          svg: "<path d=\"M66 34 Q64 22 76 20 Q84 14 92 21 Q102 22 100 33 Q104 44 93 48 Q84 54 75 48 Q64 46 66 34 Z\" fill=\"#fff\" stroke=\"#1c2a3a\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M74 30 L82 36 L90 28 M78 42 L86 38\" stroke=\"#1c2a3a\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M96 54 Q104 66 90 78\" stroke=\"#2f9c4c\" stroke-width=\"3.5\" fill=\"none\" stroke-dasharray=\"5 6\" stroke-linecap=\"round\"/><path d=\"M79 78 L86 86 L93 78\" stroke=\"#2f9c4c\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"47\" y=\"94\" width=\"78\" height=\"12\" rx=\"3\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\"/><path d=\"M51 104 L121 104 L117 152 Q116 156 112 156 L60 156 Q56 156 55 152 Z\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M86 140 L86 118 M78 126 L86 118 L94 126\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M79 148 L93 148\" stroke=\"#fff\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" }
-      ]
-    },
-    paper: {
-      name: "종이",
-      steps: [
-        { t: "음식물 깨끗이 비우기", s: "남은 음식과 음료를 깨끗이 비워 주세요",
-          svg: "<g transform=\"rotate(38 88 84)\"><path d=\"M60 46 L116 46 L107 116 Q106 122 100 122 L76 122 Q70 122 69 116 Z\" fill=\"#fff\" stroke=\"#1c2a3a\" stroke-width=\"3.8\" stroke-linejoin=\"round\"/><path d=\"M63 70 L113 70\" stroke=\"#2fa24b\" stroke-width=\"5\" stroke-linecap=\"butt\"/><path d=\"M56 46 L120 46\" stroke=\"#1c2a3a\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><path d=\"M52 112 q-5 8 0 11 q5 -3 0 -11z\" fill=\"#c9985a\"/><path d=\"M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z\" fill=\"#c9985a\"/><path d=\"M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z\" fill=\"#d9ad72\"/>" },
-        { t: "비닐·테이프 떼어 내기", s: "코팅 비닐과 테이프는 떼어 내 주세요",
-          svg: "<path d=\"M44 88 L54 72 L126 72 L136 88 Z\" fill=\"#f3d9a8\" stroke=\"#1c2a3a\" stroke-width=\"3.8\" stroke-linejoin=\"round\"/><rect x=\"44\" y=\"88\" width=\"92\" height=\"58\" rx=\"4\" fill=\"#f3d9a8\" stroke=\"#1c2a3a\" stroke-width=\"3.8\"/><path d=\"M96 88 C96 70 100 60 122 54\" stroke=\"#8ec5ee\" stroke-width=\"14\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M126 44 L138 38 M132 56 L146 56\" stroke=\"#2fa24b\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" },
-        { t: "납작하게 접어 넣기", s: "오른쪽 <b>종이 투입구</b>에 넣어요",
-          svg: "<g transform=\"rotate(-18 80 36)\"><rect x=\"57\" y=\"22\" width=\"46\" height=\"28\" rx=\"3\" fill=\"#f3d9a8\" stroke=\"#1c2a3a\" stroke-width=\"3.5\"/><path d=\"M63 36 H97\" stroke=\"#1c2a3a\" stroke-width=\"2.5\" stroke-dasharray=\"4 3\" stroke-linecap=\"round\"/></g><path d=\"M96 54 Q104 66 90 78\" stroke=\"#2f9c4c\" stroke-width=\"3.5\" fill=\"none\" stroke-dasharray=\"5 6\" stroke-linecap=\"round\"/><path d=\"M79 78 L86 86 L93 78\" stroke=\"#2f9c4c\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"47\" y=\"94\" width=\"78\" height=\"12\" rx=\"3\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\"/><path d=\"M51 104 L121 104 L117 152 Q116 156 112 156 L60 156 Q56 156 55 152 Z\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M86 140 L86 118 M78 126 L86 118 L94 126\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M79 148 L93 148\" stroke=\"#fff\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" }
-      ]
-    },
-    can: {
-      name: "캔",
-      steps: [
-        { t: "남은 음료 비우기", s: "캔 안의 음료를 깨끗이 비워 주세요",
-          svg: "<g transform=\"rotate(38 88 84)\"><rect x=\"66\" y=\"44\" width=\"44\" height=\"76\" rx=\"8\" fill=\"#cfd8e0\" stroke=\"#1c2a3a\" stroke-width=\"3.8\"/><path d=\"M70 44 L106 44\" stroke=\"#1c2a3a\" stroke-width=\"4.5\" stroke-linecap=\"round\"/><path d=\"M66 70 H110 M66 96 H110\" stroke=\"#2fa24b\" stroke-width=\"4\"/></g><path d=\"M52 112 q-5 8 0 11 q5 -3 0 -11z\" fill=\"#c9985a\"/><path d=\"M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z\" fill=\"#c9985a\"/><path d=\"M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z\" fill=\"#d9ad72\"/>" },
-        { t: "물로 헹구기", s: "가볍게 물로 헹궈 주세요",
-          svg: "<path d=\"M40 44 H86 Q98 44 98 56 V62\" stroke=\"#1c2a3a\" stroke-width=\"10\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"56\" y=\"34\" width=\"10\" height=\"10\" rx=\"2\" fill=\"#1c2a3a\"/><path d=\"M98 72 V86 M92 76 V90 M104 76 V90\" stroke=\"#8ec5ee\" stroke-width=\"4\" stroke-linecap=\"round\"/><rect x=\"78\" y=\"96\" width=\"40\" height=\"56\" rx=\"7\" fill=\"#cfd8e0\" stroke=\"#1c2a3a\" stroke-width=\"3.8\"/><path d=\"M78 116 H118 M78 134 H118\" stroke=\"#2fa24b\" stroke-width=\"3.5\"/>" },
-        { t: "납작하게 눌러 넣기", s: "오른쪽 <b>캔 투입구</b>에 넣어요",
-          svg: "<g transform=\"rotate(-18 82 36)\"><path d=\"M64 22 L100 22 L97 30 L101 36 L97 42 L100 50 L64 50 L67 42 L63 36 L67 30 Z\" fill=\"#cfd8e0\" stroke=\"#1c2a3a\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M70 36 H94\" stroke=\"#2fa24b\" stroke-width=\"4\" stroke-linecap=\"round\"/></g><path d=\"M96 54 Q104 66 90 78\" stroke=\"#2f9c4c\" stroke-width=\"3.5\" fill=\"none\" stroke-dasharray=\"5 6\" stroke-linecap=\"round\"/><path d=\"M79 78 L86 86 L93 78\" stroke=\"#2f9c4c\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"47\" y=\"94\" width=\"78\" height=\"12\" rx=\"3\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\"/><path d=\"M51 104 L121 104 L117 152 Q116 156 112 156 L60 156 Q56 156 55 152 Z\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M86 140 L86 118 M78 126 L86 118 L94 126\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M79 148 L93 148\" stroke=\"#fff\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" }
-      ]
-    },
-    plastic: {
-      name: "플라스틱",
-      steps: [
-        { t: "내용물 비우고 헹구기", s: "남은 음료를 비우고 물로 헹궈 주세요",
-          svg: "<g transform=\"rotate(48 88 84)\"><rect x=\"80\" y=\"30\" width=\"16\" height=\"10\" rx=\"2\" fill=\"#8ec5ee\" stroke=\"#1c2a3a\" stroke-width=\"3.4\"/><path d=\"M78 40 L98 40 L104 56 L104 126 Q104 132 98 132 L78 132 Q72 132 72 126 L72 56 Z\" fill=\"#e6f3fc\" stroke=\"#1c2a3a\" stroke-width=\"3.8\" stroke-linejoin=\"round\"/><path d=\"M72 84 H104\" stroke=\"#2fa24b\" stroke-width=\"4\"/></g><path d=\"M52 112 q-5 8 0 11 q5 -3 0 -11z\" fill=\"#8ec5ee\"/><path d=\"M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z\" fill=\"#8ec5ee\"/><path d=\"M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z\" fill=\"#b5dbf5\"/>" },
-        { t: "라벨 떼어 내기", s: "비닐 라벨은 떼어 내 주세요",
-          svg: "<rect x=\"68\" y=\"26\" width=\"18\" height=\"12\" rx=\"2\" fill=\"#8ec5ee\" stroke=\"#1c2a3a\" stroke-width=\"3.4\"/><path d=\"M66 38 L88 38 L95 56 L95 140 Q95 147 88 147 L66 147 Q59 147 59 140 L59 56 Z\" fill=\"#e6f3fc\" stroke=\"#1c2a3a\" stroke-width=\"3.8\" stroke-linejoin=\"round\"/><path d=\"M59 84 L95 84 L95 108 L59 108 Z\" fill=\"#2fa24b\" fill-opacity=\".9\"/><path d=\"M95 96 C108 92 116 84 124 70\" stroke=\"#2fa24b\" stroke-width=\"16\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M128 56 L140 50 M134 68 L148 68\" stroke=\"#2fa24b\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" },
-        { t: "찌그러뜨려 넣기", s: "오른쪽 <b>플라스틱 투입구</b>에 넣어요",
-          svg: "<g transform=\"rotate(-70 82 36)\"><rect x=\"76\" y=\"10\" width=\"12\" height=\"7\" rx=\"2\" fill=\"#8ec5ee\" stroke=\"#1c2a3a\" stroke-width=\"3\"/><path d=\"M75 17 L89 17 L93 26 L89 34 L93 42 L90 58 Q89 61 86 61 L78 61 Q75 61 74 58 L71 42 L75 34 L71 26 Z\" fill=\"#e6f3fc\" stroke=\"#1c2a3a\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/></g><path d=\"M96 54 Q104 66 90 78\" stroke=\"#2f9c4c\" stroke-width=\"3.5\" fill=\"none\" stroke-dasharray=\"5 6\" stroke-linecap=\"round\"/><path d=\"M79 78 L86 86 L93 78\" stroke=\"#2f9c4c\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"47\" y=\"94\" width=\"78\" height=\"12\" rx=\"3\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\"/><path d=\"M51 104 L121 104 L117 152 Q116 156 112 156 L60 156 Q56 156 55 152 Z\" fill=\"#2f9c4c\" stroke=\"#1f3a28\" stroke-width=\"3.5\" stroke-linejoin=\"round\"/><path d=\"M86 140 L86 118 M78 126 L86 118 L94 126\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M79 148 L93 148\" stroke=\"#fff\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>" }
-      ]
-    }
-  };
+  /* ---------- 쓰레기 종류별 안내 내용 ---------- */
+  var INK = '#1c2a3a';
 
-  var GUIDE_TYPES = ['general', 'paper', 'can', 'plastic'];   // 음식물 안내 화면은 없음 (음식물 투입구는 그대로 표시)
-
-  // 쓰레기통 배치 값 (1920×1080 스테이지 기준)
-  var BINS_W = 746, BIN_W = 108, BIN_ACTIVE_W = 156, BIN_GAP = 10, BINS_LEFT = 1055;
-
-  /**
-   * 인식 결과(쓰레기 종류)에 맞는 분리배출 안내 화면을 그림
-   * @param {'general'|'paper'|'can'|'plastic'} type
-   */
-  function renderGuide(type) {
-    var g = GUIDES[type];
-    if (!g) return;
-
-    // 제목
-    var title = document.querySelector('#screen-result .g-title');
-    if (title) title.innerHTML = '<em>' + g.name + '</em> 이렇게 버려 주세요';
-
-    // 3단계 카드
-    ['.g-c1', '.g-c2', '.g-c3'].forEach(function (sel, i) {
-      var card = document.querySelector('#screen-result ' + sel);
-      if (!card) return;
-      var step = g.steps[i];
-      card.querySelector('.g-ill').innerHTML = '<svg viewBox="0 0 172 172" aria-hidden="true">' + step.svg + '</svg>';
-      card.querySelector('.g-t').textContent = step.t;
-      card.querySelector('.g-s').innerHTML = step.s;
-    });
-
-    // 해당 투입구 강조 + 쓰레기통 가로 배치 (가운데 정렬)
-    var bins = document.querySelectorAll('#screen-result .g-bin');
-    var total = 0;
-    Array.prototype.forEach.call(bins, function (bin) {
-      total += (bin.dataset.bin === type ? BIN_ACTIVE_W : BIN_W);
-    });
-    total += BIN_GAP * (bins.length - 1);
-    var x = (BINS_W - total) / 2;
-    var activeCenter = null;
-    Array.prototype.forEach.call(bins, function (bin) {
-      var isActive = bin.dataset.bin === type;
-      var w = isActive ? BIN_ACTIVE_W : BIN_W;
-      bin.classList.toggle('g-active', isActive);
-      bin.style.left = x + 'px';
-      if (isActive) activeCenter = BINS_LEFT + x + w / 2;
-      x += w + BIN_GAP;
-    });
-
-    // "여기에 넣어요!" 말풍선과 화살표를 강조된 투입구 위로
-    if (activeCenter !== null) {
-      var tip = document.querySelector('#screen-result .g-tip');
-      var arrow = document.querySelector('#screen-result .g-tip-arrow');
-      if (tip) tip.style.left = (activeCenter - 102.5) + 'px';
-      if (arrow) arrow.style.left = (activeCenter - 17) + 'px';
-    }
+  // 물방울 (종이 안내 1번 그림과 같은 모양)
+  function drop(x, y, color) {
+    return '<path d="M' + x + ' ' + y + ' q-5 8 0 11 q5 -3 0 -11z" fill="' + color + '"/>';
   }
 
+  // 3번 그림 공통: 위쪽 물건 → 점선 화살표 → 투입구 통 (모두 가로 중앙 정렬)
+  function binIll(item) {
+    return '<svg viewBox="0 0 172 172" aria-hidden="true">' + item +
+      '<path d="M86 59 V74" stroke="#2f9c4c" stroke-width="3.5" fill="none" stroke-dasharray="5 6" stroke-linecap="round"/>' +
+      '<path d="M79 73 L86 80 L93 73" stroke="#2f9c4c" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M51 95 L121 95 L117 147 Q116 151 112 151 L60 151 Q56 151 55 147 Z" fill="#2f9c4c" stroke="#1f3a28" stroke-width="3.5" stroke-linejoin="round"/>' +
+      '<rect x="47" y="85" width="78" height="12" rx="3" fill="#2f9c4c" stroke="#1f3a28" stroke-width="3.5"/>' +
+      '<path d="M86 135 L86 111 M78 119 L86 111 L94 119" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M79 143 L93 143" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function svg(inner) {
+    return '<svg viewBox="0 0 172 172" aria-hidden="true">' + inner + '</svg>';
+  }
+
+  var GUIDES = {
+    /* 일반 쓰레기 */
+    general: {
+      title: '<em>일반 쓰레기</em> 이렇게 버려 주세요',
+      steps: [
+        {
+          t: '재활용 안 되는 것 모으기',
+          s: '휴지·나무젓가락·오염된 포장재 등',
+          ill: svg(
+            // 구겨진 휴지 + 나무젓가락
+            '<path d="M48 92 Q44 74 60 68 Q68 56 84 62 Q100 60 104 76 Q116 86 108 102 Q106 118 88 116 Q74 126 62 114 Q44 110 48 92 Z" fill="#fff" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+            '<path d="M62 84 L76 92 L70 104 M84 76 L92 90 L102 92" stroke="' + INK + '" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M118 42 L134 126 M130 40 L146 120" stroke="#c9985a" stroke-width="6" stroke-linecap="round"/>'
+          )
+        },
+        {
+          t: '음식물·액체 비우기',
+          s: '남은 음식과 음료는 따로 버려 주세요',
+          ill: svg(
+            // 기울인 일회용 용기 + 쏟아지는 부스러기·물방울
+            '<g transform="rotate(-28 86 86)">' +
+              '<path d="M44 70 L128 70 L118 102 Q117 106 113 106 L59 106 Q55 106 54 102 Z" fill="#fff" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+              '<path d="M40 70 L132 70" stroke="' + INK + '" stroke-width="4.5" stroke-linecap="round"/>' +
+              '<path d="M50 82 L124 82" stroke="#2fa24b" stroke-width="5"/>' +
+            '</g>' +
+            '<circle cx="40" cy="110" r="4" fill="#c9985a"/>' +
+            '<circle cx="50" cy="124" r="3.5" fill="#d9ad72"/>' +
+            drop(34, 120, '#c9985a') + drop(56, 104, '#d9ad72')
+          )
+        },
+        {
+          t: '부피 줄여 넣기',
+          s: '오른쪽 <b>일반 투입구</b>에 넣어요',
+          ill: binIll(
+            // 묶은 쓰레기 봉투
+            '<path d="M72 56 Q62 56 64 44 Q66 34 78 30 L75 22 L86 27 L97 22 L94 30 Q106 34 108 44 Q110 56 100 56 Z" fill="#cfd6dd" stroke="' + INK + '" stroke-width="3.5" stroke-linejoin="round"/>' +
+            '<path d="M78 30 Q86 34 94 30" stroke="' + INK + '" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+          )
+        }
+      ]
+    },
+
+    /* 종이 */
+    paper: {
+      title: '<em>종이</em> 이렇게 버려 주세요',
+      steps: [
+        {
+          t: '음식물 깨끗이 비우기',
+          s: '남은 음식과 음료를 깨끗이 비워 주세요',
+          ill: svg(
+            '<g transform="rotate(38 88 84)">' +
+              '<path d="M60 46 L116 46 L107 116 Q106 122 100 122 L76 122 Q70 122 69 116 Z" fill="#fff" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+              '<path d="M63 70 L113 70" stroke="#2fa24b" stroke-width="5" stroke-linecap="butt"/>' +
+              '<path d="M56 46 L120 46" stroke="' + INK + '" stroke-width="4.5" stroke-linecap="round"/>' +
+            '</g>' +
+            '<path d="M52 112 q-5 8 0 11 q5 -3 0 -11z" fill="#c9985a"/>' +
+            '<path d="M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z" fill="#c9985a"/>' +
+            '<path d="M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z" fill="#d9ad72"/>'
+          )
+        },
+        {
+          t: '비닐·테이프 떼어 내기',
+          s: '코팅 비닐과 테이프는 떼어 내 주세요',
+          ill: svg(
+            '<path d="M44 88 L54 72 L126 72 L136 88 Z" fill="#f3d9a8" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+            '<rect x="44" y="88" width="92" height="58" rx="4" fill="#f3d9a8" stroke="' + INK + '" stroke-width="3.8"/>' +
+            '<path d="M96 88 C96 70 100 60 122 54" stroke="#8ec5ee" stroke-width="14" fill="none" stroke-linecap="round"/>' +
+            '<path d="M126 44 L138 38 M132 56 L146 56" stroke="#2fa24b" stroke-width="3.5" stroke-linecap="round"/>'
+          )
+        },
+        {
+          t: '납작하게 접어 넣기',
+          s: '오른쪽 <b>종이 투입구</b>에 넣어요',
+          ill: binIll(
+            '<g transform="rotate(-18 86 38)">' +
+              '<rect x="63" y="24" width="46" height="28" rx="3" fill="#f3d9a8" stroke="' + INK + '" stroke-width="3.5"/>' +
+              '<path d="M69 38 H103" stroke="' + INK + '" stroke-width="2.5" stroke-dasharray="4 3" stroke-linecap="round"/>' +
+            '</g>'
+          )
+        }
+      ]
+    },
+
+    /* 캔 */
+    can: {
+      title: '<em>캔</em> 이렇게 버려 주세요',
+      steps: [
+        {
+          t: '내용물 비우기',
+          s: '남은 음료를 깨끗이 비워 주세요',
+          ill: svg(
+            // 기울인 캔 + 떨어지는 음료
+            '<g transform="rotate(-110 92 72)">' +
+              '<rect x="72" y="42" width="40" height="60" rx="6" fill="#d5dde4" stroke="' + INK + '" stroke-width="3.8"/>' +
+              '<path d="M72 52 H112 M72 92 H112" stroke="' + INK + '" stroke-width="3"/>' +
+              '<path d="M76 70 H108" stroke="#2fa24b" stroke-width="6"/>' +
+            '</g>' +
+            drop(68, 114, '#c9985a') + drop(80, 128, '#c9985a') + drop(62, 132, '#d9ad72')
+          )
+        },
+        {
+          t: '이물질 넣지 않기',
+          s: '담배꽁초 등 이물질을 넣지 말아 주세요',
+          ill: svg(
+            // 캔 + 담배꽁초 + 금지 표시
+            '<rect x="46" y="66" width="44" height="72" rx="7" fill="#d5dde4" stroke="' + INK + '" stroke-width="3.8"/>' +
+            '<path d="M46 78 H90 M46 126 H90" stroke="' + INK + '" stroke-width="3"/>' +
+            '<path d="M50 100 H86" stroke="#2fa24b" stroke-width="6"/>' +
+            '<rect x="58" y="69" width="20" height="5" rx="2.5" fill="' + INK + '"/>' +
+            '<g transform="rotate(-30 112 48)">' +
+              '<rect x="94" y="43" width="36" height="10" rx="3" fill="#fff" stroke="' + INK + '" stroke-width="3"/>' +
+              '<rect x="94" y="43" width="12" height="10" rx="3" fill="#e8a35a" stroke="' + INK + '" stroke-width="3"/>' +
+            '</g>' +
+            '<circle cx="124" cy="100" r="16" fill="#fff" stroke="#e5534b" stroke-width="4"/>' +
+            '<path d="M117 93 L131 107 M131 93 L117 107" stroke="#e5534b" stroke-width="4" stroke-linecap="round"/>'
+          )
+        },
+        {
+          t: '납작하게 눌러 넣기',
+          s: '오른쪽 <b>캔 투입구</b>에 넣어요',
+          ill: binIll(
+            // 찌그러뜨린 캔
+            '<rect x="72" y="24" width="28" height="32" rx="5" fill="#d5dde4" stroke="' + INK + '" stroke-width="3.5"/>' +
+            '<path d="M72 31 H100 M72 49 H100" stroke="' + INK + '" stroke-width="2.5"/>' +
+            '<path d="M72 40 L79 36 L86 42 L93 36 L100 40" stroke="' + INK + '" stroke-width="2.5" fill="none" stroke-linejoin="round"/>'
+          )
+        }
+      ]
+    },
+
+    /* 플라스틱 */
+    plastic: {
+      title: '<em>플라스틱</em> 이렇게 버려 주세요',
+      steps: [
+        {
+          t: '내용물 비우기',
+          s: '남은 음료와 얼음을 비워 주세요',
+          ill: svg(
+            // 기울인 플라스틱 컵 + 물방울·얼음
+            '<g transform="rotate(-110 88 84)">' +
+              '<path d="M60 46 L116 46 L107 116 Q106 122 100 122 L76 122 Q70 122 69 116 Z" fill="#e3f3fc" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+              '<path d="M56 46 L120 46" stroke="' + INK + '" stroke-width="4.5" stroke-linecap="round"/>' +
+              '<path d="M63 70 L113 70" stroke="#2fa24b" stroke-width="5"/>' +
+            '</g>' +
+            drop(62, 132, '#8ec5ee') + drop(74, 142, '#8ec5ee') +
+            '<rect x="40" y="128" width="12" height="12" rx="2.5" fill="#fff" stroke="#8ec5ee" stroke-width="3" transform="rotate(18 46 134)"/>'
+          )
+        },
+        {
+          t: '라벨·뚜껑 분리하기',
+          s: '비닐 라벨을 떼고 뚜껑은 분리해 주세요',
+          ill: svg(
+            // 페트병 + 떼어 내는 라벨 + 분리한 뚜껑
+            '<path d="M68 52 L84 52 L84 60 Q100 66 100 80 L100 140 Q100 148 92 148 L60 148 Q52 148 52 140 L52 80 Q52 66 68 60 Z" fill="#d6ecf8" stroke="' + INK + '" stroke-width="3.8" stroke-linejoin="round"/>' +
+            '<rect x="52" y="96" width="30" height="26" fill="#9fd4a8" stroke="' + INK + '" stroke-width="3"/>' +
+            '<path d="M82 96 Q102 90 118 104 L112 126 Q98 116 82 122 Z" fill="#9fd4a8" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
+            '<rect x="106" y="30" width="22" height="16" rx="3" fill="#2f9c4c" stroke="#1f3a28" stroke-width="3.5" transform="rotate(20 117 38)"/>' +
+            '<path d="M90 46 L100 40 M136 58 L148 62" stroke="#2fa24b" stroke-width="3.5" stroke-linecap="round"/>'
+          )
+        },
+        {
+          t: '찌그러뜨려 넣기',
+          s: '오른쪽 <b>플라스틱 투입구</b>에 넣어요',
+          ill: binIll(
+            // 뚜껑 뺀 페트병
+            '<path d="M80 20 L92 20 L92 27 Q102 31 102 40 L102 52 Q102 56 98 56 L74 56 Q70 56 70 52 L70 40 Q70 31 80 27 Z" fill="#d6ecf8" stroke="' + INK + '" stroke-width="3.5" stroke-linejoin="round"/>' +
+            '<path d="M75 46 L81 41 M91 50 L97 45" stroke="#8ec5ee" stroke-width="3" stroke-linecap="round"/>'
+          )
+        }
+      ]
+    }  // 음식물 쓰레기 안내 화면은 사용하지 않음 (오른쪽 음식물 통은 그대로 표시)
+  };
+
+  var GUIDE_TYPES = ['general', 'paper', 'can', 'plastic'];
+
   /**
-   * 안내할 쓰레기 종류 결정
-   * — 인식 시스템을 만들기 전까지는 무작위로 선택
-   * — 인식 시스템 연동 후에는 recognizedType에 인식 결과('general'|'paper'|'can'|'plastic')를 넣으면 그 안내가 표시됨
+   * AI 인식 결과(쓰레기 종류)를 돌려줌.
+   * TODO: 인식 시스템이 만들어지면 실제 인식 결과('general'|'paper'|'can'|'plastic')를 반환하도록 교체
+   * 지금은 인식 시스템이 없으므로 랜덤으로 선택
    */
-  var recognizedType = null;
-  function pickGuideType() {
-    if (recognizedType && GUIDES[recognizedType]) return recognizedType;
+  function getRecognizedType() {
     return GUIDE_TYPES[Math.floor(Math.random() * GUIDE_TYPES.length)];
   }
 
-  // 인식 시스템 연동용: 외부에서 인식 결과를 넘겨 안내 화면을 바로 바꿀 수 있음
-  window.showRecycleGuide = function (type) {
-    recognizedType = type;
-    renderGuide(type);
-  };
+  /** 안내 화면 내용을 쓰레기 종류에 맞게 바꿈 */
+  function renderGuide(type) {
+    var guide = GUIDES[type] || GUIDES.paper;
+    var stage = document.getElementById('g-stage');
+    if (!stage) return;
 
-  function initResult() {
+    var title = stage.querySelector('.g-title');
+    if (title) title.innerHTML = guide.title;
+
+    ['.g-c1', '.g-c2', '.g-c3'].forEach(function (sel, i) {
+      var card = stage.querySelector(sel);
+      var step = guide.steps[i];
+      if (!card || !step) return;
+      var ill = card.querySelector('.g-ill');
+      var t = card.querySelector('.g-t');
+      var s = card.querySelector('.g-s');
+      if (ill) ill.innerHTML = step.ill;
+      if (t) t.textContent = step.t;
+      if (s) s.innerHTML = step.s;
+    });
+
+    // 해당 투입구 강조
+    var bins = stage.querySelectorAll('.g-bin');
+    Array.prototype.forEach.call(bins, function (bin) {
+      bin.classList.toggle('g-active', bin.dataset.bin === type);
+    });
+
+    placeGuideTip();
+  }
+
+  /** "여기에 넣어요!" 말풍선·화살표를 강조된 통 위 가운데로 */
+  function placeGuideTip() {
+    var binsWrap = document.querySelector('#screen-result .g-bins');
+    var active = binsWrap && binsWrap.querySelector('.g-bin.g-active');
+    var tip = document.querySelector('#screen-result .g-tip');
+    var arrow = document.querySelector('#screen-result .g-tip-arrow');
+    if (!active) return;
+    var cx = binsWrap.offsetLeft + active.offsetLeft + active.offsetWidth / 2;
+    if (tip)   tip.style.left   = (cx - 205 / 2) + 'px';
+    if (arrow) arrow.style.left = (cx - 34 / 2) + 'px';
+  }
+
+  renderGuide('paper');
+
+  function initResult(type) {
+    renderGuide(type);
     fitGuideStage();
-    renderGuide(pickGuideType());
     // 진입 효과 (위치는 그대로, 순서대로 나타남)
     var els = [
       document.querySelector('.g-title'),
@@ -614,6 +746,15 @@
         window.location.reload();
       }
     }, 1000);
+  }
+
+  // 완료 화면 카운트다운 옆 홈 버튼 → 처음 화면으로 (새로 고침)
+  var completeHomeBtn = document.getElementById('complete-home-btn');
+  if (completeHomeBtn) {
+    completeHomeBtn.addEventListener('click', function () {
+      if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+      window.location.reload();
+    });
   }
 
   // 팀 선택 / 촬영 화면 상단 홈 버튼 → 홈 화면으로
