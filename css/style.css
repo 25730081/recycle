@@ -487,6 +487,18 @@ html, body {
 
 .home-content .btn-arrow { font-size: clamp(26px, 4vh, 40px); line-height: 1; margin-top: -0.12em; }
 
+/* 시작 안내 문구 — 적립 완료 화면 카운트다운 문구와 같은 회색·폰트 */
+.home-touch-text {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: clamp(18px, 2.8vh, 26px);
+  font-weight: 500;
+  color: #9aa3ab;
+  white-space: nowrap;
+}
+
+/* 홈 화면은 아무 곳이나 터치하면 시작 */
+#screen-home { cursor: pointer; }
+
 /* ============================================================
    [화면 2] 좌석번호 입력 / [화면 3] 팀 선택 / [화면 4] 촬영
    — 공통 배경
@@ -912,6 +924,7 @@ html, body {
 
 /* 팀 카드 컨테이너 (좌우 반반) */
 .ts-cards {
+  position: relative;
   flex: 1;
   min-height: 0;
   width: min(100%, 72vw);   /* 두 마스코트를 가운데 쪽으로 */
@@ -960,22 +973,24 @@ html, body {
   transition: filter 0.25s ease;
 }
 
-/* 마스코트 테두리 모양대로 퍼지는 팀 컬러 글로우 (약 5cm 이상) */
-.ts-left .ts-mascot {
-  filter:
-    drop-shadow(0 0 4px rgba(255,140,30,1))
-    drop-shadow(0 0 22px rgba(255,122,0,0.9))
-    drop-shadow(0 0 60px rgba(255,122,0,0.8))
-    drop-shadow(0 0 120px rgba(255,140,30,0.65))
-    drop-shadow(0 0 190px rgba(255,140,30,0.5));   /* 약 5cm 이상 */
+/* 마스코트 뒤 팀 로고 — 붓터치처럼 흩날리며 퍼지는 효과 */
+.ts-logo-fx {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 100%;
+  max-height: 46vh;   /* 마스코트 높이와 동일 */
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+  animation: logoDrift 4s ease-in-out infinite;
 }
-.ts-right .ts-mascot {
-  filter:
-    drop-shadow(0 0 4px rgba(70,135,240,1))
-    drop-shadow(0 0 22px rgba(40,100,220,0.9))
-    drop-shadow(0 0 60px rgba(40,100,220,0.8))
-    drop-shadow(0 0 120px rgba(70,135,240,0.65))
-    drop-shadow(0 0 190px rgba(70,135,240,0.5));   /* 약 5cm 이상 */
+.ts-logo-fx img { display: block; height: 100%; width: auto; }
+.ts-right .ts-logo-fx { animation-delay: 1.2s; }
+
+@keyframes logoDrift {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-6px); }
 }
 
 .ts-right .ts-mascot { animation-delay: 1.4s; }
@@ -995,25 +1010,10 @@ html, body {
   50%       { transform: translateY(-16px) scale(1.06) rotate(2deg); }
 }
 
-/* 마우스 오버 시 팀 컬러 글로우 */
-.ts-left:hover .ts-mascot,
-.ts-left:focus-visible .ts-mascot {
-  filter:
-    drop-shadow(0 0 6px rgba(255,140,30,1))
-    drop-shadow(0 0 26px rgba(255,122,0,1))
-    drop-shadow(0 0 70px rgba(255,122,0,0.9))
-    drop-shadow(0 0 130px rgba(255,140,30,0.75))
-    drop-shadow(0 0 200px rgba(255,140,30,0.55));
-}
-.ts-right:hover .ts-mascot,
-.ts-right:focus-visible .ts-mascot {
-  filter:
-    drop-shadow(0 0 6px rgba(70,135,240,1))
-    drop-shadow(0 0 26px rgba(40,100,220,1))
-    drop-shadow(0 0 70px rgba(40,100,220,0.9))
-    drop-shadow(0 0 130px rgba(70,135,240,0.75))
-    drop-shadow(0 0 200px rgba(70,135,240,0.55));
-}
+/* 마우스 오버 시 로고 붓터치 효과 강조 */
+.ts-card .ts-logo-fx { transition: filter 0.25s ease; }
+.ts-card:hover .ts-logo-fx,
+.ts-card:focus-visible .ts-logo-fx { filter: brightness(1.08) saturate(1.1); }
 
 /* ── 축하 팡파레: 마우스 오버 시 마스코트 머리 위에서 터짐 ── */
 .ts-fanfare {
@@ -1079,56 +1079,79 @@ html, body {
 .ts-left  .ff11 { background-color: #1a1a1a; }
 .ts-right .ff11 { background-color: #e60026; }
 
+/* 두 마스코트 사이 VS (대결 구도만 보이도록 은은하게) */
+.ts-vs {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2vh;
+  z-index: 1;
+  pointer-events: none;
+}
+.ts-vs::before,
+.ts-vs::after {
+  content: '';
+  width: 2px;
+  height: 7vh;
+  border-radius: 2px;
+}
+.ts-vs::before { background: linear-gradient(180deg, rgba(31,45,58,0), rgba(31,45,58,0.28)); }
+.ts-vs::after  { background: linear-gradient(180deg, rgba(31,45,58,0.28), rgba(31,45,58,0)); }
+
+.ts-vs-text {
+  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-size: clamp(34px, 6.4vh, 64px);
+  line-height: 1;
+  letter-spacing: 2px;
+  color: rgba(31,45,58,0.55);
+  font-style: italic;
+}
+
 /* 한쪽에 마우스를 올리면 다른 팀은 살짝 흐리게 */
 .ts-cards:has(.ts-card:hover) .ts-card:not(:hover) { opacity: 0.6; }
 
-/* 팀 이름 버튼 */
-.ts-select-btn {
+/* 팀 이름 버튼 (원본 1672×941 캔버스 기준 444×93 / 40px 비율을 화면 높이 기준으로 환산) */
+.team-btn {
   flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(170px, 24vh, 250px);   /* 마스코트 가로폭보다 작게 */
-  height: clamp(46px, 6.6vh, 64px);
-  padding: 0 18px;
-  border: none;
+  width: min(80%, 36vh);
+  height: 7.6vh;
+  border: 0;
   border-radius: 999px;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(18px, 3vh, 28px);
-  font-weight: 900;
-  letter-spacing: 1px;
-  color: #fff;
   cursor: pointer;
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 3.3vh;
+  color: #fff;
+  letter-spacing: -.5px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 14px rgba(0,0,0,.22), inset 0 -4px 0 rgba(0,0,0,.12), inset 0 3px 0 rgba(255,255,255,.35);
+  transition: transform .15s;
+}
+.team-btn span { position: relative; z-index: 2; text-shadow: 0 2px 3px rgba(0,0,0,.3); }
+.team-btn:hover { transform: translateY(-4px); }
+.team-btn:active { transform: translateY(1px) scale(.98); }
+.team-btn:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+
+.team-btn.eagles {
+  background:
+    repeating-linear-gradient(115deg, rgba(255,255,255,0) 0 60px, rgba(255,255,255,.25) 60px 78px, rgba(255,255,255,0) 78px 110px),
+    linear-gradient(180deg, #ff9a3a, #f57a0f);
+}
+.team-btn.giants {
+  background:
+    linear-gradient(115deg, transparent 0 9%, #e8283c 9% 11.5%, transparent 11.5% 14%, #e8283c 14% 15.5%, transparent 15.5% 84%, #e8283c 84% 86%, transparent 86% 89%, #e8283c 89% 92%, transparent 92%),
+    linear-gradient(180deg, #1f2f6b, #14214f);
 }
 
-/* 팀 컬러 버튼 */
-.ts-left .ts-select-btn {
-  background: linear-gradient(180deg, rgba(255,146,52,0.62) 0%, rgba(242,107,0,0.62) 100%);
-  box-shadow: 0 6px 18px rgba(200,90,0,0.25);
-  text-shadow: 0 1px 2px rgba(110,40,0,0.85), 0 0 8px rgba(110,40,0,0.55);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-}
-.ts-right .ts-select-btn {
-  background: linear-gradient(180deg, rgba(61,122,230,0.62) 0%, rgba(32,88,200,0.62) 100%);
-  box-shadow: 0 6px 18px rgba(20,70,190,0.25);
-  text-shadow: 0 1px 2px rgba(5,25,90,0.85), 0 0 8px rgba(5,25,90,0.55);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-}
-
-.ts-card:hover .ts-select-btn,
-.ts-card:focus-visible .ts-select-btn {
-  transform: translateY(-3px);
-  filter: brightness(1.08);
-}
-.ts-left:hover .ts-select-btn,
-.ts-left:focus-visible .ts-select-btn  { box-shadow: 0 0 22px rgba(255,122,0,0.85); }
-.ts-right:hover .ts-select-btn,
-.ts-right:focus-visible .ts-select-btn { box-shadow: 0 0 22px rgba(40,100,220,0.85); }
-
-.ts-select-btn:active { transform: scale(0.95); }
+/* 선택 효과 */
+.team-btn.selected { animation: pop .5s ease; }
+@keyframes pop { 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
 
 /* ============================================================
    [화면 4] AI 쓰레기 인식 (촬영)
@@ -1152,7 +1175,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   padding: 0 4vw 4vh;
-  overflow: hidden;
+  overflow: visible;   /* 메인 문구 윗부분이 잘리지 않도록 */
 }
 
 .cam-stage {
@@ -1488,334 +1511,102 @@ html, body {
 }
 
 /* ============================================================
-   [화면 5] 분리배출 안내 (result)
+   [화면 5] 분리배출 안내 (guide 디자인)
+   1920 x 1080 고정 스테이지를 화면 크기에 맞춰 스케일링 (app.js fitGuideStage)
    ============================================================ */
-
-/* ── 다른 화면과 동일한 배경/헤더 ── */
-#screen-result .seat-bg {
-  background: linear-gradient(
-    180deg,
-    #d8ecf8 0%,
-    #e6f3fb 40%,
-    #ffffff 78%,
-    #c4e3c8 100%
-  );
-}
-
-#screen-result .deco-corner { display: none; }
-
-#screen-result .seat-header { padding: 22px 36px 0; }
-
-#screen-result .logo-title    { color: #1f2d3a; }
-#screen-result .logo-subtitle { color: #5a6b7a; }
-
-#screen-result .step-badge {
-  padding: 9px 20px;
-  box-shadow: 0 4px 14px rgba(30,60,90,0.10);
-}
-
-#screen-result .step-num,
-#screen-result .step-dot,
-#screen-result .step-label { color: #138a50; }
-
-.result-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.result-content {
-  flex: 1;
-  display: flex;
-  align-items: stretch;
-  gap: 36px;
-  padding: 20px 48px 32px;
+#screen-result {
   overflow: hidden;
-  min-height: 0;
+  font-family: 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: linear-gradient(180deg,#d6e9f7 0%,#e4f0f9 30%,#f3f8fb 62%,#e2f0e0 82%,#c6e2c3 100%);
 }
+#screen-result * { box-sizing: border-box; }
 
-/* ── 왼쪽: AI 인식 결과 카드 (크게) ── */
-.result-left-card {
-  flex: 0 0 46%;
-  min-height: 0;
-  background: #fff;
-  border-radius: 32px;
-  box-shadow: 0 16px 48px rgba(30,60,90,0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 26px 32px 30px;
-  overflow: hidden;
+#screen-result * {margin:0;padding:0;box-sizing:border-box}
+#screen-result .g-stage {position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
+#screen-result .g-stage>* {position:absolute}
+#screen-result .g-logo {left:44px;top:30px;width:170px;height:76px}
+#screen-result .g-home {left:1804px;top:32px;width:72px;height:72px;border:0;border-radius:50%;background:#fff;
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 5px 16px rgba(40,90,140,.16);transition:transform .15s}
+#screen-result .g-home svg {width:34px;height:34px}
+#screen-result .g-home:hover {transform:scale(1.07)}
+#screen-result .g-home:active {transform:scale(.96)}
+#screen-result .g-title {left:110px;top:112px;font-weight:900;font-size:88px;line-height:116px;letter-spacing:-5px;color:#1f2a37;white-space:nowrap}
+#screen-result .g-title em {font-style:normal;color:#22a04a}
+#screen-result .g-steps-line {left:149px;top:380px;width:4px;height:530px;background:linear-gradient(180deg,#b7dcbf,#a6d3b0);border-radius:2px}
+#screen-result .g-badge {left:110px;width:82px;height:82px;border-radius:22px;display:grid;place-items:center;
+  background:linear-gradient(180deg,#2fa64d,#27943f);color:#fff;font-weight:900;font-size:46px;
+  box-shadow:0 6px 12px rgba(30,120,60,.22)}
+#screen-result .g-b1 {top:333px}
+#screen-result .g-b2 {top:600px}
+#screen-result .g-b3 {top:868px}
+#screen-result .g-card {left:218px;width:752px;height:246px;border-radius:40px;background:#fff;
+  box-shadow:0 12px 32px rgba(70,110,150,.08)}
+#screen-result .g-c1 {top:251px}
+#screen-result .g-c2 {top:518px}
+#screen-result .g-c3 {top:786px}
+#screen-result .g-card>* {position:absolute}
+#screen-result .g-ill {left:52px;top:37px;width:172px;height:172px;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,#eef7ef 0%,#e2f1e5 70%,#d9ecdd 100%)}
+#screen-result .g-ill svg {width:88%;height:88%;margin:6%}
+#screen-result .g-card .g-t {left:224px;width:524px;top:78px;text-align:center;font-weight:900;font-size:40px;line-height:52px;
+  letter-spacing:-1.5px;color:#1f2a37}
+#screen-result .g-card .g-s {left:224px;width:524px;top:137px;text-align:center;font-weight:400;font-size:25px;line-height:34px;
+  letter-spacing:-.6px;color:#3b4652}
+#screen-result .g-card .g-s b {font-weight:700;color:#1f9a45}
+#screen-result .g-c2 .g-s {left:200px;width:572px;font-size:25px}
+#screen-result .g-panel {left:1026px;top:251px;width:804px;height:670px;border-radius:40px;
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.86));
+  box-shadow:0 12px 32px rgba(70,110,150,.08)}
+#screen-result .g-panel-label {position:absolute;left:40px;top:30px;display:flex;align-items:center;gap:10px;
+  font-weight:700;font-size:28px;color:#4a5560;letter-spacing:-.5px}
+#screen-result .g-panel-label i {width:13px;height:13px;border-radius:50%;background:#2b9c47;display:block}
+#screen-result .g-tip {left:1208px;top:321px;width:205px;height:61px;border-radius:31px;background:#1b2735;color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:27px;letter-spacing:-.5px;z-index:3}
+#screen-result .g-tip-arrow {left:1293px;top:392px;width:34px;height:36px;z-index:3}
+#screen-result .g-bins {left:1055px;top:0;width:746px;height:1080px;pointer-events:none}
+#screen-result .g-bin {position:absolute;width:108px;left:0;top:0;pointer-events:auto;cursor:pointer}
+/* 쓰레기통 5개 기본 위치 (종이 강조 기준) — 실제 위치는 강조된 투입구에 맞춰 app.js에서 다시 계산 */
+#screen-result .g-bin:nth-child(1) {left:59px}
+#screen-result .g-bin:nth-child(2) {left:177px}
+#screen-result .g-bin:nth-child(3) {left:343px}
+#screen-result .g-bin:nth-child(4) {left:461px}
+#screen-result .g-bin:nth-child(5) {left:579px}
+#screen-result .g-bin .g-lid {position:absolute;left:0;top:499px;width:108px;height:44px;border-radius:18px 18px 10px 10px;
+  background:#d2d9e0;display:grid;place-items:center}
+#screen-result .g-bin .g-slot {width:54px;height:11px;border-radius:6px;background:#9aa5b1}
+#screen-result .g-bin .g-body {position:absolute;left:5px;top:549px;width:98px;height:339px;border-radius:20px 20px 28px 28px;
+  background:#e5eaef;color:#a8b2bc;display:flex;flex-direction:column;align-items:center;padding-top:122px;gap:10px;
+  font-weight:700;font-size:22px;letter-spacing:-.3px;white-space:nowrap}
+#screen-result .g-bin .g-body svg {width:44px;height:44px}
+#screen-result .g-bin.g-active {width:156px}
+#screen-result .g-bin.g-active .g-lid {top:439px;width:156px;background:#2d9d48}
+#screen-result .g-bin.g-active .g-slot {width:76px;height:13px;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.9)}
+#screen-result .g-bin.g-active .g-body {top:489px;left:7px;width:142px;height:399px;background:#2f9f49;color:#fff;
+  padding-top:132px;gap:20px;font-size:34px;font-weight:900;letter-spacing:-.5px}
+#screen-result .g-bin.g-active .g-body svg {width:56px;height:56px}
+#screen-result .g-bin:not(.g-active):hover .g-body {background:#dde4ea}
+
+/* 숨겨진(비활성) 안내 화면의 쓰레기통이 다른 화면(좌석 숫자 키패드 등)의 클릭을 가로채지 않도록 */
+#screen-result:not(.active) .g-bin {pointer-events:none}
+#screen-result .g-done {left:1026px;top:944px;width:698px;height:88px;border:0;border-radius:44px;cursor:pointer;
+  background:linear-gradient(180deg,#2fa24b,#27943f);color:#fff;font-family:inherit;font-weight:900;font-size:35px;
+  letter-spacing:-.5px;box-shadow:0 8px 16px rgba(30,120,60,.2);transition:transform .15s}
+#screen-result .g-done:hover {transform:translateY(-3px)}
+#screen-result .g-done:active {transform:translateY(1px) scale(.99)}
+#screen-result .g-reset {left:1742px;top:944px;width:88px;height:88px;border:0;border-radius:50%;background:#fff;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 6px 16px rgba(40,90,140,.14);transition:transform .15s}
+#screen-result .g-reset svg {width:44px;height:44px}
+#screen-result .g-reset:hover {transform:rotate(-25deg)}
+#screen-result .g-reset:active {transform:scale(.95)}
+
+/* 공통 로고 / 홈 버튼 스타일을 guide 디자인에 맞춰 덮어쓰기 */
+#screen-result .g-logo { align-self: auto; }
+#screen-result .g-logo .logo-icon { width: 100%; height: 100%; margin: 0; object-fit: contain; }
+#screen-result .g-home {
+  padding: 0; border: 0; color: inherit;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
 }
-
-/* 상단 라벨 (알약 형태) */
-.result-label {
-  order: -1;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #e8f5e9;
-  color: #138a50;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: 30px;
-  flex-shrink: 0;
-}
-
-.result-label::before {
-  content: '';
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #16a05a;
-  animation: pulseDot 1.4s ease-in-out infinite;
-}
-
-/* 큰 아이콘 영역 */
-.result-icon-wrap {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(circle at 50% 55%, #ffffff 0%, #e4f3e8 55%, #d3ebdb 100%);
-  border-radius: 24px;
-  overflow: hidden;
-}
-
-.result-bottle-svg {
-  height: min(42vh, 380px);
-  width: auto;
-  filter: drop-shadow(0 12px 18px rgba(30,90,50,0.18));
-}
-
-.result-material {
-  font-size: clamp(52px, 10vh, 92px);
-  font-weight: 900;
-  color: #138a50;
-  letter-spacing: -2px;
-  line-height: 1.05;
-  flex-shrink: 0;
-}
-
-.result-accuracy {
-  font-size: 16px;
-  color: #5a6b7a;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-/* 정확도 막대 */
-.result-accuracy-bar {
-  width: 72%;
-  height: 10px;
-  background: #e3efe6;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.result-accuracy-bar span {
-  display: block;
-  height: 100%;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #43a047, #16a05a);
-}
-
-/* ── 오른쪽: 안내 패널 ── */
-.result-right-panel {
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.result-title {
-  font-size: clamp(34px, 6vh, 52px);
-  font-weight: 900;
-  color: #1f2d3a;
-  line-height: 1.2;
-  flex-shrink: 0;
-}
-
-/* 단계 리스트: 남는 세로 공간을 균등하게 채움 */
-.result-steps {
-  flex: 1;
-  min-height: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.result-step-item {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: #fff;
-  border-radius: 22px;
-  padding: 0 26px;
-  box-shadow: 0 8px 24px rgba(30,60,90,0.08);
-}
-
-.result-step-num {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  background: linear-gradient(135deg, #43a047, #138a50);
-  color: #fff;
-  font-size: 20px;
-  font-weight: 900;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(19,138,80,0.30);
-}
-
-.result-step-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1f2d3a;
-  line-height: 1.4;
-}
-
-/* 투입 안내 카드 */
-.result-disposal-guide {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 22px 24px;
-  background: linear-gradient(135deg, #e8f5e9, #d4ece2);
-  border: 2px solid #bfe0c8;
-  border-radius: 22px;
-}
-
-.disposal-item-icon {
-  width: 30px;
-  height: auto;
-  flex-shrink: 0;
-}
-
-.disposal-arrow {
-  font-size: 26px;
-  color: #138a50;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.disposal-bin-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #43a047, #138a50);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(19,138,80,0.35);
-}
-
-.disposal-text {
-  flex: 1;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2d3a;
-}
-
-/* 투입구 이름 강조 */
-.disposal-target {
-  display: inline-block;
-  margin-right: 4px;
-  padding: 4px 16px;
-  font-size: 30px;
-  font-weight: 900;
-  color: #fff;
-  background: linear-gradient(135deg, #43a047, #1b5e20);
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(19,138,80,0.35);
-}
-
-/* 분리배출 했어요 버튼 */
-.result-done-btn {
-  flex-shrink: 0;
-  width: 100%;
-  padding: 22px;
-  background: linear-gradient(135deg, #43a047, #1b5e20);
-  color: #fff;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  box-shadow: 0 8px 28px rgba(46,125,50,0.40);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-}
-
-.result-done-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 34px rgba(46,125,50,0.50);
-  filter: brightness(1.06);
-}
-
-.result-done-btn:active {
-  transform: translateY(0);
-  filter: brightness(0.96);
-}
-
-/* 다시 인식하기 + 분리배출 완료 버튼 행 */
-.result-btn-row {
-  flex-shrink: 0;
-  display: flex;
-  gap: 14px;
-}
-
-.result-btn-row .result-done-btn {
-  flex: 1;
-  width: auto;
-}
-
-.result-retry-btn {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 36px;
-  background: #fff;
-  color: #2e7d32;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  border: 2px solid #2e7d32;
-  border-radius: 50px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: background 0.15s ease, transform 0.15s ease;
-}
-
-.result-retry-btn:hover  { background: #e8f5e9; transform: translateY(-2px); }
-.result-retry-btn:active { background: #c8e6c9; transform: translateY(0); }
-
-@media (max-width: 900px) {
-  .result-content { flex-direction: column; padding: 16px 20px 24px; overflow-y: auto; }
-  .result-left-card { flex: none; height: 46vh; }
-  .result-step-item { padding: 16px 20px; }
-}
+#screen-result .g-home:hover { background: #fff; }
 
 /* ============================================================
    반응형
@@ -1829,7 +1620,8 @@ html, body {
   .ts-card { max-width: 100%; width: 100%; height: 30vh; padding: 0; }
   .team-sel-title { font-size: 36px; }
   .ts-name-ko { font-size: 18px; }
-  .ts-vs { padding: 8px 0; }
+  .ts-vs { position: static; transform: none; padding: 8px 0; }
+  .ts-vs::before, .ts-vs::after { display: none; }
   .ts-vs-text { font-size: 28px; }
   .ts-steps { flex-wrap: wrap; justify-content: center; gap: 6px; }
   .ts-step { font-size: 12px; }
