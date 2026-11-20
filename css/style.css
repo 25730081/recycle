@@ -591,8 +591,8 @@ html, body {
 
 /* ── 좌석번호 입력 화면 본문 (시안 기준 리디자인) ──
    --u: 1920×1080 기준 1vh (가로가 좁은 화면에서는 가로 기준으로 줄어듦)
-   왼쪽 묶음 중심: 가로 31% / 세로 49.2%, 숫자 패드 중심: 가로 78% / 세로 47.4% (확대에 맞춰 양쪽으로 조금 벌림) */
-#screen-seat { --u: min(1.18vh, 0.664vw); }   /* 모든 요소 약 18% 확대 */
+   왼쪽 묶음 중심: 가로 33% / 세로 49.2%, 숫자 패드 중심: 가로 76.5% / 세로 47.4% (확대에 맞춰 양쪽으로 조금 벌림) */
+#screen-seat { --u: min(1.04vh, 0.585vw); }   /* 모든 요소 약 4% 확대 */
 
 .seat-content {
   position: absolute;
@@ -603,7 +603,7 @@ html, body {
 /* 왼쪽: 제목 + 안내 + 입력칸 */
 .left-panel {
   position: absolute;
-  left: 31%;
+  left: 33%;
   top: 49.2%;
   transform: translate(-50%, -50%);
   width: calc(var(--u) * 76.7);
@@ -654,7 +654,7 @@ html, body {
 .input-group:first-child { flex: 1.05; }
 .input-group:not(:first-child) { flex: 1; }
 
-/* 칸 이름: 회색 알약 */
+/* 칸 이름: 입력 중인 칸의 이름 뒤에만 회색 원형 배경 */
 .input-label {
   display: inline-flex;
   align-items: center;
@@ -663,11 +663,14 @@ html, body {
   height: calc(var(--u) * 4.7);
   padding: 0 calc(var(--u) * 2.4);
   border-radius: 999px;
-  background: #e5e9ed;
+  background: transparent;
   font-size: calc(var(--u) * 2.35);
   font-weight: 700;
   color: #1f2d3a;
+  transition: background 0.2s ease;
 }
+
+.input-group.is-active .input-label { background: #e5e9ed; }
 
 .input-box {
   width: 100%;
@@ -712,7 +715,7 @@ html, body {
 /* 오른쪽: 숫자 패드 카드 */
 .right-panel {
   position: absolute;
-  left: 78%;
+  left: 76.5%;
   top: 47.4%;
   transform: translate(-50%, -50%);
   width: calc(var(--u) * 48);
