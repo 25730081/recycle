@@ -964,14 +964,14 @@ html, body {
 .ts-logo-fx {
   position: absolute;
   left: 50%;
-  bottom: 14%;
-  width: 150%;
+  bottom: 8%;
+  width: 140%;
   transform: translateX(-50%);
   z-index: 1;
   pointer-events: none;
   animation: logoDrift 4s ease-in-out infinite;
 }
-.ts-logo-fx svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ts-logo-fx img { display: block; width: 100%; height: auto; }
 .ts-right .ts-logo-fx { animation-delay: 1.2s; }
 
 @keyframes logoDrift {
