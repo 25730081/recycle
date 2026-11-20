@@ -748,22 +748,12 @@
     }, 1000);
   }
 
-  // 완료 화면 카운트다운 옆 홈 버튼 → 처음 화면으로 (새로 고침)
-  var completeHomeBtn = document.getElementById('complete-home-btn');
-  if (completeHomeBtn) {
-    completeHomeBtn.addEventListener('click', function () {
-      if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-      window.location.reload();
-    });
-  }
-
-  // 팀 선택 / 촬영 화면 상단 홈 버튼 → 홈 화면으로
+  // 모든 화면 상단 홈 버튼 → 처음 시작 화면으로 (새로 고침)
   var navHomeBtns = document.querySelectorAll('.nav-home-btn');
   Array.prototype.forEach.call(navHomeBtns, function (btn) {
     btn.addEventListener('click', function () {
-      resetCamera();
-      showScreen('home');
-      setTimeout(function () { initHomeAnimation(); }, 50);
+      if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+      window.location.reload();
     });
   });
 
