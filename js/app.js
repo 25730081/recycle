@@ -225,6 +225,14 @@
       card.addEventListener('click', function () {
         // 선택한 팀 저장
         selectedTeam = TEAMS[id];
+        // 팀 버튼 선택 효과 + 선택 팀 저장
+        var teamBtn = card.querySelector('.team-btn');
+        if (teamBtn) {
+          teamBtn.classList.remove('selected');
+          void teamBtn.offsetWidth;
+          teamBtn.classList.add('selected');
+          try { localStorage.setItem('selectedTeam', teamBtn.dataset.team); } catch (e) {}
+        }
         // 클릭 효과
         card.style.transform = 'scale(0.97)';
         setTimeout(function () {
@@ -344,23 +352,36 @@
   /* ==============================
      분리배출 안내 (결과) 화면
   ============================== */
+  // 1920x1080 안내 스테이지를 화면 크기에 맞춰 비율 유지하며 확대/축소
+  var GUIDE_W = 1920, GUIDE_H = 1080;
+  function fitGuideStage() {
+    var st = document.getElementById('g-stage');
+    if (!st) return;
+    var sc = Math.min(window.innerWidth / GUIDE_W, window.innerHeight / GUIDE_H);
+    st.style.transform = 'translate(' + (-GUIDE_W * sc / 2) + 'px, ' + (-GUIDE_H * sc / 2) + 'px) scale(' + sc + ')';
+  }
+  window.addEventListener('resize', fitGuideStage);
+  fitGuideStage();
+
   function initResult() {
-    // 애니메이션 진입 효과
+    fitGuideStage();
+    // 진입 효과 (위치는 그대로, 순서대로 나타남)
     var els = [
-      document.querySelector('.result-left-card'),
-      document.querySelector('.result-title'),
-      document.querySelector('.result-steps'),
-      document.querySelector('.result-disposal-guide'),
-      document.querySelector('.result-btn-row'),
+      document.querySelector('.g-title'),
+      document.querySelector('.g-c1'),
+      document.querySelector('.g-c2'),
+      document.querySelector('.g-c3'),
+      document.querySelector('.g-panel'),
+      document.querySelector('.g-tip'),
+      document.querySelector('.g-tip-arrow'),
+      document.querySelector('.g-bins'),
     ];
     els.forEach(function (el, i) {
       if (!el) return;
       el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      el.style.transition = 'opacity 0.5s ease';
       setTimeout(function () {
         el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
       }, 60 + i * 90);
     });
   }
