@@ -615,7 +615,7 @@ html, body {
 .seat-title {
   text-align: center;
   white-space: nowrap;
-  font-size: calc(var(--u) * 9.6);
+  font-size: calc(var(--u) * 11.2);
   font-weight: 900;
   line-height: 1.23;
   letter-spacing: 0;
