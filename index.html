@@ -48,11 +48,9 @@
 
         </div>
 
-        <!-- 시작하기 버튼 -->
+        <!-- 시작 안내 (화면 아무 곳이나 터치하면 시작) -->
         <div class="btn-wrapper">
-          <button class="btn-start" id="btn-start" type="button">
-            <span class="btn-label">시작하기</span>
-          </button>
+          <p class="home-touch-text" id="home-touch-text">화면을 터치해 주세요</p>
         </div>
       </main>
     </div>
@@ -104,7 +102,7 @@
               </div>
             </div>
             <div class="input-group">
-              <label class="input-label">번</label>
+              <label class="input-label">번호</label>
               <div class="input-box" id="field-num" data-field="num" tabindex="0">
                 <span class="input-value" id="val-num"></span>
                 <span class="input-cursor" id="cursor-num"></span>
@@ -175,6 +173,9 @@
           <!-- 한화 이글스 -->
           <div class="ts-card ts-left" id="ts-hanwha" role="button" tabindex="0" aria-label="한화 이글스 선택">
             <div class="ts-mascot-wrap">
+              <div class="ts-logo-fx" aria-hidden="true">
+              <img src="images/eagles_brush_logo_transparent.png" alt="" />
+              </div>
               <img class="ts-mascot" src="images/hanwha_suri_cheer_stick.png" alt="한화 이글스 마스코트" />
               <div class="ts-fanfare" aria-hidden="true">
                 <span class="ff ff1"></span><span class="ff ff2"></span><span class="ff ff3"></span>
@@ -183,12 +184,20 @@
                 <span class="ff ff10"></span><span class="ff ff11"></span><span class="ff ff12"></span>
               </div>
             </div>
-            <button class="ts-select-btn" type="button">한화 이글스</button>
+            <button class="team-btn eagles" data-team="eagles" type="button">
+              <span>한화 이글스</span>
+            </button>
           </div>
+
+          <!-- 대결 구도 VS -->
+          <div class="ts-vs" aria-hidden="true"><span class="ts-vs-text">VS</span></div>
 
           <!-- 롯데 자이언츠 -->
           <div class="ts-card ts-right" id="ts-lotte" role="button" tabindex="0" aria-label="롯데 자이언츠 선택">
             <div class="ts-mascot-wrap">
+              <div class="ts-logo-fx" aria-hidden="true">
+              <img src="images/giants_brush_logo_transparent.png" alt="" />
+              </div>
               <img class="ts-mascot" src="images/lotte_nuri_cheer_stick.png" alt="롯데 자이언츠 마스코트" />
               <div class="ts-fanfare" aria-hidden="true">
                 <span class="ff ff1"></span><span class="ff ff2"></span><span class="ff ff3"></span>
@@ -197,7 +206,9 @@
                 <span class="ff ff10"></span><span class="ff ff11"></span><span class="ff ff12"></span>
               </div>
             </div>
-            <button class="ts-select-btn" type="button">롯데 자이언츠</button>
+            <button class="team-btn giants" data-team="giants" type="button">
+              <span>롯데 자이언츠</span>
+            </button>
           </div>
 
         </div>
@@ -278,90 +289,122 @@
   <!-- ============================== -->
   <div id="screen-result" class="screen">
 
-    <div class="seat-bg"></div>
-    <div class="deco-corner"></div>
+  <div id="g-stage" class="g-stage">
 
-    <div class="result-wrapper">
-
-      <!-- 헤더 -->
-      <header class="seat-header">
-        <div class="header-logo">
-          <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
-        </div>
-      </header>
-
-      <!-- 본문 -->
-      <main class="result-content">
-
-        <!-- 왼쪽: AI 인식 결과 카드 -->
-        <div class="result-left-card">
-          <!-- 병 아이콘 SVG -->
-          <div class="result-icon-wrap">
-            <svg class="result-bottle-svg" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- 병목 -->
-              <rect x="46" y="10" width="28" height="18" rx="6" stroke="#333" stroke-width="4" fill="none"/>
-              <!-- 어깨 -->
-              <path d="M46 28 C38 40 28 50 24 68" stroke="#333" stroke-width="4" stroke-linecap="round" fill="none"/>
-              <path d="M74 28 C82 40 92 50 96 68" stroke="#333" stroke-width="4" stroke-linecap="round" fill="none"/>
-              <!-- 몸통 -->
-              <rect x="24" y="68" width="72" height="112" rx="12" stroke="#333" stroke-width="4" fill="none"/>
-              <!-- 내용물 표시 (아랫부분) -->
-              <rect x="28" y="130" width="64" height="46" rx="8" fill="#e0f0e0" stroke="none"/>
-              <!-- 라벨 -->
-              <rect x="30" y="90" width="60" height="35" rx="6" stroke="#333" stroke-width="2.5" fill="none"/>
-            </svg>
-          </div>
-
-          <p class="result-label">AI 인식 결과</p>
-          <p class="result-material" id="result-material">플라스틱</p>
-          <p class="result-accuracy" id="result-accuracy">정확도 98%</p>
-          <div class="result-accuracy-bar"><span id="result-accuracy-fill" style="width:98%"></span></div>
-        </div>
-
-        <!-- 오른쪽: 안내 패널 -->
-        <div class="result-right-panel">
-
-          <h1 class="result-title">
-            분리배출 <span class="title-green">순서</span> 안내
-          </h1>
-
-          <!-- 단계 리스트 -->
-          <ul class="result-steps" id="result-steps">
-            <li class="result-step-item">
-              <span class="result-step-num">1</span>
-              <span class="result-step-text">내용물 비우고 헹구기</span>
-            </li>
-            <li class="result-step-item">
-              <span class="result-step-num">2</span>
-              <span class="result-step-text">라벨 떼어 내기</span>
-            </li>
-            <li class="result-step-item">
-              <span class="result-step-num">3</span>
-              <span class="result-step-text">찌그러뜨려 플라스틱 칸에 넣기</span>
-            </li>
-          </ul>
-
-          <!-- 투입 안내 -->
-          <div class="result-disposal-guide">
-            <p class="disposal-text" id="disposal-text"><strong class="disposal-target" id="disposal-target">플라스틱 투입구</strong>에 넣어 주세요</p>
-          </div>
-
-          <!-- 분리배출 했어요 버튼 -->
-          <div class="result-btn-row">
-            <button class="result-done-btn" id="result-done-btn" type="button">
-              분리배출 완료
-            </button>
-            <button class="result-retry-btn" id="result-retry-btn" type="button" aria-label="다시 인식하기">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 3-6.7"/>
-                <path d="M3 4v5h5"/>
-              </svg>
-            </button>
-          </div>
-
-        </div>
-      </main>
+    <!-- 로고 / 홈 -->
+    <div class="g-logo header-logo">
+      <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
     </div>
+    <button class="g-home nav-home-btn" type="button" aria-label="홈으로 가기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1c8f4a" d="M12 2.7 2.6 11a1 1 0 0 0 .7 1.7H5V20a1.5 1.5 0 0 0 1.5 1.5H9.5V15h5v6.5h3A1.5 1.5 0 0 0 19 20v-7.3h1.7a1 1 0 0 0 .7-1.7Z"/></svg>
+    </button>
+
+    <!-- 타이틀 -->
+    <h1 class="g-title"><em>종이</em> 이렇게 버려 주세요</h1>
+
+    <!-- 단계 연결선 + 번호 -->
+    <div class="g-steps-line"></div>
+    <div class="g-badge g-b1">1</div>
+    <div class="g-badge g-b2">2</div>
+    <div class="g-badge g-b3">3</div>
+
+    <!-- 단계 카드 -->
+    <section class="g-card g-c1">
+      <div class="g-ill">
+        <svg viewBox="0 0 172 172" aria-hidden="true">
+          <!-- 비스듬히 기울인 컵 + 떨어지는 물방울 -->
+          <g transform="rotate(38 88 84)">
+            <path d="M60 46 L116 46 L107 116 Q106 122 100 122 L76 122 Q70 122 69 116 Z" fill="#fff" stroke="#1c2a3a" stroke-width="3.8" stroke-linejoin="round"/>
+            <path d="M63 70 L113 70" stroke="#2fa24b" stroke-width="5" stroke-linecap="butt"/>
+            <path d="M56 46 L120 46" stroke="#1c2a3a" stroke-width="4.5" stroke-linecap="round"/>
+          </g>
+          <path d="M52 112 q-5 8 0 11 q5 -3 0 -11z" fill="#c9985a"/>
+          <path d="M64 126 q-4.5 7 0 10 q4.5 -3 0 -10z" fill="#c9985a"/>
+          <path d="M56 96 q-3.5 6 0 8 q3.5 -2 0 -8z" fill="#d9ad72"/>
+        </svg>
+      </div>
+      <h2 class="g-t">음식물 깨끗이 비우기</h2>
+      <p class="g-s">남은 음식과 음료를 깨끗이 비워 주세요</p>
+    </section>
+
+    <section class="g-card g-c2">
+      <div class="g-ill">
+        <svg viewBox="0 0 172 172" aria-hidden="true">
+          <!-- 박스 + 떼어내는 테이프 -->
+          <path d="M44 88 L54 72 L126 72 L136 88 Z" fill="#f3d9a8" stroke="#1c2a3a" stroke-width="3.8" stroke-linejoin="round"/>
+          <rect x="44" y="88" width="92" height="58" rx="4" fill="#f3d9a8" stroke="#1c2a3a" stroke-width="3.8"/>
+          <path d="M96 88 C96 70 100 60 122 54" stroke="#8ec5ee" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <path d="M126 44 L138 38 M132 56 L146 56" stroke="#2fa24b" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="g-t">비닐·테이프 떼어 내기</h2>
+      <p class="g-s">코팅 비닐과 테이프는 떼어 내 주세요</p>
+    </section>
+
+    <section class="g-card g-c3">
+      <div class="g-ill">
+        <svg viewBox="0 0 172 172" aria-hidden="true">
+          <!-- 접은 종이 → 점선 화살표 → 투입함 (가로 중앙 정렬) -->
+          <g transform="rotate(-18 80 36)"><rect x="57" y="22" width="46" height="28" rx="3" fill="#f3d9a8" stroke="#1c2a3a" stroke-width="3.5"/><path d="M63 36 H97" stroke="#1c2a3a" stroke-width="2.5" stroke-dasharray="4 3" stroke-linecap="round"/></g><path d="M96 54 Q104 66 90 78" stroke="#2f9c4c" stroke-width="3.5" fill="none" stroke-dasharray="5 6" stroke-linecap="round"/><path d="M79 78 L86 86 L93 78" stroke="#2f9c4c" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="47" y="94" width="78" height="12" rx="3" fill="#2f9c4c" stroke="#1f3a28" stroke-width="3.5"/><path d="M51 104 L121 104 L117 152 Q116 156 112 156 L60 156 Q56 156 55 152 Z" fill="#2f9c4c" stroke="#1f3a28" stroke-width="3.5" stroke-linejoin="round"/><path d="M86 140 L86 118 M78 126 L86 118 L94 126" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M79 148 L93 148" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="g-t">납작하게 접어 넣기</h2>
+      <p class="g-s">오른쪽 <b>종이 투입구</b>에 넣어요</p>
+    </section>
+
+    <!-- 투입구 위치 패널 -->
+    <section class="g-panel">
+      <div class="g-panel-label"><i></i>투입구 위치</div>
+    </section>
+    <div class="g-tip">여기에 넣어요!</div>
+    <svg class="g-tip-arrow" viewBox="0 0 34 36" aria-hidden="true"><path d="M17 3 V30 M5 19 L17 31 L29 19" stroke="#2b9c47" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+    <!-- 쓰레기통 5개 (일반 / 종이 / 캔 / 플라스틱 / 음식물) — 인식 결과에 맞는 투입구가 강조됨 (app.js renderGuide) -->
+        <div class="g-bins">
+      <div class="g-bin" data-bin="general">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12 H42"/><path d="M18 12 V8 Q18 6 20 6 H28 Q30 6 30 8 V12"/><path d="M10 12 L13 40 Q13.3 42 15.5 42 H32.5 Q34.7 42 35 40 L38 12"/><path d="M19 20 V34 M29 20 V34"/></g></svg>
+          <span>일반</span>
+        </div>
+      </div>
+      <div class="g-bin g-active" data-bin="paper">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 H29 L40 15 V40 Q40 44 36 44 H12 Q8 44 8 40 V8 Q8 4 12 4 Z"/><path d="M29 4 V15 H40"/><path d="M16 26 H32 M16 34 H28"/></g></svg>
+          <span>종이</span>
+        </div>
+      </div>
+      <div class="g-bin" data-bin="can">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 9 Q11 5 15 5 H33 Q37 5 37 9 V39 Q37 43 33 43 H15 Q11 43 11 39 Z"/><path d="M11 15 H37 M11 33 H37"/><path d="M17 24 H31"/></g></svg>
+          <span>캔</span>
+        </div>
+      </div>
+      <div class="g-bin" data-bin="plastic">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4 H28 V10 H20 Z"/><path d="M20 10 Q20 14 14 18 Q10 21 10 26 V39 Q10 44 15 44 H33 Q38 44 38 39 V26 Q38 21 34 18 Q28 14 28 10"/><path d="M10 26 H38 M10 35 H38"/></g></svg>
+          <span>플라스틱</span>
+        </div>
+      </div>
+      <div class="g-bin" data-bin="food">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 14 C20 9 9 10 8 23 C7 35 15 44 20 43 C22 42.5 23 41.5 24 41.5 C25 41.5 26 42.5 28 43 C33 44 41 35 40 23 C39 10 28 9 24 14 Z"/><path d="M24 14 C24 9 26 5 30 3"/></g></svg>
+          <span>음식물</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 버튼 -->
+    <button class="g-done" id="result-done-btn" type="button">분리배출 완료</button>
+    <button class="g-reset" id="result-retry-btn" type="button" aria-label="다시 인식하기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="#1f9a45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12 A8 8 0 1 1 15.6 4.9"/><path d="M15 2.5 L16 6.4 L12.2 7.4"/></g></svg>
+    </button>
+  </div>
+
   </div><!-- /#screen-result -->
 
 
