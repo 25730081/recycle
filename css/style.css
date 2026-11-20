@@ -964,14 +964,15 @@ html, body {
 .ts-logo-fx {
   position: absolute;
   left: 50%;
-  bottom: 8%;
-  width: 140%;
+  bottom: 0;
+  height: 100%;
+  max-height: 46vh;   /* 마스코트 높이와 동일 */
   transform: translateX(-50%);
   z-index: 1;
   pointer-events: none;
   animation: logoDrift 4s ease-in-out infinite;
 }
-.ts-logo-fx img { display: block; width: 100%; height: auto; }
+.ts-logo-fx img { display: block; height: 100%; width: auto; }
 .ts-right .ts-logo-fx { animation-delay: 1.2s; }
 
 @keyframes logoDrift {
