@@ -1515,30 +1515,34 @@ html, body {
 #screen-result .g-panel-label {position:absolute;left:40px;top:30px;display:flex;align-items:center;gap:10px;
   font-weight:700;font-size:28px;color:#4a5560;letter-spacing:-.5px}
 #screen-result .g-panel-label i {width:13px;height:13px;border-radius:50%;background:#2b9c47;display:block}
-#screen-result .g-tip {left:1181px;top:321px;width:205px;height:61px;border-radius:31px;background:#1b2735;color:#fff;
+#screen-result .g-tip {left:1149px;top:321px;width:205px;height:61px;border-radius:31px;background:#1b2735;color:#fff;
   display:grid;place-items:center;font-weight:900;font-size:27px;letter-spacing:-.5px;z-index:3}
-#screen-result .g-tip-arrow {left:1266px;top:392px;width:34px;height:36px;z-index:3}
-#screen-result .g-bins {left:1048px;top:0;width:760px;height:1080px;pointer-events:none}
-#screen-result .g-bin {position:absolute;width:134px;left:0;top:0;pointer-events:auto;cursor:pointer}
+#screen-result .g-tip-arrow {left:1234px;top:392px;width:34px;height:36px;z-index:3}
+#screen-result .g-bins {left:1055px;top:0;width:746px;height:1080px;pointer-events:none}
+#screen-result .g-bin {position:absolute;width:108px;left:0;top:0;pointer-events:auto;cursor:pointer}
 #screen-result .g-bin:nth-child(1) {left:0}
-#screen-result .g-bin:nth-child(2) {left:144px}
-#screen-result .g-bin:nth-child(3) {left:336px}
-#screen-result .g-bin:nth-child(4) {left:480px}
-#screen-result .g-bin:nth-child(5) {left:624px}
-#screen-result .g-bin .g-lid {position:absolute;left:0;top:499px;width:134px;height:44px;border-radius:18px 18px 10px 10px;
+#screen-result .g-bin:nth-child(2) {left:118px}
+#screen-result .g-bin:nth-child(3) {left:284px}
+#screen-result .g-bin:nth-child(4) {left:402px}
+#screen-result .g-bin:nth-child(5) {left:520px}
+#screen-result .g-bin:nth-child(6) {left:638px}
+#screen-result .g-bin .g-lid {position:absolute;left:0;top:499px;width:108px;height:44px;border-radius:18px 18px 10px 10px;
   background:#d2d9e0;display:grid;place-items:center}
-#screen-result .g-bin .g-slot {width:66px;height:11px;border-radius:6px;background:#9aa5b1}
-#screen-result .g-bin .g-body {position:absolute;left:5px;top:549px;width:124px;height:339px;border-radius:20px 20px 28px 28px;
-  background:#e5eaef;color:#a8b2bc;display:flex;flex-direction:column;align-items:center;padding-top:122px;gap:11px;
-  font-weight:700;font-size:26px;letter-spacing:-.3px}
-#screen-result .g-bin .g-body svg {width:50px;height:50px}
-#screen-result .g-bin.g-active {width:182px}
-#screen-result .g-bin.g-active .g-lid {top:439px;width:182px;background:#2d9d48}
-#screen-result .g-bin.g-active .g-slot {width:88px;height:13px;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.9)}
-#screen-result .g-bin.g-active .g-body {top:489px;left:7px;width:168px;height:399px;background:#2f9f49;color:#fff;
-  padding-top:132px;gap:20px;font-size:37px;font-weight:900;letter-spacing:-.5px}
-#screen-result .g-bin.g-active .g-body svg {width:62px;height:62px}
+#screen-result .g-bin .g-slot {width:54px;height:11px;border-radius:6px;background:#9aa5b1}
+#screen-result .g-bin .g-body {position:absolute;left:5px;top:549px;width:98px;height:339px;border-radius:20px 20px 28px 28px;
+  background:#e5eaef;color:#a8b2bc;display:flex;flex-direction:column;align-items:center;padding-top:122px;gap:10px;
+  font-weight:700;font-size:22px;letter-spacing:-.3px;white-space:nowrap}
+#screen-result .g-bin .g-body svg {width:44px;height:44px}
+#screen-result .g-bin.g-active {width:156px}
+#screen-result .g-bin.g-active .g-lid {top:439px;width:156px;background:#2d9d48}
+#screen-result .g-bin.g-active .g-slot {width:76px;height:13px;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.9)}
+#screen-result .g-bin.g-active .g-body {top:489px;left:7px;width:142px;height:399px;background:#2f9f49;color:#fff;
+  padding-top:132px;gap:20px;font-size:34px;font-weight:900;letter-spacing:-.5px}
+#screen-result .g-bin.g-active .g-body svg {width:56px;height:56px}
 #screen-result .g-bin:not(.g-active):hover .g-body {background:#dde4ea}
+
+/* 숨겨진(비활성) 안내 화면의 쓰레기통이 다른 화면(좌석 숫자 키패드 등)의 클릭을 가로채지 않도록 */
+#screen-result:not(.active) .g-bin {pointer-events:none}
 #screen-result .g-done {left:1026px;top:944px;width:698px;height:88px;border:0;border-radius:44px;cursor:pointer;
   background:linear-gradient(180deg,#2fa24b,#27943f);color:#fff;font-family:inherit;font-weight:900;font-size:35px;
   letter-spacing:-.5px;box-shadow:0 8px 16px rgba(30,120,60,.2);transition:transform .15s}
