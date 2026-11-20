@@ -838,30 +838,24 @@ html, body {
 }
 
 /* ── 공통: 상단 홈 버튼 (팀 선택 / 촬영) ── */
+/* 모든 화면 공통 홈 버튼 — 분리배출 안내 페이지 홈 버튼과 같은 디자인 */
 .nav-home-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
   width: clamp(56px, 8vh, 72px);
   height: clamp(56px, 8vh, 72px);
   padding: 0;
+  border: 0;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.85);
-  background: linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.32) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #138a50;
+  background: #fff;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(30,60,90,0.18);
-  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 5px 16px rgba(40,90,140,.16);
+  transition: transform .15s;
 }
-
-.nav-home-btn:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.55) 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 8px 22px rgba(30,60,90,0.24);
-}
-.nav-home-btn:active { transform: scale(0.94); }
+.nav-home-btn svg { width: 47%; height: 47%; }
+.nav-home-btn:hover  { transform: scale(1.07); }
+.nav-home-btn:active { transform: scale(.96); }
 
 /* 헤더 가운데 좌석 정보 배지 */
 .seat-info-badge {
@@ -888,13 +882,6 @@ html, body {
   white-space: nowrap;
 }
 
-/* 헤더 오른쪽 홈 버튼 (흰색 원) */
-#screen-team .nav-home-btn {
-  background: #fff;
-  border: none;
-  box-shadow: 0 6px 18px rgba(30,60,90,0.18);
-}
-#screen-team .nav-home-btn:hover { background: #f1f8f2; }
 
 .team-sel-content {
   flex: 1;
@@ -925,7 +912,7 @@ html, body {
 .ts-cards {
   flex: 1;
   min-height: 0;
-  width: min(100%, 72vw);   /* 두 마스코트를 가운데 쪽으로 */
+  width: min(100%, 80vw);   /* 두 마스코트 사이 간격 */
   display: flex;
   align-items: stretch;
   margin-top: 2vh;
@@ -1083,7 +1070,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 1.5vw calc(8.4vh + 1.2vh);   /* 아래 팀 버튼 높이만큼 올려 마스코트 높이 중앙에 */
+  padding: 0 1.5vw calc(7vh + 1.2vh);   /* 아래 팀 버튼 높이만큼 올려 마스코트 높이 중앙에 */
   pointer-events: none;
 }
 
@@ -1092,7 +1079,7 @@ html, body {
   font-size: clamp(36px, 6.5vh, 68px);
   line-height: 1;
   letter-spacing: 2px;
-  color: rgba(31,45,58,0.55);
+  color: #b9c0c7;
   text-shadow: 0 2px 10px rgba(255,255,255,0.8);
 }
 
@@ -1102,14 +1089,14 @@ html, body {
 /* 팀 이름 버튼 (원본 1672×941 캔버스 기준 444×93 / 40px 비율을 화면 높이 기준으로 환산) */
 .team-btn {
   flex-shrink: 0;
-  width: min(80%, 40vh);
-  height: 8.4vh;
+  width: min(66%, 32vh);
+  height: 7vh;
   border: 0;
   border-radius: 999px;
   cursor: pointer;
   font-family: inherit;
   font-weight: 900;
-  font-size: 3.6vh;
+  font-size: 3vh;
   color: #fff;
   letter-spacing: -.5px;
   overflow: hidden;
@@ -1509,13 +1496,7 @@ html, body {
 #screen-result * {margin:0;padding:0;box-sizing:border-box}
 #screen-result .g-stage {position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
 #screen-result .g-stage>* {position:absolute}
-#screen-result .g-logo {left:44px;top:30px;width:170px;height:76px}
-#screen-result .g-home {left:1804px;top:32px;width:72px;height:72px;border:0;border-radius:50%;background:#fff;
-  display:grid;place-items:center;cursor:pointer;box-shadow:0 5px 16px rgba(40,90,140,.16);transition:transform .15s}
-#screen-result .g-home svg {width:34px;height:34px}
-#screen-result .g-home:hover {transform:scale(1.07)}
-#screen-result .g-home:active {transform:scale(.96)}
-#screen-result .g-title {left:110px;top:112px;font-weight:900;font-size:88px;line-height:116px;letter-spacing:-5px;color:#1f2a37;white-space:nowrap}
+#screen-result .g-title {left:0;width:1920px;text-align:center;top:112px;font-weight:900;font-size:88px;line-height:116px;letter-spacing:-5px;color:#1f2a37;white-space:nowrap}
 #screen-result .g-title em {font-style:normal;color:#22a04a}
 #screen-result .g-steps-line {left:149px;top:380px;width:4px;height:530px;background:linear-gradient(180deg,#b7dcbf,#a6d3b0);border-radius:2px}
 #screen-result .g-badge {left:110px;width:82px;height:82px;border-radius:22px;display:grid;place-items:center;
@@ -1545,9 +1526,9 @@ html, body {
 #screen-result .g-panel-label {position:absolute;left:40px;top:30px;display:flex;align-items:center;gap:10px;
   font-weight:700;font-size:28px;color:#4a5560;letter-spacing:-.5px}
 #screen-result .g-panel-label i {width:13px;height:13px;border-radius:50%;background:#2b9c47;display:block}
-#screen-result .g-tip {left:1208px;top:321px;width:205px;height:61px;border-radius:31px;background:#1b2735;color:#fff;
+#screen-result .g-tip {left:1562px;top:321px;width:205px;height:61px;border-radius:31px;background:#1b2735;color:#fff;
   display:grid;place-items:center;font-weight:900;font-size:27px;letter-spacing:-.5px;z-index:3}
-#screen-result .g-tip-arrow {left:1293px;top:392px;width:34px;height:36px;z-index:3}
+#screen-result .g-tip-arrow {left:1647px;top:392px;width:34px;height:36px;z-index:3}
 /* 쓰레기통 5개를 패널 가운데에 나란히 (강조 통 위치가 바뀌어도 자동 정렬, 말풍선은 app.js가 강조 통 위로 이동) */
 #screen-result .g-bins {left:1055px;top:0;width:746px;height:1080px;pointer-events:none;
   display:flex;justify-content:center;align-items:flex-start;gap:10px}
@@ -1580,14 +1561,9 @@ html, body {
 #screen-result .g-reset:hover {transform:rotate(-25deg)}
 #screen-result .g-reset:active {transform:scale(.95)}
 
-/* 공통 로고 / 홈 버튼 스타일을 guide 디자인에 맞춰 덮어쓰기 */
-#screen-result .g-logo { align-self: auto; }
-#screen-result .g-logo .logo-icon { width: 100%; height: 100%; margin: 0; object-fit: contain; }
-#screen-result .g-home {
-  padding: 0; border: 0; color: inherit;
-  backdrop-filter: none; -webkit-backdrop-filter: none;
-}
-#screen-result .g-home:hover { background: #fff; }
+/* 안내 페이지 헤더: 다른 화면과 같은 위치의 로고 / 홈 버튼 (스테이지 확대·축소와 무관) */
+#screen-result .g-header {position:absolute;top:0;left:0;right:0;z-index:5;padding:22px 36px 0}
+#screen-result .g-header .logo-icon {margin:-17px -10px -34px -10px}
 
 /* ============================================================
    반응형
@@ -1634,9 +1610,11 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 5;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 22px 36px 0;   /* 좌석번호 입력 화면 로고 위치와 동일 */
 }
 
@@ -1825,42 +1803,6 @@ html, body {
   font-weight: 500;
   color: #9aa3ab;
   white-space: nowrap;
-  animation: countdownFloat 1.6s ease-in-out infinite;
-}
-
-/* 카운트다운 문구 + 왼쪽 홈 버튼 */
-.complete-countdown-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 2vh;
-}
-
-.complete-countdown-row .complete-countdown { margin-top: 0; }
-
-.complete-home-btn {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(44px, 5.6vh, 56px);
-  height: clamp(44px, 5.6vh, 56px);
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  color: #138a50;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(30,60,90,0.18);
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-.complete-home-btn:hover  { background: #f1f8f2; transform: translateY(-2px); }
-.complete-home-btn:active { transform: scale(0.94); }
-
-@keyframes countdownFloat {
-  0%, 100% { transform: translateY(0);    opacity: 0.75; }
-  50%      { transform: translateY(-5px); opacity: 1; }
 }
 
 /* ── 마스코트 섹션 ── */
