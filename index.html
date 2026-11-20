@@ -156,9 +156,7 @@
         </div>
 
         <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
-          <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
-            <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1c8f4a" d="M12 2.7 2.6 11a1 1 0 0 0 .7 1.7H5V20a1.5 1.5 0 0 0 1.5 1.5H9.5V15h5v6.5h3A1.5 1.5 0 0 0 19 20v-7.3h1.7a1 1 0 0 0 .7-1.7Z"/></svg>
         </button>
       </header>
 
@@ -238,9 +236,7 @@
         </div>
 
         <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
-          <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
-            <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1c8f4a" d="M12 2.7 2.6 11a1 1 0 0 0 .7 1.7H5V20a1.5 1.5 0 0 0 1.5 1.5H9.5V15h5v6.5h3A1.5 1.5 0 0 0 19 20v-7.3h1.7a1 1 0 0 0 .7-1.7Z"/></svg>
         </button>
       </header>
 
@@ -291,15 +287,17 @@
   <!-- ============================== -->
   <div id="screen-result" class="screen">
 
-  <div id="g-stage" class="g-stage">
-
-    <!-- 로고 / 홈 -->
-    <div class="g-logo header-logo">
+  <!-- 헤더 (다른 화면과 같은 위치의 로고 / 홈 버튼) -->
+  <header class="seat-header g-header">
+    <div class="header-logo">
       <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
     </div>
-    <button class="g-home nav-home-btn" type="button" aria-label="홈으로 가기">
+    <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1c8f4a" d="M12 2.7 2.6 11a1 1 0 0 0 .7 1.7H5V20a1.5 1.5 0 0 0 1.5 1.5H9.5V15h5v6.5h3A1.5 1.5 0 0 0 19 20v-7.3h1.7a1 1 0 0 0 .7-1.7Z"/></svg>
     </button>
+  </header>
+
+  <div id="g-stage" class="g-stage">
 
     <!-- 타이틀 -->
     <h1 class="g-title"><em>종이</em> 이렇게 버려 주세요</h1>
@@ -372,27 +370,20 @@
     <div class="g-tip">여기에 넣어요!</div>
     <svg class="g-tip-arrow" viewBox="0 0 34 36" aria-hidden="true"><path d="M17 3 V30 M5 19 L17 31 L29 19" stroke="#2b9c47" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 
-    <!-- 쓰레기통 5개 (일반 / 종이 / 캔 / 플라스틱 / 음식물) — 강조 통은 app.js가 인식 결과에 맞춰 바꿈 -->
+    <!-- 쓰레기통 5개 (음식물 / 일반 / 플라스틱 / 캔 / 종이) — 강조 통은 app.js가 인식 결과에 맞춰 바꿈 -->
         <div class="g-bins">
+      <div class="g-bin" data-bin="food">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 14 C20 9 9 10 8 23 C7 35 15 44 20 43 C22 42.5 23 41.5 24 41.5 C25 41.5 26 42.5 28 43 C33 44 41 35 40 23 C39 10 28 9 24 14 Z"/><path d="M24 14 C24 9 26 5 30 3"/></g></svg>
+          <span>음식물</span>
+        </div>
+      </div>
       <div class="g-bin" data-bin="general">
         <div class="g-lid"><span class="g-slot"></span></div>
         <div class="g-body">
           <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12 H42"/><path d="M18 12 V8 Q18 6 20 6 H28 Q30 6 30 8 V12"/><path d="M10 12 L13 40 Q13.3 42 15.5 42 H32.5 Q34.7 42 35 40 L38 12"/><path d="M19 20 V34 M29 20 V34"/></g></svg>
           <span>일반</span>
-        </div>
-      </div>
-      <div class="g-bin g-active" data-bin="paper">
-        <div class="g-lid"><span class="g-slot"></span></div>
-        <div class="g-body">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 H29 L40 15 V40 Q40 44 36 44 H12 Q8 44 8 40 V8 Q8 4 12 4 Z"/><path d="M29 4 V15 H40"/><path d="M16 26 H32 M16 34 H28"/></g></svg>
-          <span>종이</span>
-        </div>
-      </div>
-      <div class="g-bin" data-bin="can">
-        <div class="g-lid"><span class="g-slot"></span></div>
-        <div class="g-body">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 9 Q11 5 15 5 H33 Q37 5 37 9 V39 Q37 43 33 43 H15 Q11 43 11 39 Z"/><path d="M11 15 H37 M11 33 H37"/><path d="M17 24 H31"/></g></svg>
-          <span>캔</span>
         </div>
       </div>
       <div class="g-bin" data-bin="plastic">
@@ -402,11 +393,18 @@
           <span>플라스틱</span>
         </div>
       </div>
-      <div class="g-bin" data-bin="food">
+      <div class="g-bin" data-bin="can">
         <div class="g-lid"><span class="g-slot"></span></div>
         <div class="g-body">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 14 C20 9 9 10 8 23 C7 35 15 44 20 43 C22 42.5 23 41.5 24 41.5 C25 41.5 26 42.5 28 43 C33 44 41 35 40 23 C39 10 28 9 24 14 Z"/><path d="M24 14 C24 9 26 5 30 3"/></g></svg>
-          <span>음식물</span>
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 9 Q11 5 15 5 H33 Q37 5 37 9 V39 Q37 43 33 43 H15 Q11 43 11 39 Z"/><path d="M11 15 H37 M11 33 H37"/><path d="M17 24 H31"/></g></svg>
+          <span>캔</span>
+        </div>
+      </div>
+      <div class="g-bin g-active" data-bin="paper">
+        <div class="g-lid"><span class="g-slot"></span></div>
+        <div class="g-body">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 H29 L40 15 V40 Q40 44 36 44 H12 Q8 44 8 40 V8 Q8 4 12 4 Z"/><path d="M29 4 V15 H40"/><path d="M16 26 H32 M16 34 H28"/></g></svg>
+          <span>종이</span>
         </div>
       </div>
     </div>
@@ -437,6 +435,10 @@
         <div class="header-logo">
           <img src="images/greenmatch_logo.png" alt="그린매치 로고" class="logo-icon" />
         </div>
+
+        <button class="nav-home-btn" type="button" aria-label="홈으로 가기">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1c8f4a" d="M12 2.7 2.6 11a1 1 0 0 0 .7 1.7H5V20a1.5 1.5 0 0 0 1.5 1.5H9.5V15h5v6.5h3A1.5 1.5 0 0 0 19 20v-7.3h1.7a1 1 0 0 0 .7-1.7Z"/></svg>
+        </button>
       </header>
 
       <!-- 본문 -->
@@ -483,15 +485,7 @@
             <p class="complete-sub-line">경기가 끝나면 좌석번호 추첨을 통해 경품을 지급해 드려요</p>
 
             <!-- 자동 복귀 안내 (5초 카운트다운) -->
-            <div class="complete-countdown-row">
-              <!-- 홈 버튼 (누르면 새로 고침된 처음 화면으로) -->
-              <button class="complete-home-btn" id="complete-home-btn" type="button" aria-label="처음 화면으로">
-                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
-                  <path d="M12 3L2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/>
-                </svg>
-              </button>
-              <p class="complete-countdown" id="complete-countdown"><span id="complete-countdown-num">10</span>초 후 처음 화면으로 돌아갑니다</p>
-            </div>
+            <p class="complete-countdown" id="complete-countdown"><span id="complete-countdown-num">10</span>초 후 처음 화면으로 돌아갑니다</p>
           </div>
 
           <!-- 마스코트 (선택한 팀) -->
