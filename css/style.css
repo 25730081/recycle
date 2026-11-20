@@ -1005,7 +1005,7 @@ html, body {
 .ts-card:hover .ts-fanfare,
 .ts-card:focus-visible .ts-fanfare { opacity: 1; }
 
-/* 마스코트 테두리 주변으로 흩날리는 색종이 (6개) — 기준점: 마스코트 머리 위 가운데 */
+/* 마스코트 머리 위 공간에서만 동시에 흩날리는 색종이 (9개) — 기준점: 마스코트 머리 위 가운데, 메인 문구와 겹치지 않는 높이 */
 .ff {
   position: absolute;
   left: var(--x);
@@ -1017,36 +1017,34 @@ html, body {
   transform: rotate(var(--r));
 }
 
-/* 6개만 사용 */
-.ff7, .ff8, .ff9, .ff10, .ff11, .ff12 { display: none; }
+/* 9개만 사용 */
+.ff10, .ff11, .ff12 { display: none; }
 
+/* 음수 지연으로 처음부터 9개가 동시에 흩날림 */
 .ts-card:hover .ff,
-.ts-card:focus-visible .ff { animation: ffFlutter 2.6s ease-in-out infinite; }
+.ts-card:focus-visible .ff { animation: ffFlutter 2s ease-in-out infinite; }
 
-/* 살랑살랑 흔들리며 아래로 흩날림 */
+/* 살랑살랑 흔들리며 아래로 흩날림 (머리 위 공간 안에서만 움직임) */
 @keyframes ffFlutter {
-  0%   { opacity: 0; transform: translate(0, -8px)   rotate(var(--r)); }
-  15%  { opacity: 1; }
-  40%  { transform: translate(7px, 4px)   rotate(calc(var(--r) + 90deg)); }
-  70%  { opacity: 1; transform: translate(-6px, 14px) rotate(calc(var(--r) + 180deg)); }
-  100% { opacity: 0; transform: translate(3px, 24px)  rotate(calc(var(--r) + 260deg)); }
+  0%   { opacity: 0; transform: translate(0, -4px)   rotate(var(--r)); }
+  12%  { opacity: 1; }
+  50%  { transform: translate(5px, 5px)   rotate(calc(var(--r) + 120deg)); }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-3px, 12px) rotate(calc(var(--r) + 240deg)); }
 }
 
-/* 한화(왼쪽): 마스코트 테두리 주변 */
-.ts-left .ff1 { --x: -19vh; --y: 3vh;  --r: -20deg; animation-delay: 0s !important; }
-.ts-left .ff2 { --x: -10vh; --y: -3vh; --r: 35deg;  animation-delay: 0.9s !important; }
-.ts-left .ff3 { --x: 8vh;   --y: -4vh; --r: -45deg; animation-delay: 1.7s !important; }
-.ts-left .ff4 { --x: 18vh;  --y: 4vh;  --r: 15deg;  animation-delay: 0.4s !important; }
-.ts-left .ff5 { --x: -22vh; --y: 20vh; --r: 40deg;  animation-delay: 1.3s !important; }
-.ts-left .ff6 { --x: 21vh;  --y: 22vh; --r: -30deg; animation-delay: 2.1s !important; }
-
-/* 롯데(오른쪽): 좌우 반전 */
-.ts-right .ff1 { --x: 19vh;  --y: 3vh;  --r: 20deg;  animation-delay: 0.2s !important; }
-.ts-right .ff2 { --x: 10vh;  --y: -3vh; --r: -35deg; animation-delay: 1.1s !important; }
-.ts-right .ff3 { --x: -8vh;  --y: -4vh; --r: 45deg;  animation-delay: 1.9s !important; }
-.ts-right .ff4 { --x: -18vh; --y: 4vh;  --r: -15deg; animation-delay: 0.6s !important; }
-.ts-right .ff5 { --x: 22vh;  --y: 20vh; --r: -40deg; animation-delay: 1.5s !important; }
-.ts-right .ff6 { --x: -21vh; --y: 22vh; --r: 30deg;  animation-delay: 2.3s !important; }
+.ts-card .ff1 { --x: -9vh;    --y: -3.5vh; --r: -20deg; animation-delay: 0s !important; }
+.ts-card .ff2 { --x: -6vh;    --y: -6.5vh; --r: 35deg;  animation-delay: -1.1s !important; }
+.ts-card .ff3 { --x: -3vh;    --y: -2.5vh; --r: -45deg; animation-delay: -0.4s !important; }
+.ts-card .ff4 { --x: 0vh;     --y: -7vh;   --r: 15deg;  animation-delay: -1.6s !important; }
+.ts-card .ff5 { --x: 3vh;     --y: -3.5vh; --r: 40deg;  animation-delay: -0.8s !important; }
+.ts-card .ff6 { --x: 6vh;     --y: -6vh;   --r: -30deg; animation-delay: -1.4s !important; }
+.ts-card .ff7 { --x: 9vh;     --y: -2.5vh; --r: 25deg;  animation-delay: -0.2s !important; }
+.ts-card .ff8 { --x: -10.5vh; --y: -6vh;   --r: -35deg; animation-delay: -1.8s !important; }
+.ts-card .ff9 { --x: 10.5vh;  --y: -5.5vh; --r: 50deg;  animation-delay: -0.6s !important; }
+.ts-right .ff1 { animation-delay: -0.9s !important; }
+.ts-right .ff4 { animation-delay: -0.3s !important; }
+.ts-right .ff7 { animation-delay: -1.3s !important; }
 
 /* 팀 컬러 색종이 (기본색) */
 .ts-left  .ff { background-color: #ff7a00; }
@@ -1071,6 +1069,7 @@ html, body {
 .ts-vs-text {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: clamp(36px, 6.5vh, 68px);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 2px;
   color: #b9c0c7;
@@ -1168,16 +1167,18 @@ html, body {
   position: relative;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: clamp(36px, 4.2vw, 64px);
-  font-weight: 700;
-  color: #1f2d3a;
-  line-height: 1.2;
+  /* 분리배출 안내 페이지 메인 문구와 같은 스타일 (88px / 1920×1080 기준, 화면 크기에 맞춰 같은 비율로 확대·축소) */
+  font-size: min(4.583vw, 8.148vh);
+  font-weight: 900;
+  color: #1f2a37;
+  line-height: 1.318;
+  letter-spacing: -0.057em;
   text-align: center;
   white-space: nowrap;
 }
 
-.cam-bubble-green { color: #16a05a; }
-.cam-bubble-dark  { color: #1f2d3a; }
+.cam-bubble-green { color: #22a04a; }
+.cam-bubble-dark  { color: #1f2a37; }
 
 .cam-stage .cam-viewfinder-wrap { min-height: 0; }
 
